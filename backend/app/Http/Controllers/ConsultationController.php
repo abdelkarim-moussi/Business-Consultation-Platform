@@ -12,7 +12,7 @@ class ConsultationController extends Controller
 
     public function index(){
 
-        $consulations = Consultation::all();
+        $consultations = Consultation::all();
 
         return response()->json(compact('consultations'));
     }
@@ -22,5 +22,22 @@ class ConsultationController extends Controller
         $consulation = DB::table('consulations')->where('id',$consulation->id)->first();
 
         return response()->json(compact('consultation'));
+    }
+
+    public function store(Request $request){
+
+        $validate = $request->validate(
+            [
+                'Date'=>'required|datetime',
+                'dalay'=>'required|float|min:30',
+                'entrepreneur_id'=>'required',
+                'consultant_id'=>'required'
+            ]
+            );
+
+        $consulation = Consultation::create($validate);
+
+        return response()->json(compact('consultation'));
+
     }
 }
