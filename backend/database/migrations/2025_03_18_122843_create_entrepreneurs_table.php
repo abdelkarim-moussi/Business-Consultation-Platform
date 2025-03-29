@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('entrepreneurs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->string('sectorActivity');
+            $table->string('sectorActivity')->nullable();
             $table->timestamps();
         });
     }

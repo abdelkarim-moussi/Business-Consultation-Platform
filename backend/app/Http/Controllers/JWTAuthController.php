@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Consultant;
+use App\Models\Entrepreneur;
 use App\Models\User;
 use Doctrine\Common\Lexer\Token;
 use Illuminate\Http\Request;
@@ -28,6 +30,19 @@ class JWTAuthController extends Controller
             $user = User::create($validated);
 
             $token = JWTAuth::fromUser($user);
+
+            if($user->accountType === 'entrepreneur'){
+                Entrepreneur::create(
+                    [
+                        'user_id'=>$user->id
+                    ]
+                    );
+            }
+            else if($user->accountType === 'consultant'){
+                Consultant::create([
+                    'user_id'=>$user->id
+                ]);
+            }
 
             return response()->json(compact('user','token'),201);
 

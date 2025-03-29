@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('consultations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('consultant_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignId('entrepreneur_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('consultant_id')->constrained('users','id')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('entrepreneur_id')->constrained('users','id')->cascadeOnDelete()->cascadeOnUpdate();
             $table->float('consultationDelay');
             $table->dateTime('consultationDate');
             $table->timestamps();
