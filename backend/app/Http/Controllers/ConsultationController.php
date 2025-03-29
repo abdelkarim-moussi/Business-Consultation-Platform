@@ -3,18 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\Consultation;
+use App\Services\ConsultationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ConsultationController extends Controller
 {
+    private $consultationService;
     
+    public function __construct(ConsultationService $consultationService)
+    {
+        $this->consultationService = $consultationService;
+    }
 
     public function index(){
 
-        $consultations = Consultation::all();
+        $consultations = $this->consultationService->getAllConsultations();
 
         return response()->json(compact('consultations'));
+
     }
 
     public function show(Consultation $consulation){

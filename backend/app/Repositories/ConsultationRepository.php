@@ -1,5 +1,7 @@
 <?php
 namespace App\Repositories;
+
+use App\Models\Consultation;
 use App\Repositories\Interfaces\ConsultationRepositoryInterface;
 
 class ConsultationRepository implements ConsultationRepositoryInterface
@@ -7,7 +9,7 @@ class ConsultationRepository implements ConsultationRepositoryInterface
 
     public function all()
     {
-
+        return Consultation::all();
     }
 
     public function find($id)
@@ -24,7 +26,7 @@ class ConsultationRepository implements ConsultationRepositoryInterface
     {
 
     }
-    
+
     public function delete($id)
     {
 
