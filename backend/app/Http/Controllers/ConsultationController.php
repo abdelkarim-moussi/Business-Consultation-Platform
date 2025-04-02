@@ -36,7 +36,7 @@ class ConsultationController extends Controller
 
         $consulation = $this->consultationService->createConsultation($request);
 
-        return response()->json(compact('consultation'));
+        return response()->json(compact('consultation',200));
 
     }
 }

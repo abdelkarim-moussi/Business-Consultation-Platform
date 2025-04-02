@@ -28,8 +28,12 @@ class ConsultationRepository implements ConsultationRepositoryInterface
 
     public function create(object $data)
     {
-        return Consultation::create($data);
+        if(Gate::denies('create')){
+            abort(403,'you don\'t have the rights to make a consulation');
+        }
         
+        return Consultation::create($data);
+
     }
 
     public function update($id,object $data)

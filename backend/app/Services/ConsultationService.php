@@ -2,6 +2,7 @@
 namespace App\Services;
 
 use App\Repositories\ConsultationRepository;
+use Illuminate\Support\Facades\Gate;
 
 class ConsultationService
 {
@@ -26,14 +27,15 @@ class ConsultationService
 
         $validated = $data->validate(
             [
-                'Date'=>'required|datetime',
-                'dalay'=>'required|float|min:30',
-                'entrepreneur_id'=>'required',
-                'consultant_id'=>'required'
+                'date'=>'required|date_format:"Y-m-d H:i"',
+                'delay'=>'required',
+                'entrepreneur_id'=>'required|exists:entrepreneurs,id',
+                'consultant_id'=>'required|exists:consultants,id'
             ]
             );
-
-        return $this->consultationRepository->create($data);
         
+           
+        return $this->consultationRepository->create($data);
+
     }
 }
