@@ -30,7 +30,7 @@ class ConsultationPolicy
      */
     public function create(User $user): bool
     {
-        return $user->accountType === "entrepreneur" ;
+        return $user->accountType === "entrepreneur";
     }
 
     /**

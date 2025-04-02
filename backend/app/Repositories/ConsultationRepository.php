@@ -26,12 +26,12 @@ class ConsultationRepository implements ConsultationRepositoryInterface
         return Consultation::find($id);
     }
 
-    public function create(object $data)
+    public function create($data)
     {
-        if(Gate::denies('create')){
+        if(Gate::denies('create',Consultation::class)){
             abort(403,'you don\'t have the rights to make a consulation');
         }
-        
+
         return Consultation::create($data);
 
     }

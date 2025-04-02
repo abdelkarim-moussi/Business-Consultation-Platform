@@ -35,7 +35,7 @@ class ConsultationService
             );
         
            
-        return $this->consultationRepository->create($data);
+        return $this->consultationRepository->create($validated);
 
     }
 }
