@@ -34,7 +34,7 @@ class ConsultationController extends Controller
 
     public function store(Request $request){
 
-        $consulation = $this->consultationService->createConsultation($request);
+        $consultation = $this->consultationService->createConsultation($request);
 
         return response()->json(compact('consultation',200));
 

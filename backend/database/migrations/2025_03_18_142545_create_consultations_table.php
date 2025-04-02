@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('consultant_id')->constrained('users','id')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('entrepreneur_id')->constrained('users','id')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->float('consultationDelay');
-            $table->dateTime('consultationDate');
+            $table->float('delay');
+            $table->dateTime('date');
             $table->timestamps();
         });
     }
