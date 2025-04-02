@@ -28,7 +28,8 @@ class ConsultationRepository implements ConsultationRepositoryInterface
 
     public function create(object $data)
     {
-
+        return Consultation::create($data);
+        
     }
 
     public function update($id,object $data)

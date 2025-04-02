@@ -21,4 +21,19 @@ class ConsultationService
     {
         return $this->consultationRepository->find($id);
     }
+
+    public function createConsultation($data){
+
+        $validated = $data->validate(
+            [
+                'Date'=>'required|datetime',
+                'dalay'=>'required|float|min:30',
+                'entrepreneur_id'=>'required',
+                'consultant_id'=>'required'
+            ]
+            );
+
+        return $this->consultationRepository->create($data);
+        
+    }
 }

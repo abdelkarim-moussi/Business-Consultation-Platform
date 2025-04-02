@@ -11,10 +11,12 @@ Route::get('/user', function (Request $request) {
 
 Route::post('register',[JWTAuthController::class,'register']);
 Route::post('login',[JWTAuthController::class,'login']);
+
 Route::middleware(['jwtauth'])->group(function(){
     Route::get('user',[JWTAuthController::class,'getUser']);
     Route::post('logout',[JWTAuthController::class,'logout']);
+    
+    Route::apiResource('consultations',ConsultationController::class);
 });
 
-Route::apiResource('consultations',ConsultationController::class);
 

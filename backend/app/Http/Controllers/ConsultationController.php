@@ -34,16 +34,7 @@ class ConsultationController extends Controller
 
     public function store(Request $request){
 
-        $validate = $request->validate(
-            [
-                'Date'=>'required|datetime',
-                'dalay'=>'required|float|min:30',
-                'entrepreneur_id'=>'required',
-                'consultant_id'=>'required'
-            ]
-            );
-
-        $consulation = Consultation::create($validate);
+        $consulation = $this->consultationService->createConsultation($request);
 
         return response()->json(compact('consultation'));
 
