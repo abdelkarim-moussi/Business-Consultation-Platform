@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Consultant;
 use App\Models\Entrepreneur;
 use App\Models\User;
-use Doctrine\Common\Lexer\Token;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -17,6 +17,7 @@ class JWTAuthController extends Controller
     
     public function register(Request $request){
 
+    
         $validated = $request->validate(
             [
                 'firstName'=>'required|string|max:255',
@@ -26,6 +27,12 @@ class JWTAuthController extends Controller
                 'password'=>'required|confirmed'
             ]
             );
+
+            try{
+
+            DB::beginTransaction();
+
+            $validated['password'] = bcrypt($validated['password']);
 
             $user = User::create($validated);
 
@@ -44,7 +51,21 @@ class JWTAuthController extends Controller
                 ]);
             }
 
+            DB::commit();
+
             return response()->json(compact('user','token'),201);
+
+            }catch(\Exception $e){
+    
+                DB::rollBack();
+                report($e);
+
+                return response()->json([
+                    'message' => 'Registration failed. Please try again.',
+                    'error'   => $e->getMessage()
+                ], 500);
+                
+            }
 
     }
 

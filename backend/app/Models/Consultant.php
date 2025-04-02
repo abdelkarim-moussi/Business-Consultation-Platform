@@ -8,7 +8,7 @@ class Consultant extends Model
 {
     
     protected $fillable = [
-        'used_id',
+        'user_id',
         'experience',
         'domainExpertise'
     ];

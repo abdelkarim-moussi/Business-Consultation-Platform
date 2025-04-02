@@ -24,10 +24,11 @@ class ConsultationController extends Controller
 
     }
 
-    public function show(Consultation $consulation){
 
-        $consulation = DB::table('consulations')->where('id',$consulation->id)->first();
+    public function show($id){
 
+        $consulation = $this->consultationService->getConsultationById($id);
+        
         return response()->json(compact('consultation'));
     }
 

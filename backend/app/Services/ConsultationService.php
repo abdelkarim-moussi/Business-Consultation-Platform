@@ -11,8 +11,14 @@ class ConsultationService
     {
         $this->consultationRepository = $consultationRepository;
     }
+
     public function getAllConsultations()
     {
         return $this->consultationRepository->all();
+    }
+
+    public function getConsultationById($id)
+    {
+        return $this->consultationRepository->find($id);
     }
 }
