@@ -32,6 +32,15 @@ class ConsultationRepository implements ConsultationRepositoryInterface
             abort(403,'you don\'t have the rights to make a consulation');
         }
 
+        $consultation = Consultation::find($data['entrepreneur_id']);
+
+        if($consultation && $consultation->consultant_id = $data['consultant_id']){
+            return response()->json(
+                [
+                    'message'=>'already have consultation with this consultant'
+                ]
+                );
+        }
         return Consultation::create($data);
 
     }
