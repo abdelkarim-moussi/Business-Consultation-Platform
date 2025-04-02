@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('entrepreneur_id')->constrained('users','id')->cascadeOnDelete()->cascadeOnUpdate();
             $table->float('delay');
             $table->dateTime('date');
-            $table->enum('status',['pending','accepted','refused','in_progress','done']);
+            $table->enum('status',['pending','accepted','refused','in_progress','done'])->default('pending');
             $table->timestamps();
         });
     }

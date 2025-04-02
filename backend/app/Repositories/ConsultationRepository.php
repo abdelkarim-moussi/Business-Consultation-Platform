@@ -34,13 +34,15 @@ class ConsultationRepository implements ConsultationRepositoryInterface
 
         $consultation = Consultation::find($data['entrepreneur_id']);
 
-        if($consultation && $consultation->consultant_id = $data['consultant_id']){
-            return response()->json(
-                [
-                    'message'=>'already have consultation with this consultant'
-                ]
-                );
+        if($consultation->date <= now()){
+
+            abort(403,'choose a valide date and time');
+
+            if($consultation && $consultation->date != $data['date']){
+                abort(403,'already have consultation with this consultant at the same time');
+            }
         }
+        
         return Consultation::create($data);
 
     }

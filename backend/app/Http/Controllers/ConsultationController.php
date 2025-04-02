@@ -38,6 +38,7 @@ class ConsultationController extends Controller
 
         return response()->json(
             [
+                'message'=>'consultation created succefully',
                 'consultation'=>$consultation
             ],200);
 
