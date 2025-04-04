@@ -45,6 +45,11 @@ class ConsultationPolicy
     {
         return $user->id === $consultation->entrepreneur_id;
     }
+
+    public function accept(User $user,Consultation $consultation):bool
+    {
+        return $user->id === $consultation->consultant_id;
+    }
     /**
      * Determine whether the user can delete the model.
      */
