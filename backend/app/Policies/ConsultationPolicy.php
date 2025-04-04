@@ -41,6 +41,10 @@ class ConsultationPolicy
         return $user->id === $consultation->entrepreneur_id;
     }
 
+    public function cancel(User $user,Consultation $consultation):bool
+    {
+        return $user->id === $consultation->entrepreneur_id;
+    }
     /**
      * Determine whether the user can delete the model.
      */
