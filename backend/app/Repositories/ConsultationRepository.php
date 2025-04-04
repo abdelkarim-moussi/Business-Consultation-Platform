@@ -73,7 +73,13 @@ class ConsultationRepository implements ConsultationRepositoryInterface
     {
         $consultation = Consultation::find($id);
 
-        if($consultation->status != 'pending'){
+        if(Gate::denies('cancel',$consultation))
+        {
+            abort(403,'you don\'t have access to cancel this consulation');
+        }
+        
+        if($consultation->status != 'pending')
+        {
             abort(403,'you can not cancel this consultation because it\'s has been'.$consultation->status);
         }
 

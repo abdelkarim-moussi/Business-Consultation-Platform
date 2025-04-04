@@ -17,6 +17,7 @@ Route::middleware(['jwtauth'])->group(function(){
     Route::post('logout',[JWTAuthController::class,'logout']);
     
     Route::apiResource('consultations',ConsultationController::class);
+    Route::post('consultations/{id}/cancel',[ConsultationController::class,'cancel']);
 });
 
 
