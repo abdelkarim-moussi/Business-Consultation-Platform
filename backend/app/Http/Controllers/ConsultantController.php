@@ -18,7 +18,8 @@ class ConsultantController extends Controller
     
     public function index()
     {
-        $consultants = DB::table('users')->join('consultants','users.id','consultants.user_id')->get();
+
+        $consultants = $this->consultantService->getAllConsultants();
 
         return response()->json(
             [
