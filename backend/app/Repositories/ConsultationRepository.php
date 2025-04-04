@@ -98,7 +98,7 @@ class ConsultationRepository implements ConsultationRepositoryInterface
     {
         $consultation = Consultation::find($id);
 
-        if(Gate::denies('accept',$consultation))
+        if(Gate::denies('acceptRefuse',$consultation))
         {
             abort(403,'you don\'t have permission for this action');
         }
@@ -124,7 +124,7 @@ class ConsultationRepository implements ConsultationRepositoryInterface
 
         $consultation = Consultation::find($id);
 
-        if(Gate::denies('refuse',$consultation))
+        if(Gate::denies('acceptRefuse',$consultation))
         {
             abort(403,'you don\'t have permission for this action');
         }
