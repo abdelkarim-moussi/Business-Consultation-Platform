@@ -1,8 +1,10 @@
 <?php
 namespace App\Repositories;
 
+use App\Models\Consultant;
 use App\Models\Consultation;
 use App\Repositories\Interfaces\ConsultationRepositoryInterface;
+use Illuminate\Console\Application;
 use Illuminate\Support\Facades\Gate;
 
 class ConsultationRepository implements ConsultationRepositoryInterface
@@ -50,7 +52,14 @@ class ConsultationRepository implements ConsultationRepositoryInterface
 
     public function update($id,object $data)
     {
-        
+        $consultation = Consultation::find($id);
+
+        if(Gate::denies('update',$consultation)){
+            abort(403,'you can not update this consultation');
+        }
+
+       return $consultation->update($data);
+
     }
 
     public function delete($id)

@@ -47,6 +47,12 @@ class ConsultationController extends Controller
     public function update($id,Request $request){
         
        $consultation = $this->consultationService->updateConsultation($id,$request);
+       return response()->json(
+        [
+            'message'=>'consultation updated succefully'
+        ]
+        );
+        
     }
     
 }

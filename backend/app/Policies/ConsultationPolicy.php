@@ -38,7 +38,7 @@ class ConsultationPolicy
      */
     public function update(User $user, Consultation $consultation): bool
     {
-        return false;
+        return $user->id === $consultation->entrepreneur_id;
     }
 
     /**
