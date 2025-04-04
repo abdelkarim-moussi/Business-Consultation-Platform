@@ -8,6 +8,8 @@ use Carbon\Carbon;
 use Illuminate\Console\Application;
 use Illuminate\Support\Facades\Gate;
 
+use function PHPUnit\Framework\returnCallback;
+
 class ConsultationRepository implements ConsultationRepositoryInterface
 {
 
@@ -64,6 +66,26 @@ class ConsultationRepository implements ConsultationRepositoryInterface
         }
         
        return $consultation->update($data);
+
+    }
+
+    public function cancel($id)
+    {
+        $consultation = Consultation::find($id);
+
+        if($consultation->status != 'pending'){
+            abort(403,'you can not cancel this consultation because it\'s has been'.$consultation->status);
+        }
+
+        $consultation->update([
+            'status'=>'cancel'
+        ]);
+
+        return response()->json(
+            [
+                'message'=>'your consultation has been updated'
+            ]
+            );
 
     }
 

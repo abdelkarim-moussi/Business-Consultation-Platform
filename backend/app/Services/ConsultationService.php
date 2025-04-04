@@ -50,4 +50,9 @@ class ConsultationService
 
         return $this->consultationRepository->update($id,$validated);
     }
+
+    public function cancelConsult($id)
+    {
+        return $this->consultationRepository->cancel($id);
+    }
 }

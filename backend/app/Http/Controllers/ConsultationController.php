@@ -49,10 +49,15 @@ class ConsultationController extends Controller
        $consultation = $this->consultationService->updateConsultation($id,$request);
        return response()->json(
         [
-            'message'=>'consultation updated succefully'
+            'message'=>'consultation updated succefully',
+            'consultation'=>$consultation
         ]
         );
-        
+
     }
     
+    public function cancelConsulation($id){
+
+       return $this->consultationService->cancelConsult($id);
+    }
 }
