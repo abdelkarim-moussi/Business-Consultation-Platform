@@ -43,5 +43,10 @@ class ConsultationController extends Controller
             ],200);
 
     }
+
+    public function update($id,Request $request){
+        
+       $consultation = $this->consultationService->updateConsultation($id,$request);
+    }
     
 }

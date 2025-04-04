@@ -38,4 +38,16 @@ class ConsultationService
         return $this->consultationRepository->create($validated);
 
     }
+
+    public function updateConsultation($id,$data)
+    {
+        $validated = $data->validate(
+            [
+                'date'=>'required|date_format:"Y-m-d H:i"',
+                'delay'=>'required'
+            ]
+        );
+
+        return $this->consultationRepository->update($id,$data);
+    }
 }

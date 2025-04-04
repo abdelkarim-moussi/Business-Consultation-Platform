@@ -29,19 +29,20 @@ class ConsultationRepository implements ConsultationRepositoryInterface
     public function create($data)
     {
         if(Gate::denies('create',Consultation::class)){
-            abort(403,'you don\'t have the rights to make a consulation');
+            abort(403,'you don\'t have the rights to make a consultation');
         }
 
         $consultation = Consultation::find($data['entrepreneur_id']);
 
-        if($consultation->date <= now()){
+            if($data['date'] <= now()){
 
-            abort(403,'choose a valide date and time');
-
-            if($consultation && $consultation->date != $data['date']){
-                abort(403,'already have consultation with this consultant at the same time');
-            }
+                abort(403,'choose a valide date and time');
+    
+                if($consultation && $consultation->date != $data['date']){
+                    abort(403,'already have consultation with this consultant at the same time');
+                }
         }
+        
         
         return Consultation::create($data);
 
@@ -49,7 +50,7 @@ class ConsultationRepository implements ConsultationRepositoryInterface
 
     public function update($id,object $data)
     {
-
+        
     }
 
     public function delete($id)
