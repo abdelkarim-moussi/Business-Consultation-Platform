@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ConsultantController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\JWTAuthController;
 use Illuminate\Http\Request;
@@ -11,6 +12,8 @@ Route::get('/user', function (Request $request) {
 
 Route::post('register',[JWTAuthController::class,'register']);
 Route::post('login',[JWTAuthController::class,'login']);
+
+Route::get('consultants',[ConsultantController::class,'index']);
 
 Route::middleware(['jwtauth'])->group(function(){
     Route::get('user',[JWTAuthController::class,'getUser']);

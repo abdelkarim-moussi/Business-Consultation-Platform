@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Consultation;
 use App\Services\ConsultationService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class ConsultationController extends Controller
 {
