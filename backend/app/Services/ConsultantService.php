@@ -16,4 +16,9 @@ class ConsultantService
     {
         return $this->consultantRepository->getAll();
     }
+
+    public function findConsultantById($id)
+    {
+        return $this->consultantRepository->findById($id);
+    }
 }

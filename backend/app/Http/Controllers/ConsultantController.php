@@ -28,7 +28,7 @@ class ConsultantController extends Controller
                 ]
                 );
         }
-        
+
         return response()->json(
             [
                 'consultants'=>$consultants
@@ -37,6 +37,6 @@ class ConsultantController extends Controller
     }
 
     public function view($id){
-
+        $consultant = $this->consultantService->findConsultantById($id);
     }
 }
