@@ -64,9 +64,10 @@ class ConsultationController extends Controller
 
        return $this->consultationService->acceptConsultation($id);
     }
-    public function refuse($id){
 
-       return $this->consultationService->refuseConsultation($id);
-    }
+    // public function refuse($id){
+
+    //    return $this->consultationService->refuseConsultation($id);
+    // }
 
 }

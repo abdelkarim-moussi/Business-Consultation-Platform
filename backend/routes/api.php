@@ -18,6 +18,8 @@ Route::middleware(['jwtauth'])->group(function(){
     
     Route::apiResource('consultations',ConsultationController::class);
     Route::post('consultations/{id}/cancel',[ConsultationController::class,'cancel']);
+    Route::post('consultations/{id}/accept',[ConsultationController::class,'accept']);
+
 });
 
 

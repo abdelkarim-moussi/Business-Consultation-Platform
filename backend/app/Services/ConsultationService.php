@@ -29,8 +29,8 @@ class ConsultationService
             [
                 'date'=>'required|date_format:"Y-m-d H:i"',
                 'delay'=>'required',
-                'entrepreneur_id'=>'required|exists:entrepreneurs,id',
-                'consultant_id'=>'required|exists:consultants,id'
+                'entrepreneur_id'=>'required|exists:entrepreneurs,user_id',
+                'consultant_id'=>'required|exists:consultants,user_id'
             ]
             );
         

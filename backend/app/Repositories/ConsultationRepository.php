@@ -103,10 +103,10 @@ class ConsultationRepository implements ConsultationRepositoryInterface
             abort(403,'you don\'t have permission for this action');
         }
 
-        if($consultation->status != 'pending')
-        {
-            abort(403,'you can not accept this consultation because it\'s has been '.$consultation->status);
-        }
+        // if($consultation->status != 'pending')
+        // {
+        //     abort(403,'you can not accept this consultation because it\'s has been '.$consultation->status);
+        // }
 
         $consultation->status = 'accepted';
         $consultation->save();
@@ -116,6 +116,11 @@ class ConsultationRepository implements ConsultationRepositoryInterface
                 'message'=>'consultation has been accepted succefully'
             ]
             );
+
+    }
+
+    public function refuse($id)
+    {
 
     }
 
