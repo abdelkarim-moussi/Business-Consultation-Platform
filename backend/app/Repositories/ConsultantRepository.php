@@ -1,14 +1,15 @@
 <?php
 namespace App\Repositories\ConsultantRepository;
 
+use App\Repositories\ConsultantRepositoryInterface\ConsultantRepositoryInterface;
 use Illuminate\Support\Facades\DB;
 
-class ConsultantRepository
+class ConsultantRepository implements ConsultantRepositoryInterface
 {
 
     public function getAll(){
 
-    $consultants = DB::table('users')->join('consultants','users.id','consultants.user_id')->get();
+    return  DB::table('users')->join('consultants','users.id','consultants.user_id')->get();
 
     }
 }

@@ -21,6 +21,14 @@ class ConsultantController extends Controller
 
         $consultants = $this->consultantService->getAllConsultants();
 
+        if(! $consultants){
+            return response()->json(
+                [
+                    'message'=>'there is no consultants now'
+                ]
+                );
+        }
+        
         return response()->json(
             [
                 'consultants'=>$consultants
