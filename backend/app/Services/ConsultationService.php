@@ -51,8 +51,13 @@ class ConsultationService
         return $this->consultationRepository->update($id,$validated);
     }
 
-    public function cancelConsult($id)
+    public function cancelConsultation($id)
     {
         return $this->consultationRepository->cancel($id);
+    }
+
+    public function acceptConsultation($id)
+    {
+        return $this->consultationRepository->accept($id);
     }
 }

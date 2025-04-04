@@ -75,21 +75,45 @@ class ConsultationRepository implements ConsultationRepositoryInterface
 
         if(Gate::denies('cancel',$consultation))
         {
-            abort(403,'you don\'t have access to cancel this consulation');
-        }
-        
-        if($consultation->status != 'pending')
-        {
-            abort(403,'you can not cancel this consultation because it\'s has been'.$consultation->status);
+            abort(403,'you don\'t have permission for this action');
         }
 
-        $consultation->update([
-            'status'=>'cancel'
-        ]);
+        if($consultation->status != 'pending' || $consultation->status === 'cancel')
+        {
+            abort(403,'you can not cancel this consultation because it\'s has been '.$consultation->status);
+        }
+
+        $consultation->status = 'cancel';
+        $consultation->save();
 
         return response()->json(
             [
-                'message'=>'your consultation has been updated'
+                'message'=>'your consultation has been canceled succefully'
+            ]
+            );
+
+    }
+
+    public function accept($id)
+    {
+        $consultation = Consultation::find($id);
+
+        if(Gate::denies('accept',$consultation))
+        {
+            abort(403,'you don\'t have permission for this action');
+        }
+
+        if($consultation->status != 'pending')
+        {
+            abort(403,'you can not accept this consultation because it\'s has been '.$consultation->status);
+        }
+
+        $consultation->status = 'accepted';
+        $consultation->save();
+
+        return response()->json(
+            [
+                'message'=>'consultation has been accepted succefully'
             ]
             );
 
