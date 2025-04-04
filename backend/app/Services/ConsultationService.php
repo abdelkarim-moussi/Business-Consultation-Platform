@@ -60,4 +60,9 @@ class ConsultationService
     {
         return $this->consultationRepository->accept($id);
     }
+
+    public function refuseConsultation($id)
+    {
+        return $this->consultationRepository->refuse($id);
+    }
 }

@@ -50,6 +50,7 @@ class ConsultationPolicy
     {
         return $user->id === $consultation->consultant_id;
     }
+    
     /**
      * Determine whether the user can delete the model.
      */

@@ -103,10 +103,10 @@ class ConsultationRepository implements ConsultationRepositoryInterface
             abort(403,'you don\'t have permission for this action');
         }
 
-        // if($consultation->status != 'pending')
-        // {
-        //     abort(403,'you can not accept this consultation because it\'s has been '.$consultation->status);
-        // }
+        if($consultation->status != 'pending')
+        {
+            abort(403,'you can not accept this consultation because it\'s has been '.$consultation->status);
+        }
 
         $consultation->status = 'accepted';
         $consultation->save();
@@ -122,6 +122,26 @@ class ConsultationRepository implements ConsultationRepositoryInterface
     public function refuse($id)
     {
 
+        $consultation = Consultation::find($id);
+
+        if(Gate::denies('refuse',$consultation))
+        {
+            abort(403,'you don\'t have permission for this action');
+        }
+
+        if($consultation->status != 'pending')
+        {
+            abort(403,'you can not accept this consultation because it\'s has been '.$consultation->status);
+        }
+
+        $consultation->status = 'refused';
+        $consultation->save();
+
+        return response()->json(
+            [
+                'message'=>'consultation has been refused succefully'
+            ]
+            );
     }
 
     public function delete($id)
