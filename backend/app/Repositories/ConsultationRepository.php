@@ -4,6 +4,7 @@ namespace App\Repositories;
 use App\Models\Consultant;
 use App\Models\Consultation;
 use App\Repositories\Interfaces\ConsultationRepositoryInterface;
+use Carbon\Carbon;
 use Illuminate\Console\Application;
 use Illuminate\Support\Facades\Gate;
 
@@ -50,7 +51,7 @@ class ConsultationRepository implements ConsultationRepositoryInterface
 
     }
 
-    public function update($id,object $data)
+    public function update($id,$data)
     {
         $consultation = Consultation::find($id);
 
@@ -58,6 +59,10 @@ class ConsultationRepository implements ConsultationRepositoryInterface
             abort(403,'you can not update this consultation');
         }
 
+        if(Carbon::parse($data['date'])->lessThanOrEqualTo(Carbon::parse($consultation->date)->addDay()) ){
+            abort(403,'the new date must be greater then the consultation actual date');
+        }
+        
        return $consultation->update($data);
 
     }

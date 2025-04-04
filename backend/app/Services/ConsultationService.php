@@ -39,7 +39,7 @@ class ConsultationService
 
     }
 
-    public function updateConsultation($id,$data)
+    public function updateConsultation($id,object $data)
     {
         $validated = $data->validate(
             [
@@ -48,6 +48,6 @@ class ConsultationService
             ]
         );
 
-        return $this->consultationRepository->update($id,$data);
+        return $this->consultationRepository->update($id,$validated);
     }
 }
