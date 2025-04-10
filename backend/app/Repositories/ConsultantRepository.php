@@ -1,8 +1,8 @@
 <?php
-namespace App\Repositories\ConsultantRepository;
+namespace App\Repositories;
 
 use App\Models\Consultant;
-use App\Repositories\ConsultantRepositoryInterface\ConsultantRepositoryInterface;
+use App\Repositories\Interfaces\ConsultantRepositoryInterface;
 use Illuminate\Support\Facades\DB;
 
 class ConsultantRepository implements ConsultantRepositoryInterface

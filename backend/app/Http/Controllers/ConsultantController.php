@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Consultant;
-use App\Services\ConsultantService\ConsultantService;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Services\ConsultantService;
 
 class ConsultantController extends Controller
 {
@@ -36,7 +33,12 @@ class ConsultantController extends Controller
             );
     }
 
-    public function view($id){
+    public function show($id){
         $consultant = $this->consultantService->findConsultantById($id);
+        return response()->json(
+            [
+                'consultant'=>$consultant
+            ],200
+        );
     }
 }

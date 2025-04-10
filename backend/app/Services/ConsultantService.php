@@ -1,7 +1,7 @@
 <?php
-namespace App\Services\ConsultantService;
+namespace App\Services;
 
-use App\Repositories\ConsultantRepository\ConsultantRepository;
+use App\Repositories\ConsultantRepository;
 
 class ConsultantService
 {

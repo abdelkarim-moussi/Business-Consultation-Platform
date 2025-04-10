@@ -1,5 +1,5 @@
 <?php
-namespace App\Repositories\ConsultantRepositoryInterface;
+namespace App\Repositories\Interfaces;
 
 interface ConsultantRepositoryInterface
 {

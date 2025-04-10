@@ -13,7 +13,7 @@ Route::get('/user', function (Request $request) {
 Route::post('register',[JWTAuthController::class,'register']);
 Route::post('login',[JWTAuthController::class,'login']);
 
-Route::get('consultants',[ConsultantController::class,'index']);
+Route::apiResource('consultants',ConsultantController::class);
 
 Route::middleware(['jwtauth'])->group(function(){
     Route::get('user',[JWTAuthController::class,'getUser']);
