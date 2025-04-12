@@ -32,7 +32,7 @@ export default function NavBar() {
           <li>
             <Link
               to="/login"
-              className="px-3 py-0.5 bg-[#D9E0A4] rounded-md text-black text-center transition hover:bg-[#ABB17B] hover:text-white"
+              className="px-[25px] py-[5px] text-sm bg-[#D9E0A4] rounded-md text-black text-center transition hover:bg-[#ABB17B] hover:text-white"
             >
               login
             </Link>

@@ -23,7 +23,7 @@ const Home = () => {
               to="/register"
               className="bg-[#19485F] border-2 border-[#19485F] px-8 py-1 text-white capitalize transition hover:bg-[#D9E0A4] hover:border-[#D9E0A4] hover:text-[#19485F] rounded-md"
             >
-              login
+              register
             </Link>
           </div>
         </div>
