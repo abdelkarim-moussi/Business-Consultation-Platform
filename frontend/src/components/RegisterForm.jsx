@@ -1,5 +1,4 @@
 import { useState } from "react";
-import PrimaryButton from "./PrimaryButton";
 import { Link } from "react-router-dom";
 
 const RegisterForm = () => {
