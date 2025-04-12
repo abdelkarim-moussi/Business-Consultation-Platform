@@ -1,11 +1,24 @@
-import React from 'react'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import NavBar from "./components/NavBar";
+import JobListings from "./pages/JobListings";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
 
 const App = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
 
-export default App
+  return (
+    <>
+      <BrowserRouter>
+        <NavBar />
+        <Routes>
+          <Route path="home" element={<Home />}></Route>
+          <Route path="conusltants" element={<Consultant />}></Route>
+          <Route path="blog" element={<Blog />}></Route>
+          <Route path="login" element={<Login />}></Route>
+        </Routes>
+      </BrowserRouter>
+    </>
+  );
+};
+
+export default App;
