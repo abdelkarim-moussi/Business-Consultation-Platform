@@ -11,11 +11,6 @@ export default function Input({
   divClasses,
 }) {
   return (
-    <div className={`flex gap-2 ${divClasses}`}>
-      <label className="text-sm lowercase" htmlFor={name}>
-        {label}
-      </label>
-
       <input
         className={`w-full border border-black h-[35px] rounded-lg px-3 text-sm ${inputClasses}`}
         id={id}
@@ -24,6 +19,5 @@ export default function Input({
         onChange={onChange}
         type={type}
       />
-    </div>
   );
 }

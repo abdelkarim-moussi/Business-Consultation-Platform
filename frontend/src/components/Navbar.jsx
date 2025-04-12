@@ -29,11 +29,6 @@ export default function NavBar() {
               blog
             </Link>
           </li>
-          <li className=" text-sm capitalize">
-            <Link to="/login" className="transition hover:text-[#D9E0A4]">
-              login
-            </Link>
-          </li>
           <li>
             <Link
               to="/login"
