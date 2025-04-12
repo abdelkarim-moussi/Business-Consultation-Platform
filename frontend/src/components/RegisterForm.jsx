@@ -13,9 +13,32 @@ const RegisterForm = () => {
   const [accountType, setAccountType] = useState("");
   const [password, setPassword] = useState("");
   const [password_confirmation, setPassword_confirmation] = useState("");
+  const [errors, setErrors] = useState({});
+
+  const validateEmail = (email) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const handleRegister = async (e) => {
     e.preventDefault();
+
+    const newErrors = {};
+    if (!firstName.trim()) newErrors.firstName = "First name is required";
+    if (!lastName.trim()) newErrors.lastName = "Last name is required";
+    if (!email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!validateEmail(email)) {
+      newErrors.email = "Invalid email format";
+    }
+    if (!password) newErrors.password = "Password is required";
+    if (!password_confirmation) newErrors.password_confirmation = "Password confirmation is required";
+    if (password !== password_confirmation)
+      newErrors.passwordMatch = "Passwords do not match";
+    if (!accountType) newErrors.accountType = "Account type is required";
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
 
     try {
       const response = await axios.post("http://127.0.0.1:8000/api/register", {
@@ -47,6 +70,7 @@ const RegisterForm = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
+          {errors.email && <p className="text-red-500 text-xs">{errors.email}</p>}
         </div>
 
         <div className="flex items-center gap-4">
@@ -59,6 +83,7 @@ const RegisterForm = () => {
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
             />
+            {errors.firstName && <p className="text-red-500 text-xs">{errors.firstName}</p>}
           </div>
           <div className="flex flex-col gap-2">
             <Label label="last name" forInput="last-name" />
@@ -69,6 +94,7 @@ const RegisterForm = () => {
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
             />
+            {errors.lastName && <p className="text-red-500 text-xs">{errors.lastName}</p>}
           </div>
         </div>
 
@@ -76,19 +102,16 @@ const RegisterForm = () => {
           <div className="flex flex-col gap-2">
             <Label label="password" forInput="password" />
             <Input
-              label="Password"
               name="password"
               id="password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            {errors.password && <p className="text-red-500 text-xs">{errors.password}</p>}
           </div>
           <div className="flex flex-col gap-2">
-            <Label
-              label="password confirmation"
-              forInput="password-confirmation"
-            />
+            <Label label="password confirmation" forInput="password-confirmation" />
             <Input
               name="password-confirmation"
               id="password-confirmation"
@@ -96,6 +119,12 @@ const RegisterForm = () => {
               value={password_confirmation}
               onChange={(e) => setPassword_confirmation(e.target.value)}
             />
+            {errors.password_confirmation && (
+              <p className="text-red-500 text-xs">{errors.password_confirmation}</p>
+            )}
+            {errors.passwordMatch && (
+              <p className="text-red-500 text-xs">{errors.passwordMatch}</p>
+            )}
           </div>
         </div>
 
@@ -135,6 +164,7 @@ const RegisterForm = () => {
               <Label label="entrepreneur" forInput="entrepreneur" />
             </div>
           </div>
+          {errors.accountType && <p className="text-red-500 text-xs">{errors.accountType}</p>}
         </div>
 
         <Button type="submit" text="sign up" />
