@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Input(
+export default function Input({
   label,
   id,
   name,
@@ -8,8 +8,8 @@ export default function Input(
   onChange,
   type,
   inputClasses,
-  divClasses
-) {
+  divClasses,
+}) {
   return (
     <div className={`flex gap-2 ${divClasses}`}>
       <label className="text-sm lowercase" htmlFor={name}>
@@ -17,14 +17,13 @@ export default function Input(
       </label>
 
       <input
-        className={`w-full border border-black h-[35px] rounded-lg ${inputClasses}`}
+        className={`w-full border border-black h-[35px] rounded-lg px-3 text-sm ${inputClasses}`}
         id={id}
         name={name}
         value={value}
         onChange={onChange}
         type={type}
       />
-      
     </div>
   );
 }

@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Blog from "./pages/Blog";
 import Home from "./pages/Home";
 import Consultants from "./pages/Consultants";
+import Register from "./pages/Register";
 
 export default function App (){
 
@@ -13,9 +14,10 @@ export default function App (){
         <NavBar />
         <Routes>
           <Route path="/" element={<Home/>}></Route>
-          <Route path="consultants" element={<Consultants/>}></Route>
-          <Route path="blog" element={<Blog />}></Route>
-          <Route path="login" element={<Login />}></Route>
+          <Route path="/consultants" element={<Consultants/>}></Route>
+          <Route path="/blog" element={<Blog />}></Route>
+          <Route path="/login" element={<Login/>}></Route>
+          <Route path="/register" element={<Register/>}></Route>
         </Routes>
       </BrowserRouter>
     </>
