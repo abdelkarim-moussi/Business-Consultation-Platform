@@ -24,6 +24,7 @@ export default function Input(
         onChange={onChange}
         type={type}
       />
+      
     </div>
   );
 }
