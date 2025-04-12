@@ -2,7 +2,7 @@ import LoginForm from '../components/LoginForm'
 
 const Login = ()=>{
   return (
-    <div className="flex justify-center my-20">
+    <div className="flex justify-center">
       <LoginForm />
     </div>
   )

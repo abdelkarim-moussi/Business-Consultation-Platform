@@ -44,7 +44,7 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center w-full max-w-[400px] my-5">
+    <div className="flex flex-col justify-center items-center w-full max-w-[400px] my-40">
       <h3 className="text-md font-semibold uppercase">Log in</h3>
 
       <form onSubmit={handleLogin} className="w-full flex flex-col gap-4">

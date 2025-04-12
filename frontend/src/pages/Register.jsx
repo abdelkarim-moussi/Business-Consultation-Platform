@@ -4,7 +4,7 @@ import RegisterForm from '../components/RegisterForm'
 export default function Register(){
   return (
     <div>
-      <div className="flex justify-center my-20">
+      <div className="flex justify-center">
       <RegisterForm />
     </div>
     </div>

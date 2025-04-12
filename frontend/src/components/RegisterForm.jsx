@@ -58,7 +58,7 @@ const RegisterForm = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center w-full max-w-[400px] my-5">
+    <div className="flex flex-col justify-center items-center w-full max-w-[400px] my-40">
       <h3 className="text-md font-semibold uppercase">Sign up</h3>
       <form className="w-full flex flex-col gap-4" onSubmit={handleRegister}>
         <div className="flex flex-col gap-2">
