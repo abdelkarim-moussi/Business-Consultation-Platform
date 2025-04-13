@@ -12,8 +12,8 @@ const Pagination = ({ currentPage, dataPerPage, totalData, handlePagination }) =
       {pageNumbers.map((pageNumber) => (
         <button
           key={pageNumber}
-          className={`px-4 py-2 mx-1 rounded-md transition hover:bg-gray-200 ${
-            currentPage === pageNumber ? "bg-gray-200" : "bg-white"
+          className={`px-3 py-1 mx-1 rounded-full transition ${
+            currentPage === pageNumber ? "bg-[#19485F] text-white" : "bg-white"
           }`}
           onClick={() => handlePagination(pageNumber)}
         >

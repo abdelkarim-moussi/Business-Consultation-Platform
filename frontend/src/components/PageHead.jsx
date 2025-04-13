@@ -6,7 +6,7 @@ const PageHead = ({ title, image }) => {
           {title}
         </h2>
         <img
-          className="max-h-[200px] object-fit w-[400px] min-w-[200px] mt-10 md:mt-40"
+          className="max-h-[300px] object-fit w-[400px] min-w-[200px] mt-10 md:mt-40"
           src={image}
           alt="header image"
         />

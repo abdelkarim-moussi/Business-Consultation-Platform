@@ -68,7 +68,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="w-[70%] h-[1px] bg-gray-300 mx-auto"></div>
-      <p className="text-white text-xs text-center my-2">copyright reserved for BusConsult</p>
+      <p className="text-gray-300 text-xs text-center my-2">copyright reserved for BusConsult</p>
     </section>
   );
 }
