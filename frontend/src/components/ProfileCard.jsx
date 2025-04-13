@@ -1,4 +1,4 @@
-const ProfileCard = () => {
+const ProfileCard = ({name}) => {
   return (
     <div className="max-w-xs mx-auto bg-white shadow-lg rounded-xl p-4">
       
@@ -9,7 +9,7 @@ const ProfileCard = () => {
           className="w-12 h-12 rounded-full object-cover"
         />
         <div>
-          <h2 className="text-lg font-bold text-gray-800">Jean Damon</h2>
+          <h2 className="text-lg capitalize text-gray-800">{name}</h2>
           <p className="text-sm text-gray-600">Marketing expert</p>
           <p className="text-sm text-gray-500">10 years of experience</p>
         </div>

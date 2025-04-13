@@ -30,7 +30,7 @@ class ConsultantController extends Controller
             [
                 'consultants'=>$consultants
             ]
-            );
+            ,200);
     }
 
     public function show($id){
