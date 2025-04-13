@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import OnlineConsultation from "../assets/images/dialogue.png";
 import Blogs from "../assets/images/blogging.png";
 import Ressource from "../assets/images/resource.png";
@@ -54,16 +55,29 @@ export const ServicesSection = () => {
           classes="text-center mb-5"
         />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 items-center gap-4 justify-around my-5">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 items-center gap-4 justify-around my-5"
+        >
           {consultantServices.map((service) => {
             return (
-              <div key={service.title} className="flex flex-col items-center gap-4">
+              <motion.div
+                key={service.title}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                viewport={{ once: true }}
+                className="flex flex-col items-center gap-4"
+              >
                 <img src={service.image} alt="" className="w-[80px] h-[80px] border-2 p-2 rounded-full object-cover" />
                 <h3 className="text-center">{service.title}</h3>
-              </div>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
 
       <div className="mt-10">
@@ -71,16 +85,29 @@ export const ServicesSection = () => {
           text="For Consultants / Experts"
           classes="text-center mb-5"
         />
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 justify-around gap-4 my-5">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 justify-around gap-4 my-5"
+        >
           {EntrepreneurServices.map((service) => {
             return (
-              <div key={service.title} className="flex flex-col items-center gap-4">
+              <motion.div
+                key={service.title}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                viewport={{ once: true }}
+                className="flex flex-col items-center gap-4"
+              >
                 <img src={service.image} alt="" className="w-[80px] h-[80px] border-2 p-2 rounded-full object-cover" />
                 <h3 className="text-center">{service.title}</h3>
-              </div>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

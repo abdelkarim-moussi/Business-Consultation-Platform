@@ -3,10 +3,9 @@ import axios from "axios";
 import PageHead from "../components/PageHead";
 import HeadImage from "../assets/images/blogHead.png";
 import InputButton from "../components/InputButton";
-import ConsultantsSection from "../components/ConsultantsSection";
 import Pagination from "../components/Pagination";
 import Footer from "../components/Footer";
-import ArticleSection from "../components/ArticleSection";
+import ArticleSection from "../components/ArticlesSection";
 
 const Blog = () => {
   const [articles, setArticles] = useState([]);
@@ -22,9 +21,7 @@ const Blog = () => {
     const fetchArticles = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(
-          "http://127.0.0.1:8000/api/articles"
-        );
+        const response = await axios.get("http://127.0.0.1:8000/api/articles");
         setArticles(response.data.articles || []);
         setFilteredArticles(response.data.articles || []);
         setLoading(false);
@@ -34,7 +31,7 @@ const Blog = () => {
       }
     };
 
-    fetchConsultants();
+    fetchArticles();
   }, []);
 
   useEffect(() => {
@@ -43,9 +40,7 @@ const Blog = () => {
         .toLowerCase()
         .includes(searchTerm.toLowerCase());
       const industryMatch = industry ? article.industry === industry : true;
-      const categoryMatch = category
-        ? article.category === category
-        : true;
+      const categoryMatch = category ? article.category === category : true;
       return titleMatch && industryMatch && category;
     });
 
@@ -95,7 +90,7 @@ const Blog = () => {
             name="industry"
             id="industry"
             className="border-2 text-sm border-[#D9E0A4] px-6 py-1 capitalize transition hover:border-[#19485F] rounded-md cursor-pointer"
-            value={date}
+            value={industry}
             onChange={handleIndustryChange}
           >
             <option value="">Industry</option>
