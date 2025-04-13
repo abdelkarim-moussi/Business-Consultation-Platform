@@ -1,5 +1,5 @@
 import PlayBtn from "../assets/images/playbtn.png";
-import { SectionTitle } from "./SectionTitle";
+import SectionTitle from "./SectionTitle";
 const AboutSection = () => {
   return (
     <div className="w-full flex-col gap-5 flex items-center justify-center py-10 h-[300px] text-center text-white bg-[#19485F] ">
