@@ -6,7 +6,7 @@ export default function NavBar() {
 
   return (
     <>
-      <nav className="flex justify-between bg-[#19485F] py-5 px-3 lg:px-10 rounded-2xl shadow-lg w-[100vw] max-w-[1000px] ml-[50%] translate-x-[-50%] mt-2 fixed">
+      <nav className="flex justify-between bg-[#19485F] py-5 px-3 lg:px-10 rounded-2xl shadow-lg w-[90vw] max-w-[1000px] ml-[50%] translate-x-[-50%] mt-2 fixed">
         <Link
           to="/"
           className="text-white font-bold tracking-wider text-lg uppercase"

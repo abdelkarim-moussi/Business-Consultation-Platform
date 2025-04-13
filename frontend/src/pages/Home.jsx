@@ -10,11 +10,12 @@ const Home = () => {
     <>
       <div className="hero-section grid grid-cols-2 h-[100vh]">
         <div></div>
-        <div className="col-span-1 mt-40">
-          <h1 className="text-[5rem] leading-[4rem] mb-10">
+        <div className="col-span-2 md:col-span-1 mt-40">
+          <h4 className="text-md text-white text-center md:text-left">Welcome To BusConsult</h4>
+          <h1 className="text-[4rem] font-semibold text-center md:text-left md:text-[5rem] leading-[4rem] mb-10">
             take your business to the next level
           </h1>
-          <div className="flex gap-5">
+          <div className="flex gap-5 justify-center md:justify-start">
             <Link
               to="/login"
               className="border-2 border-[#D9E0A4] px-8 py-1 text-white capitalize transition hover:border-[#19485F] rounded-md"

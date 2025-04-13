@@ -4,7 +4,7 @@ import ProfileCard from "./ProfileCard";
 export const ExpertsSection = () => {
   return (
     <div className="py-5">
-      <h1 className="text-center text-[8rem] leading-[7rem] font-bold mb-20">
+      <h1 className="text-center text-[6rem] md:text-[8em] leading-[7rem] font-bold mb-20">
         Find the
         <br /> right <span className="text-[#19485F]">expert</span> for you
       </h1>

@@ -54,7 +54,7 @@ export const ServicesSection = () => {
           classes="text-center mb-5"
         />
 
-        <div className="flex items-center gap-4 justify-around my-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 items-center gap-4 justify-around my-5">
           {consultantServices.map((service) => {
             return (
               <div key={service.title} className="flex flex-col items-center gap-4">
@@ -71,7 +71,7 @@ export const ServicesSection = () => {
           text="For Consultants / Experts"
           classes="text-center mb-5"
         />
-        <div className="flex justify-around gap-4 my-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 justify-around gap-4 my-5">
           {EntrepreneurServices.map((service) => {
             return (
               <div key={service.title} className="flex flex-col items-center gap-4">
