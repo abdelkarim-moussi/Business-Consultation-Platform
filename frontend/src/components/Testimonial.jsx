@@ -1,6 +1,6 @@
 export default function Testimonial ({profile,name,job,testimonial}){
   return (
-    <div className="flex flex-col gap-2 px-3 py-5 shadow-xl rounded-lg">
+    <div className="flex flex-col gap-2 px-3 py-10 shadow-xl rounded-lg">
       <div className="flex items-center gap-5">
         <img src={profile} alt="profile" className="w-[50px] text-xs rounded-full object-fill" />
         <div>
