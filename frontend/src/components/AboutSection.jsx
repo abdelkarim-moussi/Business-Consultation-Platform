@@ -1,8 +1,9 @@
 import PlayBtn from "../assets/images/playbtn.png";
+import { SectionTitle } from "./SectionTitle";
 const AboutSection = () => {
   return (
     <div className="w-full flex-col gap-5 flex items-center justify-center py-10 h-[300px] text-center text-white bg-[#19485F] ">
-      <h3 className="text-[2rem]">BusConsult ?</h3>
+      <SectionTitle text="BusConsult ?"/>
       <p className="md:w-[80%] text-[0.9rem]">
         busConsult is an platform that offers entrepreneurs and startups an
         opportunity to find and contact experts in their domain of activity and

@@ -34,7 +34,7 @@ export default function NavBar() {
               to="/login"
               className="px-[25px] py-[5px] text-sm bg-[#D9E0A4] rounded-md text-black text-center transition hover:bg-[#ABB17B] hover:text-white"
             >
-              login
+              Login
             </Link>
           </li>
         </ul>

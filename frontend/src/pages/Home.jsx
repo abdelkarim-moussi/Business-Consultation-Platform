@@ -2,6 +2,8 @@ import React from "react";
 import Button from "../components/Button";
 import { Link } from "react-router-dom";
 import AboutSection from "../components/AboutSection";
+import { ServicesSection } from "../components/ServicesSection";
+import { ExpertsSection } from "../components/ExpertsSection";
 
 const Home = () => {
   return (
@@ -30,6 +32,9 @@ const Home = () => {
       </div>
 
       <AboutSection />
+      <ServicesSection />
+      <ExpertsSection/>
+      
     </>
   );
 };
