@@ -14,21 +14,22 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class JWTAuthController extends Controller
 {
-    
-    public function register(Request $request){
 
-    
+    public function register(Request $request)
+    {
+
+
         $validated = $request->validate(
             [
-                'firstName'=>'required|string|max:255',
-                'lastName'=>'required|string|max:255',
-                'email'=>'required|email|max:255',
-                'accountType'=>'required|string',
-                'password'=>'required|confirmed'
+                'firstName' => 'required|string|max:255',
+                'lastName' => 'required|string|max:255',
+                'email' => 'required|email|max:255',
+                'accountType' => 'required|string',
+                'password' => 'required|confirmed'
             ]
-            );
+        );
 
-            try{
+        try {
 
             DB::beginTransaction();
 
@@ -38,95 +39,98 @@ class JWTAuthController extends Controller
 
             $token = JWTAuth::fromUser($user);
 
-            if($user->accountType === 'entrepreneur'){
+            if ($user->accountType === 'entrepreneur') {
                 Entrepreneur::create(
                     [
-                        'user_id'=>$user->id
+                        'user_id' => $user->id
                     ]
-                    );
-            }
-            else if($user->accountType === 'consultant'){
+                );
+            } else if ($user->accountType === 'consultant') {
                 Consultant::create([
-                    'user_id'=>$user->id
+                    'user_id' => $user->id
                 ]);
             }
 
             DB::commit();
 
-            return response()->json(compact('user','token'),201);
+            return response()->json([
+                'user'=>$user,
+                'token'=>$token,
+                'message'=>'your account is created succefully'
+            ], 201);
+        } catch (\Exception $e) {
 
-            }catch(\Exception $e){
-    
-                DB::rollBack();
-                report($e);
+            DB::rollBack();
+            report($e);
 
-                return response()->json([
-                    'message' => 'Registration failed. Please try again.',
-                    'error'   => $e->getMessage()
-                ], 500);
-                
-            }
-
+            return response()->json([
+                'message' => 'Registration failed. Please try again.',
+                'error'   => $e->getMessage()
+            ], 500);
+        }
     }
 
-    public function login(Request $request){
+    public function login(Request $request)
+    {
 
-        $credentials = $request->only('email','password');
+        $credentials = $request->only('email', 'password');
 
-        try{
+        try {
 
-            if(! $token = JWTAuth::attempt($credentials)){
+            if (! $token = JWTAuth::attempt($credentials)) {
                 return response()->json([
-                    'error'=>'invalid credentials'
+                    'error' => 'invalid credentials'
                 ]);
             }
 
-        $user = Auth::user();
+            $user = Auth::user();
 
-        $token = JWTAuth::claims(['accountType'=>$user->accountType])->fromUser($user);
+            $token = JWTAuth::claims(['accountType' => $user->accountType])->fromUser($user);
 
-        return response()->json(compact('user','token'));
+            return response()->json([
+                'user' => $user,
+                "token" => $token,
+                'message' => 'you are loged in succefully'
+            ]);
+        } catch (JWTException $e) {
 
-        }catch(JWTException $e){
-
-            return response()->json(['error'=>'could not create token'],500);
+            return response()->json(['error' => 'could not create token'], 500);
         }
-        
     }
 
-    public function getUser(){
+    public function getUser()
+    {
 
-        try{
-            if(! $user = JWTAuth::parseToken()->authenticate()){
+        try {
+            if (! $user = JWTAuth::parseToken()->authenticate()) {
                 return response()->json([
-                    'error'=>'user not found'
+                    'error' => 'user not found'
                 ], 404);
             }
-
-        }catch(JWTException){
+        } catch (JWTException) {
             return response()->json([
-                'error'=>'invalid token'
+                'error' => 'invalid token'
             ], 404);
         }
 
         return response()->json(compact('user'));
     }
 
-    public function logout(){
+    public function logout()
+    {
 
-        if(! JWTAuth::invalidate(JWTAuth::getToken())){
+        if (! JWTAuth::invalidate(JWTAuth::getToken())) {
             return response()->json(
                 [
-                    'error'=>'error logging out'
+                    'error' => 'error logging out'
                 ]
-                );
+            );
         }
 
         return response()->json(
             [
-                'message'=>'you are logged out succefully'
+                'message' => 'you are logged out succefully'
             ]
-            );
-        
+        );
     }
 }
