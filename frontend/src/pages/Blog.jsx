@@ -26,7 +26,7 @@ const Blog = () => {
         setFilteredArticles(response.data.articles || []);
         setLoading(false);
       } catch (error) {
-        console.log("error fetching consultants", error);
+        console.log("error fetching articles", error);
         setLoading(false);
       }
     };
