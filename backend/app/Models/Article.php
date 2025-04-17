@@ -11,5 +11,11 @@ class Article extends Model
         'cover',
         'content'
     ];
-    
+
+
+
+    public function Author()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

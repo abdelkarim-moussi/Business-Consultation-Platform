@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('content');
             $table->enum('status', ['draft', 'published'])->default('draft');
-            $table->foreignId('category')->constrainted('categories', 'id')->cascadeOnDelete()->cascadeOnDelete();
+            $table->foreignId('category_id')->constrainted('categories', 'id')->cascadeOnDelete()->cascadeOnDelete();
             $table->timestamps();
         });
     }
