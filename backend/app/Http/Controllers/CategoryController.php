@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Claims\JwtId;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class CategoryController extends Controller
 {
@@ -35,12 +37,11 @@ class CategoryController extends Controller
         
         $path = $request->file('cover')->store('covers', 'public');
 
-        $category = ;
+        $category = JWTAuth::user()->posts()->create($validated);
 
         return response()->json(
             [
-                'message'=>'consultation created succefully',
-                'consultation'=>$consultation
+                'message'=>'category created succefully',
             ],200);
 
     }
