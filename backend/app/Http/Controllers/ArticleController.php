@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\ArticleService;
 use Illuminate\Http\Request;
 
-class ArticelController extends Controller
+class ArticleController extends Controller
 {
     protected ArticleService $articleService;
 
@@ -13,8 +13,6 @@ class ArticelController extends Controller
     {
         $this->articleService = $articleService;
     }
-
-
 
     public function index()
     {
@@ -47,4 +45,5 @@ class ArticelController extends Controller
     {
         return $this->articleService->deleteArticle($id);
     }
+    
 }
