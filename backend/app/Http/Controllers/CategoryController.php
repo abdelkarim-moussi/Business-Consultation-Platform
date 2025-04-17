@@ -31,12 +31,10 @@ class CategoryController extends Controller
     {
 
         $validated = $request->validate([
-            'title' => 'required|min:10',
-            'contect' => 'required|min:100',
-            'cover' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'name' => 'required|min:2',
+            'description' => 'required|min:10'
         ]);
 
-        $path = $request->file('cover')->store('covers', 'public');
 
         $category = JWTAuth::user()->posts()->create($validated);
 
@@ -51,17 +49,11 @@ class CategoryController extends Controller
     public function update($id, Request $request)
     {
         $validated = $request->validate([
-            'title' => 'required|min:10',
-            'contect' => 'required|min:100',
-            'cover' => 'sometimes|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'name' => 'required|min:2',
+            'description' => 'required|min:10',
         ]);
 
         $category = Category::findOrFail($id);
-
-        if ($request->hasFile('cover')) {
-            $path = $request->file('cover')->store('covers', 'public');
-            $validated['cover'] = $path;
-        }
 
         $category->update($validated);
 
