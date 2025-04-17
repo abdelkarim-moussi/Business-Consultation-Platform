@@ -29,7 +29,7 @@ class ArticleController extends Controller
         return response()->json(compact('article'));
     }
 
-    public function create(Request $request)
+    public function store(Request $request)
     {
 
         return $this->articleService->createArticle($request);
