@@ -16,17 +16,35 @@ class ArticelController extends Controller
 
 
 
-    public function index(){
-        
+    public function index()
+    {
+
         $articles = $this->articleService->getAllArticles();
 
-        return response()->json(compact('articles'),200);
+        return response()->json(compact('articles'), 200);
     }
 
-    public function view($id){
+    public function view($id)
+    {
 
         $article = $this->articleService->getArticleById($id);
         return response()->json(compact('article'));
+    }
 
+    public function create(Request $request)
+    {
+
+        return $this->articleService->createArticle($request);
+    }
+
+    public function update($id, Request $request)
+    {
+
+        return $this->articleService->updateArticle($id, $request);
+    }
+
+    public function delete($id)
+    {
+        return $this->articleService->deleteArticle($id);
     }
 }
