@@ -9,67 +9,86 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class CategoryController extends Controller
 {
-   
-    public function index(){
+
+    public function index()
+    {
 
         $categories = Category::all();
 
         return response()->json(compact('categories'));
-
     }
 
 
-    public function show($id){
+    public function show($id)
+    {
 
-        $category = Category::find($id); 
-        
+        $category = Category::find($id);
+
         return response()->json(compact('category'));
-
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
 
         $validated = $request->validate([
             'title' => 'required|min:10',
             'contect' => 'required|min:100',
-            'cover' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048', 
+            'cover' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
-        
+
         $path = $request->file('cover')->store('covers', 'public');
 
         $category = JWTAuth::user()->posts()->create($validated);
 
         return response()->json(
             [
-                'message'=>'category created succefully',
-            ],200);
-
-    }
-
-    public function update($id,Request $request){
-        
-       $consultation = $this->consultationService->updateConsultation($id,$request);
-       return response()->json(
-        [
-            'message'=>'consultation updated succefully',
-            'consultation'=>$consultation
-        ]
+                'message' => 'category created succefully',
+            ],
+            200
         );
-
-    }
-    
-    public function cancel($id){
-
-       return $this->consultationService->cancelConsultation($id);
     }
 
-    public function accept($id){
+    public function update($id, Request $request)
+    {
+        $validated = $request->validate([
+            'title' => 'required|min:10',
+            'contect' => 'required|min:100',
+            'cover' => 'sometimes|image|mimes:jpg,jpeg,png,webp|max:2048',
+        ]);
 
-       return $this->consultationService->acceptConsultation($id);
+        $category = Category::findOrFail($id);
+
+        if ($request->hasFile('cover')) {
+            $path = $request->file('cover')->store('covers', 'public');
+            $validated['cover'] = $path;
+        }
+
+        $category->update($validated);
+
+        return response()->json([
+            'message' => 'Category updated successfully',
+            'data' => $category
+        ]);
     }
 
-    public function refuse($id){
 
-       return $this->consultationService->refuseConsultation($id);
+    public function delete($id)
+    {
+
+        $category = Category::find($id);
+
+        if (!$category) {
+            return response()->json(
+                [
+                    'message' => 'category not exist'
+                ]
+            );
+        }
+        
+        $category->delete();
+
+        return response()->json([
+            'message' => 'category deleted succefully'
+        ]);
     }
 }
