@@ -1,14 +1,12 @@
 import React from "react";
 
 export default function Input({
-  label,
   id,
   name,
   value,
   onChange,
   type,
   inputClasses,
-  divClasses,
 }) {
   return (
       <input
