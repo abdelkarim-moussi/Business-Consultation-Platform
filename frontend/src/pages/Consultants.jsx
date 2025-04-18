@@ -7,6 +7,7 @@ import InputButton from "../components/InputButton";
 import ConsultantsSection from "../components/ConsultantsSection";
 import Pagination from "../components/Pagination";
 import Footer from "../components/Footer";
+import NavBar from "../components/Navbar";
 
 const Consultants = () => {
   const [consultants, setConsultants] = useState([]);
@@ -75,6 +76,7 @@ const Consultants = () => {
 
   return (
     <>
+      <NavBar />
       <PageHead title="Find The Consultant you need" image={HeadImage} />
       <section className="flex flex-col md:flex-row gap-4 items-center justify-around my-10">
         <div className="flex flex-col md:flex-row gap-5 items-center">
@@ -129,7 +131,7 @@ const Consultants = () => {
         totalData={filteredConsultants.length}
         handlePagination={handlePagination}
       />
-
+      <Footer />
     </>
   );
 };

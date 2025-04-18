@@ -7,10 +7,13 @@ import { ExpertsSection } from "../components/ExpertsSection";
 import { BenifitsSection } from "../components/BenifitsSection";
 import TestimonialsSection from "../components/TestimonialsSection";
 import Footer from "../components/Footer";
+import NavBar from "../components/Navbar";
 
 const Home = () => {
   return (
     <>
+      <NavBar />
+
       <div className="hero-section grid grid-cols-2 h-[100vh]">
         <div></div>
         <div className="col-span-2 md:col-span-1 mt-40">
@@ -41,8 +44,9 @@ const Home = () => {
       <ServicesSection />
       <ExpertsSection />
       <BenifitsSection />
-      <TestimonialsSection/>
-      
+      <TestimonialsSection />
+
+      <Footer />
     </>
   );
 };

@@ -6,6 +6,7 @@ import InputButton from "../components/InputButton";
 import Pagination from "../components/Pagination";
 import Footer from "../components/Footer";
 import ArticleSection from "../components/ArticlesSection";
+import NavBar from "../components/Navbar";
 
 const Blog = () => {
   const [articles, setArticles] = useState([]);
@@ -70,6 +71,7 @@ const Blog = () => {
 
   return (
     <>
+      <NavBar />
       <PageHead title="Explore our Blogs" image={HeadImage} />
       <section className="flex flex-col md:flex-row gap-4 items-center justify-around my-10">
         <div className="flex flex-col md:flex-row gap-5 items-center">
@@ -108,6 +110,7 @@ const Blog = () => {
           onChange={handleSearch}
           onClick={handleClick}
         />
+        
       </section>
 
       <ArticleSection
@@ -123,6 +126,7 @@ const Blog = () => {
         handlePagination={handlePagination}
       />
 
+      <Footer />
     </>
   );
 };
