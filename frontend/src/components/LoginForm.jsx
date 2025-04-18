@@ -4,8 +4,10 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import Input from "./Input";
 import Label from "./Label";
+import { useAuth } from "../context/AuthContext";
 
 export default function LoginForm() {
+  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [email_error, setEmailError] = useState("");
@@ -30,17 +32,7 @@ export default function LoginForm() {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await axios.post("http://127.0.0.1:8000/api/login", {
-        email,
-        password,
-      });
-
-      alert(response.data.message);
-      sessionStorage.setItem("token", JSON.stringify(response.data.token));
-    } catch (error) {
-      alert("Login Failed", error);
-    }
+    login({ email, password });
   };
 
   return (
@@ -49,7 +41,7 @@ export default function LoginForm() {
 
       <form onSubmit={handleLogin} className="w-full flex flex-col gap-4">
         <div className="flex flex-col gap-2">
-          <Label label="Email" forInput="email"/>
+          <Label label="Email" forInput="email" />
           <Input
             name="email"
             id="email"
@@ -63,7 +55,7 @@ export default function LoginForm() {
           <p className="text-sm text-red-500 mt-[-10px]">{email_error}</p>
         )}
         <div className="flex flex-col gap-2">
-          <Label label="Password" forInput="password"/>
+          <Label label="Password" forInput="password" />
           <Input
             name="password"
             id="password"

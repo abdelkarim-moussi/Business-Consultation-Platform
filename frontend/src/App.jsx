@@ -9,6 +9,7 @@ import ArticleDetails from "./pages/ArticleDetails";
 import Footer from "./components/Footer";
 import Dashboard from "./pages/Dashboard";
 import NewArticle from "./pages/NewArticle";
+import { AuthProvider } from "./context/AuthContext";
 
 export default function App() {
   return (
@@ -18,8 +19,22 @@ export default function App() {
           <Route path="/" element={<Home />}></Route>
           <Route path="/consultants" element={<Consultants />}></Route>
           <Route path="/blog" element={<Blog />}></Route>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/register" element={<Register />}></Route>
+          <Route
+            path="/login"
+            element={
+              <AuthProvider>
+                <Login />
+              </AuthProvider>
+            }
+          ></Route>
+          <Route
+            path="/register"
+            element={
+              <AuthProvider>
+                <Register />
+              </AuthProvider>
+            }
+          ></Route>
           <Route path="/details" element={<ArticleDetails />}></Route>
           <Route path="/dashboard" element={<Dashboard />}></Route>
           <Route path="/createarticle" element={<NewArticle />}></Route>
