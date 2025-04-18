@@ -17,7 +17,7 @@ const Home = () => {
           <h4 className="text-md text-white text-center md:text-left">
             Welcome To BusConsult
           </h4>
-          <h1 className="text-[4rem] font-semibold text-center md:text-left md:text-[5rem] leading-[4rem] mb-10">
+          <h1 className="text-[4rem] text-[#19485F] font-semibold text-center md:text-left md:text-[5rem] leading-[4rem] mb-10">
             take your business to the next level
           </h1>
           <div className="flex gap-5 justify-center md:justify-start">
@@ -42,7 +42,7 @@ const Home = () => {
       <ExpertsSection />
       <BenifitsSection />
       <TestimonialsSection/>
-      <Footer/>
+      
     </>
   );
 };

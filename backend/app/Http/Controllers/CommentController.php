@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Request;
 
-class MessageController extends Controller
+class CommentController extends Controller
 {
 
     public function index()
@@ -15,7 +15,7 @@ class MessageController extends Controller
         return response()->json(compact('messages'), 200);
     }
 
-    public function show($id)
+    public function view($id)
     {
 
         $message = Comment::find($id);
@@ -42,7 +42,7 @@ class MessageController extends Controller
 
         return response()->json(
             [
-                'message' => 'commet added succefully'
+                'message' => 'comment added succefully'
             ]
         );
     }

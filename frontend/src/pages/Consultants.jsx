@@ -130,7 +130,6 @@ const Consultants = () => {
         handlePagination={handlePagination}
       />
 
-      <Footer />
     </>
   );
 };

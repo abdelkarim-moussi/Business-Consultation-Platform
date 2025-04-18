@@ -5,6 +5,8 @@ import Blog from "./pages/Blog";
 import Home from "./pages/Home";
 import Consultants from "./pages/Consultants";
 import Register from "./pages/Register";
+import ArticleDetails from "./pages/ArticleDetails";
+import Footer from "./components/Footer";
 
 export default function App (){
 
@@ -18,7 +20,9 @@ export default function App (){
           <Route path="/blog" element={<Blog />}></Route>
           <Route path="/login" element={<Login/>}></Route>
           <Route path="/register" element={<Register/>}></Route>
+          <Route path="/details" element={<ArticleDetails/>}></Route>
         </Routes>
+        <Footer />
       </BrowserRouter>
     </>
   );

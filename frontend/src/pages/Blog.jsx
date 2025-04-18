@@ -123,7 +123,6 @@ const Blog = () => {
         handlePagination={handlePagination}
       />
 
-      <Footer />
     </>
   );
 };
