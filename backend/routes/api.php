@@ -6,6 +6,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ConsultantController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\JWTAuthController;
+use App\Http\Controllers\StatisticsController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('register', [JWTAuthController::class, 'register']);
@@ -26,6 +27,15 @@ Route::middleware(['jwtauth'])->group(function () {
 
     Route::apiResource('articles', ArticleController::class)->except('index', 'view');
     Route::apiResource('comments', CommentController::class)->except('index', 'view');
+
+    Route::get('/stats/platform', [StatisticsController::class, 'platformOverview'])
+        ->middleware('can:viewAdminDashboard,App\Models\User');
+
+    // Entrepreneur statistics
+    Route::get('/entrepreneurs/{id}/stats', [StatisticsController::class, 'entrepreneurStats']);
+
+    // Consultant statistics
+    Route::get('/consultants/{id}/stats', [StatisticsController::class, 'consultantStats']);
 });
 
 Route::apiResource('categories', CategoryController::class);
