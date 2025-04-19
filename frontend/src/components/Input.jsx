@@ -1,21 +1,19 @@
 import React from "react";
 
-export default function Input({
-  id,
-  name,
-  value,
-  onChange,
-  type,
-  inputClasses,
-}) {
-  return (
+const Input = React.forwardRef(
+  ({ id, name, value, onChange, type, inputClasses }, ref) => {
+    return (
       <input
-        className={`w-full border border-black h-[35px] rounded-lg px-3 text-sm ${inputClasses}`}
+        ref={ref}
+        className={`w-full border border-black h-[35px] px-3 text-sm ${inputClasses}`}
         id={id}
         name={name}
         value={value}
         onChange={onChange}
         type={type}
       />
-  );
-}
+    );
+  }
+);
+
+export default Input;
