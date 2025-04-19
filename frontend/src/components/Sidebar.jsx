@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 
-export default function Sidebar({active}) {
+export default function Sidebar({ active }) {
   const menuItems = [
-    { name: "dashboard", icon: "📊" },
+    { name: "Dashboard", icon: "📊", link: "dashboard" },
     { name: "Consultations", icon: "💬" },
     { name: "Blogs", icon: "📝" },
-    { name: "createarticle", icon: "➕" },
+    { name: "Create Article", icon: "➕", link: "createarticle" },
     { name: "Payment", icon: "💳" },
     { name: "Messages", icon: "✉️" },
     { name: "Help", icon: "❓" },
@@ -18,10 +18,11 @@ export default function Sidebar({active}) {
       </h2>
       <nav className="space-y-4 flex flex-col">
         {menuItems.map((item) => (
-          <Link to={'../'+item.name}
+          <Link
+            to={"../" + item.link}
             key={item.name}
-            className={`w-full text-left text-white px-4 py-2 rounded-lg hover:bg-[#D9E0A4] ${
-              item.name === active ? "bg-[#D9E0A4]" : ""
+            className={`w-full text-left px-4 py-2 rounded-lg hover:bg-[#D9E0A4] ${
+              item.link === active ? "bg-[#D9E0A4]" : "text-white"
             }`}
           >
             <span className="mr-2">{item.icon}</span> {item.name}

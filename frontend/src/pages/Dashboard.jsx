@@ -6,7 +6,7 @@ import DashboardCard from "../components/DashboardCard";
 export default function Dashboard() {
   return (
     <div className="flex">
-      <Sidebar active="Dashboard"/>
+      <Sidebar active="dashboard"/>
       <div className="">
         <DashboardHeader />
         <DashboardCard />

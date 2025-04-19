@@ -1,15 +1,15 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import NavBar from "./components/Navbar";
 import Login from "./pages/Login";
 import Blog from "./pages/Article";
 import Home from "./pages/Home";
 import Consultants from "./pages/Consultants";
 import Register from "./pages/Register";
 import ArticleDetails from "./pages/ArticleDetails";
-import Footer from "./components/Footer";
 import Dashboard from "./pages/Dashboard";
 import NewArticle from "./pages/NewArticle";
 import { AuthProvider } from "./context/AuthContext";
+import ProtectedRoute from "./routes/ProtectedRoute";
+import PublicRoute from "./routes/PublicRoute";
 
 export default function App() {
   return (
@@ -23,7 +23,9 @@ export default function App() {
             path="/login"
             element={
               <AuthProvider>
-                <Login />
+                <PublicRoute>
+                  <Login />
+                </PublicRoute>
               </AuthProvider>
             }
           ></Route>
@@ -31,12 +33,25 @@ export default function App() {
             path="/register"
             element={
               <AuthProvider>
-                <Register />
+                <PublicRoute path="/register">
+                  <Register />
+                </PublicRoute>
               </AuthProvider>
             }
           ></Route>
           <Route path="/details" element={<ArticleDetails />}></Route>
-          <Route path="/dashboard" element={<Dashboard />}></Route>
+
+          <Route
+            path="/dashboard"
+            element={
+              <AuthProvider>
+                <ProtectedRoute roles={"consultant"}>
+                  <Dashboard />
+                </ProtectedRoute>
+              </AuthProvider>
+            }
+          />
+          {/* <Route path="/dashboard" element={<Dashboard />}></Route> */}
           <Route path="/createarticle" element={<NewArticle />}></Route>
         </Routes>
       </BrowserRouter>

@@ -1,13 +1,26 @@
 import { useNavigate } from "react-router-dom";
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 import axios from "axios";
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    if (token) {
+      try {
+        const decoded = jwtDecode(token);
+        setUser(decoded);
+      } catch (err) {
+        console.error("Invalid token:", err);
+        sessionStorage.removeItem("token");
+      }
+    }
+  }, []);
 
   const login = async ({ email, password }) => {
     try {
@@ -19,12 +32,13 @@ export const AuthProvider = ({ children }) => {
       const token = response.data.token;
       sessionStorage.setItem("token", token);
       const decodedToken = jwtDecode(token);
-      setUser(token);
+
+      setUser({ email: email, accountType: decodedToken["accountType"] });
 
       alert("You are logged in successfully!");
 
       // ⬇️ Make sure to only navigate once, after setting state
-      if (decodedToken.role === "recruiter") {
+      if (decodedToken.accountType === "consultant") {
         navigate("/dashboard");
       } else {
         navigate("/");
@@ -63,7 +77,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ login, register }}>
+    <AuthContext.Provider value={{ login, register, user }}>
       {children}
     </AuthContext.Provider>
   );
