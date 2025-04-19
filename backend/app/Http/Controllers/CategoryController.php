@@ -36,7 +36,7 @@ class CategoryController extends Controller
         ]);
 
 
-        $category = JWTAuth::user()->posts()->create($validated);
+        $category = Category::create($validated);
 
         return response()->json(
             [
@@ -76,7 +76,7 @@ class CategoryController extends Controller
                 ]
             );
         }
-        
+
         $category->delete();
 
         return response()->json([

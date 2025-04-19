@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('entrepreneur_id')->constrainted('users', 'id')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('author_id')->constrainted('users', 'id')->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('title');
             $table->text('content');
+            $table->text('cover')->nullable();
             $table->enum('status', ['draft', 'published'])->default('draft');
             $table->foreignId('category_id')->constrainted('categories', 'id')->cascadeOnDelete()->cascadeOnDelete();
             $table->timestamps();

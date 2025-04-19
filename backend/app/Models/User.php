@@ -20,7 +20,9 @@ class User extends Authenticatable implements JWTSubject
 
     public function getJWTCustomClaims()
     {
-        return [];
+        return [
+            'accountType' => $this->accountType
+        ];
     }
 
 
@@ -47,8 +49,18 @@ class User extends Authenticatable implements JWTSubject
     }
 
 
-    public function Articles()
+    public function entrepreneurConsultations()
     {
-        return $this->hasMany(Article::class);
+        return $this->hasMany(Consultation::class, 'entrepreneur_id');
+    }
+
+    public function consultantConsultations()
+    {
+        return $this->hasMany(Consultation::class, 'consultant_id');
+    }
+
+    public function articles()
+    {
+        return $this->hasMany(Article::class, 'author_id');
     }
 }

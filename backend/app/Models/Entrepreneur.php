@@ -12,4 +12,7 @@ class Entrepreneur extends Model
         'user_id',
         'sectorActivity'
     ];
+
+
+    
 }

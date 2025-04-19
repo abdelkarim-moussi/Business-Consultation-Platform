@@ -27,14 +27,16 @@ class ArticleService
     {
 
         $validated = $data->validate([
+            'author_id' => 'required|exists:users,id',
             'title' => 'required|min:10',
-            'contect' => 'required|min:100',
+            'content' => 'required|min:100',
             'cover' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'category_id' => 'required'
         ]);
 
         $validated['path'] = $data->file('cover')->store('covers', 'public');
 
-        JWTAuth::user()->posts()->create($validated);
+        JWTAuth::user()->articles()->create($validated);
 
         return response()->json(
             [
@@ -55,18 +57,22 @@ class ArticleService
 
         $article = Article::findOrFail($id);
 
-        if($data->hasFile('cover')){
+        if ($data->hasFile('cover')) {
             $path = $data->file('cover')->store('covers', 'public');
             $validated['cover'] = $path;
         }
 
-        return $this->articleRepository->update($id,$validated);
-        
+        return $this->articleRepository->update($id, $validated);
     }
 
 
     public function deleteArticle($id)
     {
         return $article = $this->articleRepository->delete($id);
+    }
+
+    public function getConsultantArticles($id)
+    {
+        return $this->articleRepository->getArticlesForConsultant($id);
     }
 }

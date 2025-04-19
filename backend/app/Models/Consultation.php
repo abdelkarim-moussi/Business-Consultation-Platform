@@ -12,4 +12,15 @@ class Consultation extends Model
         'entrepreneur_id',
         'consultant_id'
     ];
+
+
+    public function entrepreneur()
+    {
+        return $this->belongsTo(User::class, 'entrepreneur_id');
+    }
+
+    public function consultant()
+    {
+        return $this->belongsTo(User::class, 'consultant_id');
+    }
 }

@@ -32,4 +32,12 @@ class ArticleRepository implements ArticleRepositoryInterface
     {
         return Category::delete($id);
     }
+
+    public function getArticlesForConsultant($id)
+    {
+        return Article::with(['author', 'category'])
+            ->where('author_id', $id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+    }
 }

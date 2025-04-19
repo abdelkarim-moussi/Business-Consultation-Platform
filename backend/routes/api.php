@@ -26,6 +26,6 @@ Route::middleware(['jwtauth'])->group(function () {
 
     Route::apiResource('articles', ArticleController::class)->except('index', 'view');
     Route::apiResource('comments', CommentController::class)->except('index', 'view');
-    Route::apiResource('category', CategoryController::class);
-
 });
+
+Route::apiResource('categories', CategoryController::class);

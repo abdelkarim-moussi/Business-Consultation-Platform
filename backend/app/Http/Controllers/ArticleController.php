@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Article;
 use App\Services\ArticleService;
 use Illuminate\Http\Request;
 
@@ -32,7 +33,13 @@ class ArticleController extends Controller
     public function store(Request $request)
     {
 
-        return $this->articleService->createArticle($request);
+        $this->articleService->createArticle($request);
+
+        return response()->json(
+            [
+                'message' => 'article created succefully'
+            ]
+        );
     }
 
     public function update($id, Request $request)
@@ -45,5 +52,15 @@ class ArticleController extends Controller
     {
         return $this->articleService->deleteArticle($id);
     }
-    
+
+
+    public function forConsultant($consultantId)
+    {
+        $articles = $this->articleService->getConsultantArticles($consultantId);
+
+        return response()->json([
+            'success' => true,
+            'data' => $this->$articles
+        ]);
+    }
 }
