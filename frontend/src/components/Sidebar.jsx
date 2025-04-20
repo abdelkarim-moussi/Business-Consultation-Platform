@@ -12,7 +12,7 @@ export default function Sidebar({ active }) {
   ];
 
   return (
-    <aside className="w-64 bg-[#19485F] shadow-sm p-4">
+    <aside className="w-64 bg-[#19485F] shadow-sm p-4 h-[100vh]">
       <h2 className="text-2xl font-bold text-white mb-8">
         <span className="text-[#D9E0A4]">Bus</span>Consult
       </h2>

@@ -1,6 +1,6 @@
 export default function DashboardHeader() {
   return (
-    <div className="flex items-center justify-between gap-10 mb-8 bg-[#19485F] text-white p-5">
+    <div className="flex items-center justify-between gap-10 mb-8 bg-[#19485F] text-white p-5 w-full">
       <h1 className="text-xl font-semibold">Dashboard</h1>
       <div className="flex items-center space-x-4 gap-5">
         <div className="w-[350px] h-[40px] bg-gray-200 rounded-lg">

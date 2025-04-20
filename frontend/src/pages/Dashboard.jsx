@@ -1,15 +1,15 @@
 import React from "react";
 import Sidebar from "../components/Sidebar";
 import DashboardHeader from "../components/DashboardHeader";
-import DashboardCard from "../components/DashboardCard";
+import ConsultantStats from "../components/ConsultantStats";
 
 export default function Dashboard() {
   return (
-    <div className="flex">
-      <Sidebar active="dashboard"/>
-      <div className="">
+    <div className="flex h-full">
+      <Sidebar active="dashboard" />
+      <div className="w-full">
         <DashboardHeader />
-        <DashboardCard />
+        <ConsultantStats />
       </div>
     </div>
   );

@@ -20,7 +20,8 @@
     "react-dom": "^18.2.0",
     "react-password-checklist": "^1.8.1",
     "react-quill": "^2.0.0",
-    "react-router-dom": "^7.5.0"
+    "react-router-dom": "^7.5.0",
+    "recharts": "^2.15.3"
   },
   "devDependencies": {
     "@types/react": "^18.0.24",

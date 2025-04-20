@@ -7,19 +7,27 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = sessionStorage.getItem("token");
-    if (token) {
-      try {
-        const decoded = jwtDecode(token);
-        setUser(decoded);
-      } catch (err) {
-        console.error("Invalid token:", err);
-        sessionStorage.removeItem("token");
+    const initializeAuth = async () => {
+      const token = sessionStorage.getItem("token");
+      if (token) {
+        try {
+          const decoded = jwtDecode(token);
+          setUser(decoded);
+          setToken(token);
+        } catch (err) {
+          console.error("Invalid token:", err);
+          logout();
+        }
       }
-    }
+      setIsLoading(false);
+    };
+
+    initializeAuth();
   }, []);
 
   const login = async ({ email, password }) => {
@@ -29,15 +37,18 @@ export const AuthProvider = ({ children }) => {
         password,
       });
 
-      const token = response.data.token;
-      sessionStorage.setItem("token", token);
-      const decodedToken = jwtDecode(token);
+      const authToken = response.data.token;
+      setToken(authToken);
+      sessionStorage.setItem("token", authToken);
+      const decodedToken = jwtDecode(authToken);
 
-      setUser({ email: email, accountType: decodedToken["accountType"] });
+      setUser({ 
+        email: email, 
+        accountType: decodedToken["accountType"] 
+      });
 
       alert("You are logged in successfully!");
 
-      // ⬇️ Make sure to only navigate once, after setting state
       if (decodedToken.accountType === "consultant") {
         navigate("/dashboard");
       } else {
@@ -46,7 +57,7 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error("Login Failed", error);
       alert("Login failed. Please check your credentials.");
-      throw error; // allow upper components to catch it
+      throw error;
     }
   };
 
@@ -68,16 +79,43 @@ export const AuthProvider = ({ children }) => {
         password_confirmation,
       });
 
+      const authToken = response.data.token;
+      setToken(authToken);
+      sessionStorage.setItem("token", authToken);
+      const decodedToken = jwtDecode(authToken);
+      
+      setUser({ 
+        email: email, 
+        accountType: decodedToken["accountType"] 
+      });
+
       alert(response.data.message);
-      sessionStorage.setItem("token", JSON.stringify(response.data.token));
-      sessionStorage.setItem("user", JSON.stringify(response.data.user));
+      navigate(decodedToken.accountType === "consultant" ? "/dashboard" : "/");
+      return response.data;
     } catch (error) {
       console.error("Registration failed", error);
+      throw error;
     }
   };
 
+  const logout = () => {
+    setUser(null);
+    setToken("");
+    sessionStorage.removeItem("token");
+    navigate("/login");
+  };
+
   return (
-    <AuthContext.Provider value={{ login, register, user }}>
+    <AuthContext.Provider 
+      value={{ 
+        login, 
+        register, 
+        logout, 
+        user, 
+        token,
+        isLoading
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
