@@ -6,7 +6,7 @@ import { jwtDecode } from "jwt-decode";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState();
   const [token, setToken] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
@@ -19,6 +19,7 @@ export const AuthProvider = ({ children }) => {
           const decoded = jwtDecode(token);
           setUser(decoded);
           setToken(token);
+          
         } catch (err) {
           console.error("Invalid token:", err);
           logout();
@@ -42,15 +43,16 @@ export const AuthProvider = ({ children }) => {
       sessionStorage.setItem("token", authToken);
       const decodedToken = jwtDecode(authToken);
 
-      setUser({ 
-        email: email, 
-        accountType: decodedToken["accountType"] 
+      setUser({
+        id: decodedToken["sub"],
+        email: email,
+        accountType: decodedToken["accountType"],
       });
 
       alert("You are logged in successfully!");
 
       if (decodedToken.accountType === "consultant") {
-        navigate("/dashboard");
+        navigate("/consultantDash");
       } else {
         navigate("/");
       }
@@ -83,14 +85,16 @@ export const AuthProvider = ({ children }) => {
       setToken(authToken);
       sessionStorage.setItem("token", authToken);
       const decodedToken = jwtDecode(authToken);
-      
-      setUser({ 
-        email: email, 
-        accountType: decodedToken["accountType"] 
+
+      setUser({
+        email: email,
+        accountType: decodedToken["accountType"],
       });
 
       alert(response.data.message);
-      navigate(decodedToken.accountType === "consultant" ? "/dashboard" : "/");
+      navigate(
+        decodedToken.accountType === "consultant" ? "/consultantDash" : "/"
+      );
       return response.data;
     } catch (error) {
       console.error("Registration failed", error);
@@ -106,14 +110,14 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider 
-      value={{ 
-        login, 
-        register, 
-        logout, 
-        user, 
+    <AuthContext.Provider
+      value={{
+        login,
+        register,
+        logout,
+        user,
         token,
-        isLoading
+        isLoading,
       }}
     >
       {children}

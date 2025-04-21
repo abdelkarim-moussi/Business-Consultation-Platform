@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
-import Blog from "./pages/Article";
+import Blog from "./pages/Articles";
 import Home from "./pages/Home";
 import Consultants from "./pages/Consultants";
 import Register from "./pages/Register";
 import ArticleDetails from "./pages/ArticleDetails";
-import Dashboard from "./pages/Dashboard";
+import ConsultantDashboard from "./pages/ConsultantDashboard";
 import NewArticle from "./pages/NewArticle";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./routes/ProtectedRoute";
@@ -42,17 +42,25 @@ export default function App() {
           <Route path="/details" element={<ArticleDetails />}></Route>
 
           <Route
-            path="/dashboard"
+            path="/consultantDash"
             element={
               <AuthProvider>
                 <ProtectedRoute roles={"consultant"}>
-                  <Dashboard />
+                  <ConsultantDashboard />
                 </ProtectedRoute>
               </AuthProvider>
             }
           />
-          {/* <Route path="/dashboard" element={<Dashboard />}></Route> */}
-          <Route path="/createarticle" element={<NewArticle />}></Route>
+          <Route
+            path="/createarticle"
+            element={
+              <AuthProvider>
+                <ProtectedRoute>
+                  <NewArticle />
+                </ProtectedRoute>
+              </AuthProvider>
+            }
+          ></Route>
         </Routes>
       </BrowserRouter>
     </>

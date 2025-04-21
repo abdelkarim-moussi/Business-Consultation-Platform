@@ -1,6 +1,18 @@
+import { useAuth } from "../context/AuthContext";
+
 export default function DashboardHeader() {
+  const { logout } = useAuth();
+
+  const handlelogout = () => {
+    try {
+      logout();
+    } catch (error) {
+      console.log("logout failed", error);
+    }
+  };
+  
   return (
-    <div className="flex items-center justify-between gap-10 mb-8 bg-[#19485F] text-white p-5 w-full">
+    <div className="flex items-center justify-between gap-10 mb-8 bg-[#19485F] text-white p-5 w-full sticky top-0 z-20">
       <h1 className="text-xl font-semibold">Dashboard</h1>
       <div className="flex items-center space-x-4 gap-5">
         <div className="w-[350px] h-[40px] bg-gray-200 rounded-lg">
@@ -10,6 +22,7 @@ export default function DashboardHeader() {
             className="border px-3 py-1 text-sm w-full h-full bg-transparent outline-none text-gray-600 rounded-lg"
           />
         </div>
+        <button onClick={handlelogout}>logout</button>
         <div className="flex items-center space-x-2">
           <img
             src="https://i.pravatar.cc/30"

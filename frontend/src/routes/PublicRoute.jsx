@@ -16,13 +16,13 @@ const PublicRoute = ({ children }) => {
     accountType = decoded?.accountType;
   } catch (error) {
     console.error("Invalid token:", error);
- 
+
     sessionStorage.removeItem("token");
     return children;
   }
 
   if (accountType === "consultant") {
-    return <Navigate to="/dashboard" replace />;
+    return <Navigate to="/consultantDash" replace />;
   }
 
   return <Navigate to="/" replace />;

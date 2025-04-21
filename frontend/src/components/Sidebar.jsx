@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function Sidebar({ active }) {
   const menuItems = [
-    { name: "Dashboard", icon: "📊", link: "dashboard" },
+    { name: "ConsultantDash", icon: "📊", link: "consultantDash" },
     { name: "Consultations", icon: "💬" },
     { name: "Blogs", icon: "📝" },
     { name: "Create Article", icon: "➕", link: "createarticle" },
@@ -12,7 +12,7 @@ export default function Sidebar({ active }) {
   ];
 
   return (
-    <aside className="w-64 bg-[#19485F] shadow-sm p-4 h-[100vh]">
+    <aside className="w-64 bg-[#19485F] shadow-sm p-4 h-[100vh] sticky top-0">
       <h2 className="text-2xl font-bold text-white mb-8">
         <span className="text-[#D9E0A4]">Bus</span>Consult
       </h2>

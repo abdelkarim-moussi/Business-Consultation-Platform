@@ -8,7 +8,7 @@ import Footer from "../components/Footer";
 import ArticleSection from "../components/ArticlesSection";
 import NavBar from "../components/Navbar";
 
-const Blog = () => {
+const Articles = () => {
   const [articles, setArticles] = useState([]);
   const [filteredArticles, setFilteredArticles] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -110,7 +110,6 @@ const Blog = () => {
           onChange={handleSearch}
           onClick={handleClick}
         />
-        
       </section>
 
       <ArticleSection
@@ -131,4 +130,4 @@ const Blog = () => {
   );
 };
 
-export default Blog;
+export default Articles;
