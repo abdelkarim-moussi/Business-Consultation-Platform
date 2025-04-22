@@ -4,7 +4,7 @@ export default function Sidebar({ active }) {
   const menuItems = [
     { name: "ConsultantDash", icon: "📊", link: "consultantDash" },
     { name: "Consultations", icon: "💬" },
-    { name: "Blogs", icon: "📝" },
+    { name: "Articles", icon: "📝", link: "consultantArticles" },
     { name: "Create Article", icon: "➕", link: "createarticle" },
     { name: "Payment", icon: "💳" },
     { name: "Messages", icon: "✉️" },

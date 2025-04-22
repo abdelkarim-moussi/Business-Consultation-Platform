@@ -15,7 +15,7 @@ export default function DashboardHeader() {
     <div className="flex items-center justify-between gap-10 mb-8 bg-[#19485F] text-white p-5 w-full sticky top-0 z-20">
       <h1 className="text-xl font-semibold">Dashboard</h1>
       <div className="flex items-center space-x-4 gap-5">
-        <div className="w-[350px] h-[40px] bg-gray-200 rounded-lg">
+        <div className="w-[350px] h-[40px] bg-white rounded-lg">
           <input
             type="text"
             placeholder="Search"

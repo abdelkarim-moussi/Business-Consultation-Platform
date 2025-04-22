@@ -28,13 +28,13 @@ Route::middleware(['jwtauth'])->group(function () {
     Route::apiResource('articles', ArticleController::class)->except('index', 'view');
     Route::apiResource('comments', CommentController::class)->except('index', 'view');
 
-    Route::get('/stats/platform', [StatisticsController::class, 'platformOverview'])
-        ->middleware('can:viewAdminDashboard,App\Models\User');
+    Route::get('/stats/platform', [StatisticsController::class, 'platformOverview']);
 
-    // Entrepreneur statistics
+    Route::get('/consultants/{id}/articles', [ArticleController::class, 'forConsultant']);
+
     Route::get('/entrepreneurs/{id}/stats', [StatisticsController::class, 'entrepreneurStats']);
 
-    // Consultant statistics
+
     Route::get('/consultants/{id}/stats', [StatisticsController::class, 'consultantStats']);
 });
 

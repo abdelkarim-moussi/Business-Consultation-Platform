@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Article;
 use App\Models\Category;
 use App\Repositories\Interfaces\ArticleRepositoryInterface;
+use Illuminate\Support\Facades\DB;
 
 class ArticleRepository implements ArticleRepositoryInterface
 {
@@ -16,22 +17,37 @@ class ArticleRepository implements ArticleRepositoryInterface
 
     public function find($id)
     {
-        return Category::findOrFail($id);
+        return Article::findOrFail($id);
     }
 
     public function create($data)
     {
-        return Category::create($data);
+        return Article::create($data);
     }
 
     public function update($id, $data)
     {
-        return Category::findOrFail($id)->update($data);
+        $article = Article::findOrFail($id);
+
+        $article->update($data);
+
+
+        return response()->json(
+            [
+                'message' => 'article updated succefully'
+            ]
+        );
     }
     public function delete($id)
     {
-        return Category::delete($id);
+
+        Article::findOrFail($id)->delete();
+
+        return response()->json([
+            'message' => 'article deleted succefully'
+        ]);
     }
+
 
     public function getArticlesForConsultant($id)
     {

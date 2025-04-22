@@ -11,6 +11,11 @@ class ArticleService
 
     protected ArticleRepository $articleRepository;
 
+    public function __construct(ArticleRepository $articleRepository)
+    {
+        $this->articleRepository = $articleRepository;
+    }
+
 
     public function getAllArticles()
     {
@@ -51,11 +56,10 @@ class ArticleService
 
         $validated = $data->validate([
             'title' => 'required|min:10',
-            'contect' => 'required|min:100',
+            'content' => 'required|min:100',
+            'status' => 'required',
             'cover' => 'sometimes|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
-
-        $article = Article::findOrFail($id);
 
         if ($data->hasFile('cover')) {
             $path = $data->file('cover')->store('covers', 'public');
@@ -68,7 +72,7 @@ class ArticleService
 
     public function deleteArticle($id)
     {
-        return $article = $this->articleRepository->delete($id);
+        return $this->articleRepository->delete($id);
     }
 
     public function getConsultantArticles($id)

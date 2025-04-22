@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Article;
 use App\Services\ArticleService;
 use Illuminate\Http\Request;
 
@@ -23,7 +22,7 @@ class ArticleController extends Controller
         return response()->json(compact('articles'), 200);
     }
 
-    public function view($id)
+    public function show($id)
     {
 
         $article = $this->articleService->getArticleById($id);
@@ -46,9 +45,10 @@ class ArticleController extends Controller
     {
 
         return $this->articleService->updateArticle($id, $request);
+
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
         return $this->articleService->deleteArticle($id);
     }
@@ -60,7 +60,7 @@ class ArticleController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $this->$articles
+            'data' => $articles
         ]);
     }
 }

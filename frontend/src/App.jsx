@@ -10,6 +10,8 @@ import NewArticle from "./pages/NewArticle";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import PublicRoute from "./routes/PublicRoute";
+import ConsultantArticles from "./components/ConsultantArticles";
+import ConsultantArticlesPage from "./pages/consultantArticlesPage";
 
 export default function App() {
   return (
@@ -57,6 +59,16 @@ export default function App() {
               <AuthProvider>
                 <ProtectedRoute>
                   <NewArticle />
+                </ProtectedRoute>
+              </AuthProvider>
+            }
+          ></Route>
+          <Route
+            path="/consultantArticles"
+            element={
+              <AuthProvider>
+                <ProtectedRoute>
+                  <ConsultantArticlesPage />
                 </ProtectedRoute>
               </AuthProvider>
             }

@@ -11,6 +11,7 @@ class Article extends Model
         'title',
         'content',
         'cover',
+        'status',
         'category_id'
     ];
 
@@ -24,5 +25,10 @@ class Article extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class)->whereNull('parent_id');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 }
