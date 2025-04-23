@@ -21,8 +21,8 @@ export default function Sidebar({ active }) {
           <Link
             to={"../" + item.link}
             key={item.name}
-            className={`w-full text-left px-4 py-2 rounded-lg hover:bg-[#D9E0A4] ${
-              item.link === active ? "bg-[#D9E0A4]" : "text-white"
+            className={`w-full text-left px-4 py-2 rounded-lg hover:bg-[#D9E0A4] hover:text-[#19485F] ${
+              item.link === active ? "bg-[#D9E0A4] text-[#19485F]" : "text-white"
             }`}
           >
             <span className="mr-2">{item.icon}</span> {item.name}

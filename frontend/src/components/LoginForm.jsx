@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Button from "./Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Input from "./Input";
 import Label from "./Label";
@@ -12,7 +12,7 @@ export default function LoginForm() {
   const [password, setPassword] = useState("");
   const [email_error, setEmailError] = useState("");
   const [pass_error, setPassError] = useState("");
-
+  const navigate = useNavigate();
   const validateEmail = (value) => {
     const regex = /^\S+@\S+\.\S+$/;
     return regex.test(value);
@@ -31,8 +31,18 @@ export default function LoginForm() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
-    login({ email, password });
+    try {
+      const userData = await login({ email, password });
+      if (userData.accountType === "consultant") {
+        navigate("/consultantDash");
+      } else if (userData.accountType === "entrepreneur") {
+        navigate("/entrepreneurDash");
+      } else {
+        navigate("/");
+      }
+    } catch (err) {
+      console.error("Login error:", err);
+    }
   };
 
   return (

@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { createContext, useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
@@ -6,20 +5,21 @@ import { jwtDecode } from "jwt-decode";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(null);
   const [token, setToken] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  const navigate = useNavigate();
 
   useEffect(() => {
-    const initializeAuth = async () => {
+    const initializeAuth = () => {
       const token = sessionStorage.getItem("token");
       if (token) {
         try {
           const decoded = jwtDecode(token);
-          setUser(decoded);
+          setUser({
+            id: decoded.sub,
+            accountType: decoded.accountType,
+          });
           setToken(token);
-          
         } catch (err) {
           console.error("Invalid token:", err);
           logout();
@@ -43,19 +43,17 @@ export const AuthProvider = ({ children }) => {
       sessionStorage.setItem("token", authToken);
       const decodedToken = jwtDecode(authToken);
 
-      setUser({
-        id: decodedToken["sub"],
+      const userData = {
+        id: decodedToken.sub,
         email: email,
-        accountType: decodedToken["accountType"],
-      });
+        accountType: decodedToken.accountType,
+        full_name:
+          response.data.user.firstname + " " + response.data.user.firstname,
+      };
 
-      alert("You are logged in successfully!");
+      setUser(userData);
 
-      if (decodedToken.accountType === "consultant") {
-        navigate("/consultantDash");
-      } else {
-        navigate("/");
-      }
+      return userData;
     } catch (error) {
       console.error("Login Failed", error);
       alert("Login failed. Please check your credentials.");
@@ -86,16 +84,17 @@ export const AuthProvider = ({ children }) => {
       sessionStorage.setItem("token", authToken);
       const decodedToken = jwtDecode(authToken);
 
-      setUser({
-        email: email,
-        accountType: decodedToken["accountType"],
-      });
+      const userData = {
+        id: decodedToken.sub,
+        email,
+        accountType: decodedToken.accountType,
+        full_name:
+          response.data.user.firstname + " " + response.data.user.firstname,
+      };
 
-      alert(response.data.message);
-      navigate(
-        decodedToken.accountType === "consultant" ? "/consultantDash" : "/"
-      );
-      return response.data;
+      setUser(userData);
+
+      return { ...response.data, user: userData };
     } catch (error) {
       console.error("Registration failed", error);
       throw error;
@@ -106,7 +105,6 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     setToken("");
     sessionStorage.removeItem("token");
-    navigate("/login");
   };
 
   return (

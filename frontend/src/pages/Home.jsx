@@ -8,11 +8,14 @@ import { BenifitsSection } from "../components/BenifitsSection";
 import TestimonialsSection from "../components/TestimonialsSection";
 import Footer from "../components/Footer";
 import NavBar from "../components/Navbar";
+import { AuthProvider } from "../context/AuthContext";
 
 const Home = () => {
   return (
     <>
-      <NavBar />
+      <AuthProvider>
+        <NavBar />
+      </AuthProvider>
 
       <div className="hero-section grid grid-cols-2 h-[100vh]">
         <div></div>

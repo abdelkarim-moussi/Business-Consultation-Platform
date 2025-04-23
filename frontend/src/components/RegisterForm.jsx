@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 import Input from "./Input";
 import Button from "./Button";
 import ReactPasswordChecklist from "react-password-checklist";
@@ -16,12 +15,13 @@ const RegisterForm = () => {
   const [password, setPassword] = useState("");
   const [password_confirmation, setPassword_confirmation] = useState("");
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const handleRegister = async (e) => {
     e.preventDefault();
-
+  
     const newErrors = {};
     if (!firstName.trim()) newErrors.firstName = "First name is required";
     if (!lastName.trim()) newErrors.lastName = "Last name is required";
@@ -36,20 +36,32 @@ const RegisterForm = () => {
     if (password !== password_confirmation)
       newErrors.passwordMatch = "Passwords do not match";
     if (!accountType) newErrors.accountType = "Account type is required";
-
+  
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
-
-    register({
-      firstName,
-      lastName,
-      email,
-      accountType,
-      password,
-      password_confirmation,
-    });
+  
+    try {
+      const result = await register({
+        firstName,
+        lastName,
+        email,
+        accountType,
+        password,
+        password_confirmation,
+      });
+  
+      if (result?.user?.accountType === "consultant") {
+        navigate("/consultantDash");
+      } else if (result?.user?.accountType === "entrepreneur") {
+        navigate("/entrepreneurDash");
+      } else {
+        navigate("/");
+      }
+    } catch (error) {
+      console.error("Registration error:", error);
+    }
   };
 
   return (

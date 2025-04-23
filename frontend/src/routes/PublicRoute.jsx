@@ -24,6 +24,9 @@ const PublicRoute = ({ children }) => {
   if (accountType === "consultant") {
     return <Navigate to="/consultantDash" replace />;
   }
+  else if(accountType === "entrepreneur"){
+    return <Navigate to="/entrepreneurDash" replace />;
+  }
 
   return <Navigate to="/" replace />;
 };

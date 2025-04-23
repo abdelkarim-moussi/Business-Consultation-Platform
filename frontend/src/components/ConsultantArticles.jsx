@@ -17,7 +17,7 @@ export default function ConsultantArticles() {
   const fetchArticles = async () => {
     try {
       const response = await axios.get(
-        `http://127.0.0.1:8000/api/consultants/${user.sub}/articles`,
+        `http://127.0.0.1:8000/api/consultants/${user.id}/articles`,
         {
           headers: {
             Authorization: `Bearer ${sessionStorage.getItem("token")}`,
@@ -33,10 +33,10 @@ export default function ConsultantArticles() {
   };
 
   useEffect(() => {
-    if (user?.sub) {
+    if (user?.id) {
       fetchArticles();
     }
-  }, [user?.sub]);
+  }, [user?.id]);
 
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this article?"))

@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import PageHead from "../components/PageHead";
 import HeadImage from "../assets/images/head.png";
-import ProfileCard from "../components/ProfileCard";
 import InputButton from "../components/InputButton";
 import ConsultantsSection from "../components/ConsultantsSection";
 import Pagination from "../components/Pagination";
 import Footer from "../components/Footer";
 import NavBar from "../components/Navbar";
+import { AuthProvider } from "../context/AuthContext";
 
 const Consultants = () => {
   const [consultants, setConsultants] = useState([]);
@@ -76,7 +76,9 @@ const Consultants = () => {
 
   return (
     <>
-      <NavBar />
+      <AuthProvider>
+        <NavBar />
+      </AuthProvider>
       <PageHead title="Find The Consultant you need" image={HeadImage} />
       <section className="flex flex-col md:flex-row gap-4 items-center justify-around my-10">
         <div className="flex flex-col md:flex-row gap-5 items-center">

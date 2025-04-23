@@ -2,16 +2,17 @@ import React from "react";
 import Sidebar from "../components/Sidebar";
 import DashboardHeader from "../components/DashboardHeader";
 import ConsultantArticles from "../components/ConsultantArticles";
-import EditArticle from "../components/EditArticle";
+import { AuthProvider } from "../context/AuthContext";
 
 export default function ConsultantArticlesPage() {
   return (
     <div className="flex h-full">
       <Sidebar active="consultantArticles" />
       <div className="w-full">
-        <DashboardHeader />
+        <AuthProvider>
+          <DashboardHeader />
+        </AuthProvider>
         <ConsultantArticles />
-        
       </div>
     </div>
   );

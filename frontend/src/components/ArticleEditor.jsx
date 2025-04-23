@@ -63,7 +63,7 @@ export default function ArticleEditor() {
       });
 
       setSuccess(true);
-      // Reset form
+      
       setTitle("");
       setContent("");
       setCover(null);

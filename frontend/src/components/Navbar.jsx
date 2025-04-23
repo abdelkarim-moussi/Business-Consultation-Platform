@@ -1,8 +1,18 @@
 import { Outlet, Link } from "react-router-dom";
-import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import Logout from "../assets/images/logout-white.png";
 
 export default function NavBar() {
-  const [user, setUser] = useState(null);
+  const { user } = useAuth();
+  const { logout } = useAuth();
+
+  const handlelogout = () => {
+    try {
+      logout();
+    } catch (error) {
+      console.log("logout failed", error);
+    }
+  };
 
   return (
     <>
@@ -29,14 +39,19 @@ export default function NavBar() {
               blog
             </Link>
           </li>
-          <li>
+         
+          {!user ? (
             <Link
               to="/login"
               className="px-[25px] py-[5px] text-sm bg-[#D9E0A4] rounded-md text-black text-center transition hover:bg-[#ABB17B] hover:text-white"
             >
               Login
             </Link>
-          </li>
+          ) : (
+            <button onClick={handlelogout} className="hover:inderline">
+              <img src={Logout} className="w-5"/>
+            </button>
+          )}
         </ul>
       </nav>
       <Outlet />

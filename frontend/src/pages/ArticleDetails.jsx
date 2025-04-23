@@ -1,11 +1,14 @@
 import React from "react";
 import NavBar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { AuthProvider } from "../context/AuthContext";
 
 export default function ArticleDetails() {
   return (
     <>
-      <NavBar />
+      <AuthProvider>
+        <NavBar />
+      </AuthProvider>
       <div className="min-h-screen flex flex-col bg-white">
         <div className="bg-[#e4eff0] py-10 px-4 text-center mt-20">
           <h2 className="text-4xl font-bold text-[#1e4c5a]">

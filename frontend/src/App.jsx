@@ -10,71 +10,77 @@ import NewArticle from "./pages/NewArticle";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import PublicRoute from "./routes/PublicRoute";
-import ConsultantArticles from "./components/ConsultantArticles";
 import ConsultantArticlesPage from "./pages/consultantArticlesPage";
+import UserProfile from "./pages/UserProfile";
 
 export default function App() {
   return (
-    <>
+    <AuthProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/consultants" element={<Consultants />}></Route>
-          <Route path="/blog" element={<Blog />}></Route>
+          <Route path="/" element={<Home />} />
+          <Route path="/consultants" element={<Consultants />} />
+          <Route path="/blog" element={<Blog />} />
+
           <Route
             path="/login"
             element={
-              <AuthProvider>
-                <PublicRoute>
-                  <Login />
-                </PublicRoute>
-              </AuthProvider>
+              <PublicRoute>
+                <Login />
+              </PublicRoute>
             }
-          ></Route>
+          />
+
           <Route
             path="/register"
             element={
-              <AuthProvider>
-                <PublicRoute path="/register">
-                  <Register />
-                </PublicRoute>
-              </AuthProvider>
+              <PublicRoute>
+                <Register />
+              </PublicRoute>
             }
-          ></Route>
-          <Route path="/details" element={<ArticleDetails />}></Route>
+          />
+
+          <Route path="/details" element={<ArticleDetails />} />
 
           <Route
             path="/consultantDash"
             element={
-              <AuthProvider>
-                <ProtectedRoute roles={"consultant"}>
-                  <ConsultantDashboard />
-                </ProtectedRoute>
-              </AuthProvider>
+              <ProtectedRoute roles={["consultant"]}>
+                <ConsultantDashboard />
+              </ProtectedRoute>
             }
           />
+
           <Route
             path="/createarticle"
             element={
-              <AuthProvider>
-                <ProtectedRoute>
-                  <NewArticle />
-                </ProtectedRoute>
-              </AuthProvider>
+              <ProtectedRoute>
+                <NewArticle />
+              </ProtectedRoute>
             }
-          ></Route>
+          />
+
           <Route
             path="/consultantArticles"
             element={
-              <AuthProvider>
-                <ProtectedRoute>
-                  <ConsultantArticlesPage />
-                </ProtectedRoute>
-              </AuthProvider>
+              <ProtectedRoute>
+                <ConsultantArticlesPage />
+              </ProtectedRoute>
             }
-          ></Route>
+          />
+
+          <Route
+            path="/Consultconsultations"
+            element={
+              <ProtectedRoute>
+                <ConsultantArticlesPage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route path="/profile" element={<UserProfile />} />
         </Routes>
       </BrowserRouter>
-    </>
+    </AuthProvider>
   );
 }

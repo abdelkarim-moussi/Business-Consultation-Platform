@@ -15,7 +15,7 @@ export default function ConsultantStats() {
     const fetchStats = async () => {
       try {
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/consultants/${user.sub}/stats`,
+          `http://127.0.0.1:8000/api/consultants/${user.id}/stats`,
           {
             headers: {
               Authorization: `Bearer ${sessionStorage.getItem("token")}`,
@@ -32,7 +32,7 @@ export default function ConsultantStats() {
     };
 
     fetchStats();
-  }, [user.sub]);
+  }, [user.id]);
 
   if (loading)
     return <div className="text-center py-8">Loading statistics...</div>;
@@ -143,7 +143,7 @@ export default function ConsultantStats() {
             {stats.article_stats.latest_articles.map((article) => {
               return (
                 <li
-                  className="flex flex justify-between gap-2"
+                  className="flex justify-between gap-2"
                   key={article.id}
                 >
                   <span>{article.title}</span>
