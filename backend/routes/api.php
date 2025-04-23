@@ -38,6 +38,9 @@ Route::middleware(['jwtauth'])->group(function () {
     Route::get('/consultants/{id}/stats', [StatisticsController::class, 'consultantStats']);
 
     Route::apiResource('/profile', ProfileController::class);
+
+    Route::put('resetpassword', [JWTAuthController::class, 'resetPassword']);
+    
 });
 
 Route::apiResource('categories', CategoryController::class);

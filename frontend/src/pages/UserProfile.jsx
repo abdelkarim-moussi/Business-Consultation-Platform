@@ -21,7 +21,7 @@ export default function UserProfile() {
     tags: "",
     currentPassword: "",
     newPassword: "",
-    confirmPassword: "",
+    newPassword_confirmation: "",
   });
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export default function UserProfile() {
       domainExpertise: fetchedUser.domainExpertise,
       currentPassword: "",
       newPassword: "",
-      confirmPassword: "",
+      newPassword_confirmation: "",
     }));
   };
 
@@ -74,6 +74,39 @@ export default function UserProfile() {
       alert(response.data.message);
     } catch (error) {
       console.log("error updating the user", error);
+    }
+  };
+
+  const handlePasswordReset = async (e) => {
+    e.preventDefault();
+
+    try {
+      const token = sessionStorage.getItem("token");
+
+      const response = await axios.put(
+        "http://127.0.0.1:8000/api/resetpassword",
+
+        form,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+          },
+        }
+      );
+
+      alert(response.data.message);
+
+      setForm({
+        ...prev,
+        currentPassword: "",
+        newPassword: "",
+        newPassword_confirmation: "",
+      });
+
+      
+    } catch (error) {
+      throw ("password reset failed", error);
     }
   };
 
@@ -232,7 +265,7 @@ export default function UserProfile() {
               <h3 className="text-lg font-light text-gray-900 mb-6">
                 Sécurité
               </h3>
-              <form className="space-y-4">
+              <form className="space-y-4" onSubmit={handlePasswordReset}>
                 <div className="grid grid-cols-3 gap-4 items-center">
                   <div>
                     <Label label="current password" />
@@ -264,12 +297,15 @@ export default function UserProfile() {
                     <Label label="password confirmation" />
                     <Input
                       type="password"
-                      id="confirmPassword"
-                      name="confirmPassword"
+                      id="newPassword_confirmation"
+                      name="newPassword_confirmation"
                       inputClasses="rounded-lg outline-none"
-                      value={form.confirmPassword}
+                      value={form.newPassword_confirmation}
                       onChange={(e) =>
-                        setForm({ ...form, confirmPassword: e.target.value })
+                        setForm({
+                          ...form,
+                          newPassword_confirmation: e.target.value,
+                        })
                       }
                     />
                   </div>
