@@ -10,7 +10,8 @@ class Consultant extends Model
     protected $fillable = [
         'user_id',
         'experience',
-        'domainExpertise'
+        'domainExpertise',
+        'tags'
     ];
 
    

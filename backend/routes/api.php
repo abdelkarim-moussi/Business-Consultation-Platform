@@ -6,6 +6,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ConsultantController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\JWTAuthController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StatisticsController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,8 +35,9 @@ Route::middleware(['jwtauth'])->group(function () {
 
     Route::get('/entrepreneurs/{id}/stats', [StatisticsController::class, 'entrepreneurStats']);
 
-
     Route::get('/consultants/{id}/stats', [StatisticsController::class, 'consultantStats']);
+
+    Route::apiResource('/profile', ProfileController::class);
 });
 
 Route::apiResource('categories', CategoryController::class);
