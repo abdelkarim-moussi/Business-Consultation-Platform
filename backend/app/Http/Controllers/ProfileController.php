@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Consultant;
 use App\Models\Entrepreneur;
 use App\Models\User;
-use Illuminate\Database\Events\TransactionBeginning;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -23,6 +22,8 @@ class ProfileController extends Controller
             $user = DB::table('users')->join('entrepreneurs', 'users.id', 'entrepreneurs.user_id')
                 ->where('users.id', Auth::user()->id)->first();
         }
+
+
 
         return response()->json(
             [
@@ -70,13 +71,11 @@ class ProfileController extends Controller
                     'domainExpertise' => $validated['domainExpertise'],
                     'tags' => $validated['tags']
                 ]);
-            }
-
-            elseif ($user->accountType === "entrepreneur") {
+            } elseif ($user->accountType === "entrepreneur") {
                 $consultant = Entrepreneur::where('user_id', $id)->first();
                 $consultant->update([
                     'sectorActivity' => $validated['sectorActivity'],
-                    
+
                 ]);
             }
 
