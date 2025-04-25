@@ -1,11 +1,11 @@
 import React from "react";
-import Button from "../components/Button";
+import Button from "../components/buttons/Button";
 import { Link } from "react-router-dom";
-import AboutSection from "../components/AboutSection";
-import { ServicesSection } from "../components/ServicesSection";
-import { ExpertsSection } from "../components/ExpertsSection";
-import { BenifitsSection } from "../components/BenifitsSection";
-import TestimonialsSection from "../components/TestimonialsSection";
+import AboutSection from "../components/sections/AboutSection";
+import { ServicesSection } from "../components/sections/ServicesSection";
+import { ExpertsSection } from "../components/sections/ExpertsSection";
+import { BenifitsSection } from "../components/sections/BenifitsSection";
+import TestimonialsSection from "../components/sections/TestimonialsSection";
 import Footer from "../components/Footer";
 import NavBar from "../components/Navbar";
 import { AuthProvider } from "../context/AuthContext";

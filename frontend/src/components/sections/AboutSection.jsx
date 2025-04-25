@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
-import PlayBtn from "../assets/images/playbtn.png";
-import SectionTitle from "./SectionTitle";
+import PlayBtn from "../../assets/images/playbtn.png";
+import SectionTitle from "../SectionTitle";
 
 const AboutSection = () => {
   return (

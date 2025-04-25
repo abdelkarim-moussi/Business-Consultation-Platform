@@ -1,8 +1,13 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import ProfileCard from './ProfileCard';
+import React from "react";
+import { motion } from "framer-motion";
+import ProfileCard from "../ProfileCard";
 
-const ConsultantsSection = ({ data, loading, currentPage, consultantsPerPage }) => {
+const ConsultantsSection = ({
+  data,
+  loading,
+  currentPage,
+  consultantsPerPage,
+}) => {
   if (loading) {
     return (
       <motion.div
@@ -16,10 +21,12 @@ const ConsultantsSection = ({ data, loading, currentPage, consultantsPerPage }) 
     );
   }
 
-  // Calculate the index range for the current page
   const indexOfLastConsultant = currentPage * consultantsPerPage;
   const indexOfFirstConsultant = indexOfLastConsultant - consultantsPerPage;
-  const currentConsultants = data.slice(indexOfFirstConsultant, indexOfLastConsultant);
+  const currentConsultants = data.slice(
+    indexOfFirstConsultant,
+    indexOfLastConsultant
+  );
 
   return (
     <motion.section
@@ -37,7 +44,7 @@ const ConsultantsSection = ({ data, loading, currentPage, consultantsPerPage }) 
             transition={{ duration: 0.5, delay: index * 0.1 }}
             viewport={{ once: true }}
           >
-            <ProfileCard name={consultant.firstName} />
+            <ProfileCard consultant={consultant} />
           </motion.div>
         ))}
       </div>

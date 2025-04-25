@@ -1,8 +1,8 @@
 import React from "react";
-import RegisterForm from "../components/RegisterForm";
-import Footer from "../components/Footer";
-import NavBar from "../components/Navbar";
-import { AuthProvider } from "../context/AuthContext";
+import RegisterForm from "../../components/RegisterForm";
+import Footer from "../../components/Footer";
+import NavBar from "../../components/Navbar";
+import { AuthProvider } from "../../context/AuthContext";
 
 export default function Register() {
   return (

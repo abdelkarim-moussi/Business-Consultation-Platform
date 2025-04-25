@@ -1,8 +1,8 @@
 import React from "react";
-import Sidebar from "../components/Sidebar";
-import DashboardHeader from "../components/DashboardHeader";
-import ConsultantStats from "../components/ConsultantStats";
-import { AuthProvider } from "../context/AuthContext";
+import Sidebar from "../../components/Sidebar";
+import DashboardHeader from "../../components/dashboards.components/DashboardHeader";
+import ConsultantStats from "../../components/dashboards.components/ConsultantStats";
+import { AuthProvider } from "../../context/AuthContext";
 
 export default function ConsultantDashboard() {
   return (

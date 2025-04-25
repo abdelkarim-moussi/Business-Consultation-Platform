@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import Label from "./Label";
-import Button from "./Button";
+import Label from "../Label";
+import Button from "../buttons/Button";
 
 export default function EditArticleModal({ article, onClose, onUpdated }) {
   const [title, setTitle] = useState("");

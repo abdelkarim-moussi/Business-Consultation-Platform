@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import ArticleCard from './ArticleCard';
+import ArticleCard from '../article.components/ArticleCard';
 
 const ArticlesSection = ({ data, loading, currentPage, articlesPerPage }) => {
   if (loading) {

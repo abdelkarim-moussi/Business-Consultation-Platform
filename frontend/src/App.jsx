@@ -1,17 +1,18 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./pages/Login";
-import Blog from "./pages/Articles";
+import Login from "./pages/auth/Login";
+import Blog from "./pages/articles/Articles";
 import Home from "./pages/Home";
-import Consultants from "./pages/Consultants";
-import Register from "./pages/Register";
-import ArticleDetails from "./pages/ArticleDetails";
-import ConsultantDashboard from "./pages/ConsultantDashboard";
-import NewArticle from "./pages/NewArticle";
+import Consultants from "./pages/consultants/Consultants";
+import Register from "./pages/auth/Register";
+import ArticleDetails from "./pages/Articles/ArticleDetails";
+import ConsultantDashboard from "./pages/consultants/ConsultantDashboard";
+import NewArticle from "./pages/articles/NewArticle";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import PublicRoute from "./routes/PublicRoute";
-import ConsultantArticlesPage from "./pages/consultantArticlesPage";
-import UserProfile from "./pages/UserProfile";
+import ConsultantArticlesPage from "./pages/articles/consultantArticlesPage";
+import UserProfile from "./pages/auth/UserProfile";
+import ConsultantDetails from "./pages/consultants/ConsultantDetails";
 
 export default function App() {
   return (
@@ -40,7 +41,7 @@ export default function App() {
             }
           />
 
-          <Route path="/details" element={<ArticleDetails />} />
+          <Route path="/article_details" element={<ArticleDetails />} />
 
           <Route
             path="/consultantDash"
@@ -79,6 +80,7 @@ export default function App() {
           />
 
           <Route path="/profile" element={<UserProfile />} />
+          <Route path="/consultants/:id" element={<ConsultantDetails />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

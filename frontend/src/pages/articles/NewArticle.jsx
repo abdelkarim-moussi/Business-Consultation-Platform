@@ -1,7 +1,7 @@
 import React from "react";
-import Sidebar from "../components/Sidebar";
-import DashboardHeader from "../components/DashboardHeader";
-import ArticleEditor from "../components/ArticleEditor";
+import Sidebar from "../../components/Sidebar";
+import DashboardHeader from "../../components/dashboards.components/DashboardHeader";
+import ArticleEditor from "../../components/article.components/ArticleEditor";
 
 export default function NewArticle() {
   return (

@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useAuth } from "../context/AuthContext";
-import { Link } from "react-router-dom";
-import PrimaryButton from "./PrimaryButton";
+import { useAuth } from "../../context/AuthContext";
+import PrimaryButton from "../buttons/PrimaryButton";
 import { format } from "date-fns";
-import EditArticle from "./EditArticle";
-import EditArticleModal from "./EditArticle";
+import EditArticleModal from "../article.components/EditArticle";
 
 export default function ConsultantArticles() {
   const { user } = useAuth();

@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion';
-import Dashboard from "../assets/images/Dashboard.png";
-import SectionTitle from "./SectionTitle";
-import growth from "../assets/images/goal.png"
-import graph from "../assets/images/graph.png"
-import planning from "../assets/images/planning.png"
+import Dashboard from "../../assets/images/Dashboard.png";
+import SectionTitle from "../SectionTitle";
+import growth from "../../assets/images/goal.png"
+import graph from "../../assets/images/graph.png"
+import planning from "../../assets/images/planning.png"
 
 export const BenifitsSection = () => {
   return (

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Button from "./Button";
+import Button from "./buttons/Button";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Input from "./Input";

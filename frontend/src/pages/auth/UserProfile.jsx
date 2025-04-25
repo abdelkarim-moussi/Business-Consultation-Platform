@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
-import Input from "../components/Input";
-import Label from "../components/Label";
-import { useAuth } from "../context/AuthContext";
+import Input from "../../components/Input";
+import Label from "../../components/Label";
+import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
-import Button from "../components/Button";
+import Button from "../../components/buttons/Button";
 import { useNavigate } from "react-router-dom";
-import ArrowBack from "../assets/images/arrow-back.png";
+import ArrowBack from "../../assets/images/arrow-back.png";
+import { jwtDecode } from "jwt-decode";
 
 export default function UserProfile() {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const decoded = jwtDecode(sessionStorage.getItem("token"));
 
   const [form, setForm] = useState({
     firstName: "",
@@ -103,8 +105,6 @@ export default function UserProfile() {
         newPassword: "",
         newPassword_confirmation: "",
       });
-
-      
     } catch (error) {
       throw ("password reset failed", error);
     }
@@ -214,47 +214,53 @@ export default function UserProfile() {
                 />
               </div> */}
 
-                <div className="col-span-3">
-                  <Label label="Sector Of Activity" />
-                  <Input
-                    id="sector"
-                    name="sector"
-                    type="text"
-                    value={form.sectorActivity}
-                    inputClasses="rounded-lg outline-none"
-                    onChange={(e) =>
-                      setForm({ ...form, sectorActivity: e.target.value })
-                    }
-                  />
-                </div>
+                {decoded.accountType === "entrepreneur" && (
+                  <div className="col-span-3">
+                    <Label label="Sector Of Activity" />
+                    <Input
+                      id="sector"
+                      name="sector"
+                      type="text"
+                      value={form.sectorActivity}
+                      inputClasses="rounded-lg outline-none"
+                      onChange={(e) =>
+                        setForm({ ...form, sectorActivity: e.target.value })
+                      }
+                    />
+                  </div>
+                )}
 
-                <div className="col-span-3">
-                  <Label label="Domain of Expertise" />
-                  <Input
-                    id="domain"
-                    name="domain"
-                    type="text"
-                    value={form.domainExpertise}
-                    inputClasses="rounded-lg outline-none"
-                    onChange={(e) =>
-                      setForm({ ...form, domainExpertise: e.target.value })
-                    }
-                  />
-                </div>
+                {decoded.accountType === "consultant" && (
+                  <>
+                    <div className="col-span-3">
+                      <Label label="Domain of Expertise" />
+                      <Input
+                        id="domain"
+                        name="domain"
+                        type="text"
+                        value={form.domainExpertise}
+                        inputClasses="rounded-lg outline-none"
+                        onChange={(e) =>
+                          setForm({ ...form, domainExpertise: e.target.value })
+                        }
+                      />
+                    </div>
 
-                <div className="col-span-6">
-                  <Label label="Years of Experience" />
-                  <Input
-                    id="experience"
-                    name="experience"
-                    type="number"
-                    value={form.experience}
-                    inputClasses="rounded-lg outline-none"
-                    onChange={(e) =>
-                      setForm({ ...form, experience: e.target.value })
-                    }
-                  />
-                </div>
+                    <div className="col-span-6">
+                      <Label label="Years of Experience" />
+                      <Input
+                        id="experience"
+                        name="experience"
+                        type="number"
+                        value={form.experience}
+                        inputClasses="rounded-lg outline-none"
+                        onChange={(e) =>
+                          setForm({ ...form, experience: e.target.value })
+                        }
+                      />
+                    </div>
+                  </>
+                )}
                 <div className="col-span-6">
                   <Button type="submit" text="save changes" />
                 </div>

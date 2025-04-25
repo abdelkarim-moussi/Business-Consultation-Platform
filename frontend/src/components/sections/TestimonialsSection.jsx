@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import SectionTitle from './SectionTitle';
-import Testimonial from './Testimonial';
+import SectionTitle from '../SectionTitle';
+import Testimonial from '../Testimonial';
 
 export default function TestimonialsSection() {
   const [currentIndex, setCurrentIndex] = useState(0);

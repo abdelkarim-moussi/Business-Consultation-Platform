@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import PageHead from "../components/PageHead";
-import HeadImage from "../assets/images/blogHead.png";
-import InputButton from "../components/InputButton";
-import Pagination from "../components/Pagination";
-import Footer from "../components/Footer";
-import ArticleSection from "../components/ArticlesSection";
-import NavBar from "../components/Navbar";
-import { AuthProvider } from "../context/AuthContext";
+import PageHead from "../../components/PageHead";
+import HeadImage from "../../assets/images/blogHead.png";
+import InputButton from "../../components/buttons/InputButton";
+import Pagination from "../../components/Pagination";
+import Footer from "../../components/Footer";
+import ArticleSection from "../../components/sections/ArticlesSection";
+import NavBar from "../../components/Navbar";
+import { AuthProvider } from "../../context/AuthContext";
 
 const Articles = () => {
   const [articles, setArticles] = useState([]);

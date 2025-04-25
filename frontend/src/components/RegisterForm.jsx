@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Input from "./Input";
-import Button from "./Button";
+import Button from "./buttons/Button";
 import ReactPasswordChecklist from "react-password-checklist";
 import Label from "./Label";
 import { useAuth } from "../context/AuthContext";
@@ -21,7 +21,7 @@ const RegisterForm = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-  
+
     const newErrors = {};
     if (!firstName.trim()) newErrors.firstName = "First name is required";
     if (!lastName.trim()) newErrors.lastName = "Last name is required";
@@ -36,12 +36,12 @@ const RegisterForm = () => {
     if (password !== password_confirmation)
       newErrors.passwordMatch = "Passwords do not match";
     if (!accountType) newErrors.accountType = "Account type is required";
-  
+
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
-  
+
     try {
       const result = await register({
         firstName,
@@ -51,7 +51,7 @@ const RegisterForm = () => {
         password,
         password_confirmation,
       });
-  
+
       if (result?.user?.accountType === "consultant") {
         navigate("/consultantDash");
       } else if (result?.user?.accountType === "entrepreneur") {
@@ -151,7 +151,7 @@ const RegisterForm = () => {
         <ReactPasswordChecklist
           className="text-sm"
           iconSize={10}
-          rules={["minLength", "specialChar", "capital", "letter", "match"]}
+          rules={["minLength", "match"]}
           minLength={8}
           value={password}
           valueAgain={password_confirmation}

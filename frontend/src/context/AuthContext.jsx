@@ -45,10 +45,7 @@ export const AuthProvider = ({ children }) => {
 
       const userData = {
         id: decodedToken.sub,
-        email: email,
         accountType: decodedToken.accountType,
-        full_name:
-          response.data.user.firstname + " " + response.data.user.firstname,
       };
 
       setUser(userData);

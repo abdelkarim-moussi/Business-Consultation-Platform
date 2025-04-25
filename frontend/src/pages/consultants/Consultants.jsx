@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import PageHead from "../components/PageHead";
-import HeadImage from "../assets/images/head.png";
-import InputButton from "../components/InputButton";
-import ConsultantsSection from "../components/ConsultantsSection";
-import Pagination from "../components/Pagination";
-import Footer from "../components/Footer";
-import NavBar from "../components/Navbar";
-import { AuthProvider } from "../context/AuthContext";
+import PageHead from "../../components/PageHead";
+import HeadImage from "../../assets/images/head.png";
+import InputButton from "../../components/buttons/InputButton";
+import ConsultantsSection from "../../components/consultant.components/ConsultantsSection";
+import Pagination from "../../components/Pagination";
+import Footer from "../../components/Footer";
+import NavBar from "../../components/Navbar";
+import { AuthProvider } from "../../context/AuthContext";
 
 const Consultants = () => {
   const [consultants, setConsultants] = useState([]);

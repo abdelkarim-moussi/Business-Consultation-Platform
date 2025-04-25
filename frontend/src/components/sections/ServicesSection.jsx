@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion';
-import OnlineConsultation from "../assets/images/dialogue.png";
-import Blogs from "../assets/images/blogging.png";
-import Ressource from "../assets/images/resource.png";
-import Solution from "../assets/images/solution.png";
-import Monitize from "../assets/images/video.png";
-import Graph from "../assets/images/graph.png";
-import Client from "../assets/images/costumer.png";
-import SectionTitle from "./SectionTitle";
+import OnlineConsultation from "../../assets/images/dialogue.png";
+import Blogs from "../../assets/images/blogging.png";
+import Ressource from "../../assets/images/resource.png";
+import Solution from "../../assets/images/solution.png";
+import Monitize from "../../assets/images/video.png";
+import Graph from "../../assets/images/graph.png";
+import Client from "../../assets/images/costumer.png";
+import SectionTitle from "../SectionTitle";
 
 export const ServicesSection = () => {
   const consultantServices = [
