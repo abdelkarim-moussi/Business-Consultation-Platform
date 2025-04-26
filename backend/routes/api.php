@@ -7,6 +7,7 @@ use App\Http\Controllers\ConsultantController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\JWTAuthController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\StatisticsController;
 use Illuminate\Support\Facades\Route;
 
@@ -40,7 +41,8 @@ Route::middleware(['jwtauth'])->group(function () {
     Route::apiResource('/profile', ProfileController::class);
 
     Route::put('resetpassword', [JWTAuthController::class, 'resetPassword']);
-    
+
+    Route::apiResource('reviews', ReviewController::class);
 });
 
 Route::apiResource('categories', CategoryController::class);

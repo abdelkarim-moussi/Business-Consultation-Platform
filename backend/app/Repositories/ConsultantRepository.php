@@ -27,8 +27,8 @@ class ConsultantRepository implements ConsultantRepositoryInterface
 
         $consultations_num = Consultation::where('consultant_id', $id)->count();
 
-        $reviews = DB::table('reviews')
-            ->where('consultant_id', $id)
+        $reviews = DB::table('reviews')->join('users', 'reviews.reviewer_id', 'users.id')
+            ->where('reviews.consultant_id', $id)
             ->get();
 
         $reviews_num = $reviews->count();
