@@ -27,8 +27,9 @@ class ConsultationService
 
         $validated = $data->validate(
             [
-                'date'=>'required|date_format:"Y-m-d H:i"',
+                'date'=>'required|date_format:Y-m-d\TH:i',
                 'delay'=>'required',
+                'consultation_reason'=>'required|min:50',
                 'entrepreneur_id'=>'required|exists:entrepreneurs,user_id',
                 'consultant_id'=>'required|exists:consultants,user_id'
             ]
@@ -43,7 +44,7 @@ class ConsultationService
     {
         $validated = $data->validate(
             [
-                'date'=>'required|date_format:"Y-m-d H:i"',
+                'date'=>'required|date_format:"d-m-y H:i"',
                 'delay'=>'required'
             ]
         );

@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('consultations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('consultant_id')->constrained('users','id')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignId('entrepreneur_id')->constrained('users','id')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('consultant_id')->constrained('users', 'id')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('entrepreneur_id')->constrained('users', 'id')->cascadeOnDelete()->cascadeOnUpdate();
             $table->float('delay');
             $table->dateTime('date');
-            $table->enum('status',['pending','cancel','accepted','refused','in_progress','done'])->default('pending');
+            $table->text('consultation_reason');
+            $table->enum('status', ['pending', 'cancel', 'accepted', 'refused', 'in_progress', 'done'])->default('pending');
             $table->timestamps();
         });
     }

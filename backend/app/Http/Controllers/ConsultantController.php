@@ -12,33 +12,36 @@ class ConsultantController extends Controller
     {
         $this->consultantService = $consultantService;
     }
-    
+
     public function index()
     {
 
         $consultants = $this->consultantService->getAllConsultants();
 
-        if(! $consultants){
+        if (! $consultants) {
             return response()->json(
                 [
-                    'message'=>'there is no consultants now'
+                    'message' => 'there is no consultants now'
                 ]
-                );
+            );
         }
 
         return response()->json(
             [
-                'consultants'=>$consultants
-            ]
-            ,200);
+                'consultants' => $consultants
+            ],
+            200
+        );
     }
 
-    public function show($id){
-        $consultant = $this->consultantService->findConsultantById($id);
+    public function show($id)
+    {
+        $data = $this->consultantService->findConsultantById($id);
         return response()->json(
             [
-                'consultant'=>$consultant
-            ],200
+                $data
+            ],
+            200
         );
     }
 }

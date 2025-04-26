@@ -3,6 +3,8 @@
 namespace App\Repositories;
 
 use App\Models\Consultant;
+use App\Models\Consultation;
+use App\Models\Review;
 use App\Repositories\Interfaces\ConsultantRepositoryInterface;
 use Illuminate\Support\Facades\DB;
 
@@ -17,6 +19,27 @@ class ConsultantRepository implements ConsultantRepositoryInterface
 
     public function findById($id)
     {
-        return DB::table('users')->join('consultants', 'users.id', 'consultants.user_id')->get();
+        $consultant = DB::table('users')
+            ->join('consultants', 'users.id', '=', 'consultants.user_id')
+            ->where('consultants.id', $id)
+            ->select('users.*', 'consultants.*')
+            ->first();
+
+        $consultations_num = Consultation::where('consultant_id', $id)->count();
+
+        $reviews = DB::table('reviews')
+            ->where('consultant_id', $id)
+            ->get();
+
+        $reviews_num = $reviews->count();
+
+        $data = [
+            'consultant' => $consultant,
+            'consultations_num' => $consultations_num,
+            'reviews' => $reviews,
+            'reviews_num' => $reviews_num,
+        ];
+
+        return $data;
     }
 }

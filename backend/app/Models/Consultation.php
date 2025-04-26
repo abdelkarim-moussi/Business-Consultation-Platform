@@ -10,7 +10,8 @@ class Consultation extends Model
         'date',
         'delay',
         'entrepreneur_id',
-        'consultant_id'
+        'consultant_id',
+        'consultation_reason'
     ];
 
 

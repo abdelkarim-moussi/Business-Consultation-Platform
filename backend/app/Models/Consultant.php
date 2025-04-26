@@ -14,5 +14,8 @@ class Consultant extends Model
         'tags'
     ];
 
-   
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }

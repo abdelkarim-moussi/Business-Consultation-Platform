@@ -12,7 +12,6 @@ class User extends Authenticatable implements JWTSubject
 
     use HasFactory, Notifiable;
 
-
     public function getJWTIdentifier()
     {
         return $this->getKey();
@@ -24,7 +23,6 @@ class User extends Authenticatable implements JWTSubject
             'accountType' => $this->accountType
         ];
     }
-
 
     protected $fillable = [
         'firstName',
@@ -48,7 +46,6 @@ class User extends Authenticatable implements JWTSubject
             'password' => 'hashed',
         ];
     }
-
 
     public function entrepreneurConsultations()
     {
