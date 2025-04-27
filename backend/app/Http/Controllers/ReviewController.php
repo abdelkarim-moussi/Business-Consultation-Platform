@@ -12,36 +12,32 @@ class ReviewController extends Controller
 
     public function store(Request $request)
     {
+       
+        Gate::authorize('create', Review::class);
 
-        $review = Review::where('reviewer_id', '=', $request['reviewer_id'])->get();
+       
+        $validated = $request->validate([
+            'consultant_id' => 'required',
+            'reviewer_id' => 'required',
+            'reviewText' => 'required|min:20',
+            'rating' => 'required'
+        ]);
 
-        if (! Gate::allows('create', Review::class)) {
-            abort(403,'you are not allowed to add a review');
-        }
+    
+        $existingReview = Review::where('reviewer_id', $request->reviewer_id)
+            ->where('consultant_id', $request->consultant_id)
+            ->first(); 
 
-        $validated = $request->validate(
-            [
-                'consultant_id' => 'required',
-                'reviewer_id' => 'required',
-                'reviewText' => 'required|min:20',
-                'rating' => 'required'
-            ]
-        );
-
-        if ($review) {
-            return response()->json(
-                [
-                    'error' => 'you already reviewed this consultant'
-                ]
-            );
+        if ($existingReview) {
+            return response()->json([
+                'error' => 'You already reviewed this consultant'
+            ], 400); 
         }
 
         Review::create($validated);
 
-        return response()->json(
-            [
-                'message' => 'review added succefully'
-            ]
-        );
+        return response()->json([
+            'message' => 'Review added successfully'
+        ], 201); 
     }
 }
