@@ -12,10 +12,10 @@ class ReviewController extends Controller
 
     public function store(Request $request)
     {
-       
+
         Gate::authorize('create', Review::class);
 
-       
+
         $validated = $request->validate([
             'consultant_id' => 'required',
             'reviewer_id' => 'required',
@@ -23,21 +23,36 @@ class ReviewController extends Controller
             'rating' => 'required'
         ]);
 
-    
+
         $existingReview = Review::where('reviewer_id', $request->reviewer_id)
             ->where('consultant_id', $request->consultant_id)
-            ->first(); 
+            ->first();
 
         if ($existingReview) {
             return response()->json([
                 'error' => 'You already reviewed this consultant'
-            ], 400); 
+            ], 400);
         }
 
         Review::create($validated);
 
         return response()->json([
             'message' => 'Review added successfully'
-        ], 201); 
+        ], 201);
+    }
+
+
+    public function destroy($id)
+    {
+
+        $ExistingReview = Review::findOrFail($id);
+
+        $ExistingReview->delete();
+
+        return response()->json(
+            [
+                'message' => 'review deleted succefully'
+            ]
+        );
     }
 }
