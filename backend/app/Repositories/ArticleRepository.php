@@ -7,12 +7,21 @@ use App\Models\Category;
 use App\Repositories\Interfaces\ArticleRepositoryInterface;
 use Illuminate\Support\Facades\DB;
 
+use function PHPSTORM_META\map;
+
 class ArticleRepository implements ArticleRepositoryInterface
 {
 
     public function all()
     {
-        return Article::all();
+        $articles = Article::with('author', 'tags')->get();
+    
+        $articles->map(function ($article) {
+            $article->cover = asset('storage/' . $article->cover);
+            return $article;
+        });
+
+        return $articles;
     }
 
     public function find($id)

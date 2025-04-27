@@ -44,11 +44,10 @@ class ArticleService
                 'category_id' => 'required'
             ]);
 
-            $validated['path'] = $data->file('cover')->store('covers', 'public');
-
+            $validated['cover'] = $data->file('cover')->store('covers', 'public');
             $article = JWTAuth::user()->articles()->create($validated);
 
-            if ($data['tags']) {
+            if ($data->has('tags')) {
                 $tags = [
                     'article_id' => $article->id,
                     'tags' => $data['tags']

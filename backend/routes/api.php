@@ -16,6 +16,8 @@ Route::post('login', [JWTAuthController::class, 'login']);
 
 Route::apiResource('consultants', ConsultantController::class);
 
+Route::get('/articles', [ArticleController::class, 'index']);
+
 Route::middleware(['jwtauth'])->group(function () {
 
     Route::get('user', [JWTAuthController::class, 'getUser']);
