@@ -45,7 +45,6 @@ class ArticleController extends Controller
     {
 
         return $this->articleService->updateArticle($id, $request);
-
     }
 
     public function destroy($id)

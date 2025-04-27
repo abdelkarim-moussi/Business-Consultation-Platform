@@ -18,7 +18,7 @@ return new class extends Migration
             $table->float('delay');
             $table->dateTime('date');
             $table->text('consultation_reason');
-            $table->enum('status', ['pending', 'cancel', 'accepted', 'refused', 'in_progress', 'done'])->default('pending');
+            $table->enum('status', ['pending', 'canceled', 'accepted', 'refused', 'in_progress', 'done'])->default('pending');
             $table->timestamps();
         });
     }

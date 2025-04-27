@@ -3,7 +3,10 @@
 namespace App\Services;
 
 use App\Models\Article;
+use App\Models\Tag;
 use App\Repositories\ArticleRepository;
+use Exception;
+use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class ArticleService
@@ -31,24 +34,44 @@ class ArticleService
     public function createArticle($data)
     {
 
-        $validated = $data->validate([
-            'author_id' => 'required|exists:users,id',
-            'title' => 'required|min:10',
-            'content' => 'required|min:100',
-            'cover' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'category_id' => 'required'
-        ]);
+        try {
+            DB::beginTransaction();
+            $validated = $data->validate([
+                'author_id' => 'required|exists:users,id',
+                'title' => 'required|min:10',
+                'content' => 'required|min:100',
+                'cover' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+                'category_id' => 'required'
+            ]);
 
-        $validated['path'] = $data->file('cover')->store('covers', 'public');
+            $validated['path'] = $data->file('cover')->store('covers', 'public');
 
-        JWTAuth::user()->articles()->create($validated);
+            $article = JWTAuth::user()->articles()->create($validated);
 
-        return response()->json(
-            [
-                'message' => 'article created succefully',
-            ],
-            200
-        );
+            if ($data['tags']) {
+                $tags = [
+                    'article_id' => $article->id,
+                    'tags' => $data['tags']
+                ];
+
+                Tag::create($tags);
+            }
+
+            DB::commit();
+            return response()->json(
+                [
+                    'message' => 'article created succefully',
+                ],
+                200
+            );
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'error' => 'Something went wrong!',
+                'details' => $e->getMessage()
+            ], 500);
+        }
     }
 
     public function updateArticle($id, $data)
