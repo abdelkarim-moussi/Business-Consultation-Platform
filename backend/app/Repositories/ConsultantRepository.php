@@ -13,8 +13,14 @@ class ConsultantRepository implements ConsultantRepositoryInterface
 
     public function getAll()
     {
-
-        return  DB::table('users')->join('consultants', 'users.id', 'consultants.user_id')->get();
+        $consultants = DB::table('users')
+            ->join('consultants', 'users.id', '=', 'consultants.user_id')
+            ->leftJoin('reviews', 'consultants.id', '=', 'reviews.consultant_id')
+            ->select('users.*', 'consultants.*', DB::raw('COUNT(reviews.id) as ratings_count'))
+            ->groupBy('users.id', 'consultants.id')
+            ->get();
+            
+        return $consultants;
     }
 
     public function findById($id)
@@ -29,9 +35,9 @@ class ConsultantRepository implements ConsultantRepositoryInterface
 
         $reviews = DB::table('reviews')->join('users', 'reviews.reviewer_id', 'users.id')
             ->where('reviews.consultant_id', $id)
-            ->select('reviews.id','reviews.reviewer_id','reviews.consultant_id','reviews.rating','reviews.reviewText','users.firstName','users.lastName')
+            ->select('reviews.id', 'reviews.reviewer_id', 'reviews.consultant_id', 'reviews.rating', 'reviews.reviewText', 'users.firstName', 'users.lastName')
             ->get();
-        
+
         $reviews_num = $reviews->count();
 
         $data = [
