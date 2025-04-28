@@ -42,6 +42,8 @@ Route::middleware(['jwtauth'])->group(function () {
 
     Route::apiResource('/profile', ProfileController::class);
 
+    Route::post('updatephoto', [ProfileController::class,'updatePhoto']);
+
     Route::put('resetpassword', [JWTAuthController::class, 'resetPassword']);
 
     Route::apiResource('reviews', ReviewController::class);

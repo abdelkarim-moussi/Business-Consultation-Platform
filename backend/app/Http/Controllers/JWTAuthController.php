@@ -54,9 +54,9 @@ class JWTAuthController extends Controller
             DB::commit();
 
             return response()->json([
-                'user'=>$user,
-                'token'=>$token,
-                'message'=>'your account is created succefully'
+                'user' => $user,
+                'token' => $token,
+                'message' => 'your account is created succefully'
             ], 201);
         } catch (\Exception $e) {
 
@@ -135,26 +135,28 @@ class JWTAuthController extends Controller
     }
 
 
-    public function resetPassword(Request $request){
+    public function resetPassword(Request $request)
+    {
 
         $validated = $request->validate(
             [
-                'currentPassword'=>'required|min:6',
-                'newPassword'=>'required|confirmed|confirmed|min:6',
-                'newPassword_confirmation'=>'required'
+                'currentPassword' => 'required|min:6',
+                'newPassword' => 'required|confirmed|confirmed|min:6',
+                'newPassword_confirmation' => 'required'
             ]
-            );
+        );
 
-        if(! JWTAuth::user()->password === $validated['currentPassword']){
-            abort(403,'current password incorect');
+        if (! JWTAuth::user()->password === $validated['currentPassword']) {
+            abort(403, 'current password incorect');
         }
 
-        User::find(JWTAuth::user()->id)->update(['password'=>$request->newPassword]);
+        User::find(JWTAuth::user()->id)->update(['password' => $request->newPassword]);
         return response()->json(
             [
-                'message'=>"password updated succefully"
+                'message' => "password updated succefully"
             ]
-            );
+        );
     }
 
+   
 }

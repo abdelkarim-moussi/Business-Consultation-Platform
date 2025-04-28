@@ -38,7 +38,7 @@ class ArticleService
             DB::beginTransaction();
             $validated = $data->validate([
                 'author_id' => 'required|exists:users,id',
-                'title' => 'required|min:10',
+                'title' => 'required|min:50',
                 'content' => 'required|min:100',
                 'cover' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
                 'category_id' => 'required'

@@ -18,11 +18,17 @@ class ProfileController extends Controller
         if ($user->accountType === 'consultant') {
             $user = DB::table('users')->join('consultants', 'users.id', 'consultants.user_id')
                 ->where('users.id', Auth::user()->id)->first();
+
+
+            $avgRating = DB::table('reviews')->select(DB::raw('avg(rating) as avgrating'))->where('consultant_id', $user->id)->get()->first();
+            $user->avgrating = $avgRating->avgrating;
+
+            $user->photo = asset('/storage/' . $user->photo);
         } else if ($user->accountType === 'entrepreneur') {
             $user = DB::table('users')->join('entrepreneurs', 'users.id', 'entrepreneurs.user_id')
                 ->where('users.id', Auth::user()->id)->first();
+            $user->photo = asset('/storage/' . $user->photo);
         }
-
 
 
         return response()->json(
@@ -98,19 +104,24 @@ class ProfileController extends Controller
         }
     }
 
-
     public function updatePhoto(Request $request)
     {
-        $path['photo'] = [];
-        if ($request->hasfile('updated-photo')) {
-            $path['photo'] = $request->file('updated-photo')->store('photos', 'public');
-        }
 
-        if ($path['photo']) {
-            $user = User::find(Auth::user()->id);
-            $user->update($path);
-        }
+        $validated = $request->validate(
+            [
+                'photo' => 'sometimes|image|mimes:jpg,jpeg,png,webp|max:2048'
+            ]
+        );
 
-        return redirect('/profile');
+        $validated['photo'] = $request->file('photo')->store('photos', 'public');
+        $user = User::findOrFail(Auth::user()->id);
+
+        $user->update($validated);
+
+        return response()->json(
+            [
+                'message' => 'your photo is updated succefully'
+            ]
+        );
     }
 }
