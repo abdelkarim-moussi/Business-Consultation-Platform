@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import PlayBtn from "../../assets/images/playbtn.png";
+import PlayBtn from "../../assets/images/icon-jouer.png";
 import SectionTitle from "../SectionTitle";
 
 const AboutSection = () => {
@@ -9,7 +9,7 @@ const AboutSection = () => {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       viewport={{ once: true }}
-      className="w-full flex-col gap-5 flex items-center justify-center py-10 h-[300px] text-center text-white bg-[#19485F]"
+      className="w-full flex-col gap-5 flex items-center justify-center py-10 h-[300px] text-center text-white bg-[#4F46E5]"
     >
       <SectionTitle text="BusConsult ?"/>
       <motion.p
@@ -29,8 +29,9 @@ const AboutSection = () => {
         transition={{ duration: 0.5, delay: 0.4 }}
         viewport={{ once: true }}
         type="button"
+        className='border border-white rounded-full p-2 flex items-center justify-center'
       >
-        <img src={PlayBtn} alt="play-btn" className="w-[50px] h-[50px]" />
+        <img src={PlayBtn} alt="play-btn" className="w-[40px] h-[40px] mx-auto" />
       </motion.button>
     </motion.div>
   );

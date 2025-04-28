@@ -11,7 +11,7 @@ const PageHead = ({ title, image }) => {
           alt="header image"
         />
       </div>
-      <div className="w-full h-[1px] bg-[#D9E0A4] my-10"></div>
+      <div className="w-full h-[1px] bg-[#EEF2FF] my-10"></div>
     </div>
   );
 };

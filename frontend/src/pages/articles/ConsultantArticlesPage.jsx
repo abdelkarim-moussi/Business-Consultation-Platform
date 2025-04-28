@@ -10,7 +10,7 @@ export default function ConsultantArticlesPage() {
       <Sidebar active="consultantArticles" />
       <div className="w-full">
         <AuthProvider>
-          <DashboardHeader />
+          <DashboardHeader page="Articles"/>
         </AuthProvider>
         <ConsultantArticles />
       </div>

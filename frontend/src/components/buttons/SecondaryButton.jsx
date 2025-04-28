@@ -1,12 +1,13 @@
-import { Link } from "react-router-dom";
+import React from "react";
 
-export default function SecondaryButton({ text, link ,extraClasses}) {
+export default function SecondaryButton({ type, text, extraClasses, onClick }) {
   return (
-    <Link
-      to={link}
-      className={`border-2 border-[#D9E0A4] px-8 py-1 capitalize transition hover:border-[#19485F] hover:text-[#19485F] rounded-md ${extraClasses}`}
+    <button
+      onClick={onClick}
+      type={type}
+      className={`px-4 py-1.5 border border-[#4F46E5] rounded-m text-center transition hover:bg-[#4338CA] hover:text-white capitalize ${extraClasses}`}
     >
       {text}
-    </Link>
+    </button>
   );
 }

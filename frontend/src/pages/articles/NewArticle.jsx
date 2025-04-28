@@ -8,7 +8,7 @@ export default function NewArticle() {
     <div className="flex">
       <Sidebar active="createarticle"/>
       <div className="w-full">
-        <DashboardHeader />
+        <DashboardHeader page="Create Article"/>
         <ArticleEditor />
       </div>
     </div>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Input from "./Input";
-import Button from "./buttons/Button";
+import Button from "./buttons/PrimaryButton";
 import ReactPasswordChecklist from "react-password-checklist";
 import Label from "./Label";
 import { useAuth } from "../context/AuthContext";

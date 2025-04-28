@@ -5,7 +5,7 @@ const Input = React.forwardRef(
     return (
       <input
         ref={ref}
-        className={`w-full border border-black h-[35px] px-3 text-sm rounded-lg ${inputClasses}`}
+        className={`w-full border border-[#4F46E5] h-[35px] px-3 text-sm rounded-lg mt-1 outline-none ${inputClasses}`}
         id={id}
         name={name}
         value={value}

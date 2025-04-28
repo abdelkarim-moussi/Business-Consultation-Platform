@@ -40,13 +40,17 @@ const Consultants = () => {
 
   useEffect(() => {
     const filteredConsultants = consultants.filter((consultant) => {
-      const nameMatch = consultant.firstName
+      var fullName = consultant.lastName + " " + consultant.firstName;
+      const nameMatch = fullName
         .toLowerCase()
         .includes(searchTerm.toLowerCase());
-      const industryMatch = industry ? consultant.industry === industry : true;
-      const experienceMatch = experience
-        ? consultant.experience === experience
+      const industryMatch = industry
+        ? consultant.domainExpertise === industry
         : true;
+      const experienceMatch = experience
+        ? consultant.experience == experience
+        : true;
+
       return nameMatch && industryMatch && experienceMatch;
     });
 
@@ -86,7 +90,7 @@ const Consultants = () => {
           <select
             name="industry"
             id="industry"
-            className="border-2 text-sm border-[#D9E0A4] px-6 py-1 capitalize transition hover:border-[#19485F] rounded-md cursor-pointer"
+            className="border-2 text-sm border-[#4F46E5] px-6 py-1 capitalize transition hover:border-[#4338CA] rounded-md cursor-pointer"
             value={industry}
             onChange={handleIndustryChange}
           >
@@ -99,7 +103,7 @@ const Consultants = () => {
           <select
             name="experience"
             id="experience"
-            className="border-2 text-sm border-[#D9E0A4] px-6 py-1 capitalize transition hover:border-[#19485F] rounded-md cursor-pointer"
+            className="border-2 text-sm border-[#4338CA] px-6 py-1 capitalize transition hover:border-[#4338CA] rounded-md cursor-pointer"
             value={experience}
             onChange={handleExperienceChange}
           >

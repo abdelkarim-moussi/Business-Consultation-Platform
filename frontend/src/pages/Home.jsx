@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "../components/buttons/Button";
+import Button from "../components/buttons/PrimaryButton";
 import { Link } from "react-router-dom";
 import AboutSection from "../components/sections/AboutSection";
 import { ServicesSection } from "../components/sections/ServicesSection";
@@ -9,6 +9,8 @@ import TestimonialsSection from "../components/sections/TestimonialsSection";
 import Footer from "../components/Footer";
 import NavBar from "../components/Navbar";
 import { AuthProvider } from "../context/AuthContext";
+import PrimaryLink from "../components/buttons/PrimaryLink";
+import SecondaryLink from "../components/buttons/SecondaryLink";
 
 const Home = () => {
   return (
@@ -23,22 +25,14 @@ const Home = () => {
           <h4 className="text-md text-white text-center md:text-left">
             Welcome To BusConsult
           </h4>
-          <h1 className="text-[4rem] text-[#19485F] font-semibold text-center md:text-left md:text-[5rem] leading-[4rem] mb-10">
+          <h1 className="text-[4rem] text-[#4F46E5] font-semibold text-center md:text-left md:text-[5rem] leading-[4rem] mb-10">
             take your business to the next level
           </h1>
           <div className="flex gap-5 justify-center md:justify-start">
-            <Link
-              to="/login"
-              className="border-2 border-[#D9E0A4] px-8 py-1 text-white capitalize transition hover:border-[#19485F] rounded-md"
-            >
-              login
-            </Link>
-            <Link
-              to="/register"
-              className="bg-[#19485F] border-2 border-[#19485F] px-8 py-1 text-white capitalize transition hover:bg-[#D9E0A4] hover:border-[#D9E0A4] hover:text-[#19485F] rounded-md"
-            >
-              register
-            </Link>
+            
+            <PrimaryLink text="Log In" link="/login" extraClasses="px-8"/>
+            <SecondaryLink text="Sign Up" link="/register" extraClasses="px-8"/>
+           
           </div>
         </div>
       </div>

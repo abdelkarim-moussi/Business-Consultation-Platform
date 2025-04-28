@@ -1,13 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
-export default function PrimaryButton({link,text,extraClasses}) {
+export default function PrimaryButton({ type, text, extraClasses, onClick }) {
   return (
-    <Link
-      to={link}
-      className={`bg-[#19485F] border-2 border-[#19485F] px-8 py-1 text-white capitalize transition hover:bg-[#D9E0A4] hover:border-[#D9E0A4] hover:text-[#19485F] rounded-md ${extraClasses}`}
+    <button
+      onClick={onClick}
+      type={type}
+      className={`px-4 py-1.5 bg-[#4F46E5] rounded-md text-white text-center transition hover:bg-[#4338CA] hover:text-white capitalize ${extraClasses}`}
     >
       {text}
-    </Link>
+    </button>
   );
 }

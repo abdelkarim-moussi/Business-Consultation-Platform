@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Button from "../components/buttons/Button"; // assuming you're using your own Button
+import Button from "./buttons/PrimaryButton"; // assuming you're using your own Button
 import { Dialog } from "@headlessui/react";
 import { format, formatDate } from "date-fns";
 import { useAuth } from "../context/AuthContext";

@@ -15,7 +15,7 @@ class ArticleRepository implements ArticleRepositoryInterface
     public function all()
     {
         $articles = Article::with('author', 'tags')->get();
-    
+
         $articles->map(function ($article) {
             $article->cover = asset('storage/' . $article->cover);
             return $article;
@@ -60,7 +60,7 @@ class ArticleRepository implements ArticleRepositoryInterface
 
     public function getArticlesForConsultant($id)
     {
-        return Article::with(['author', 'category'])
+        return Article::with(['author', 'category', 'tags'])
             ->where('author_id', $id)
             ->orderBy('created_at', 'desc')
             ->get();

@@ -10,7 +10,7 @@ export default function ConsultantDashboard() {
       <Sidebar active="consultantDash" />
       <div className="w-full">
         <AuthProvider>
-          <DashboardHeader />
+          <DashboardHeader page="Dashboard"/>
         </AuthProvider>
         <ConsultantStats />
       </div>

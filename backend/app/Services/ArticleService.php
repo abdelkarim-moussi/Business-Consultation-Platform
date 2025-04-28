@@ -76,19 +76,31 @@ class ArticleService
     public function updateArticle($id, $data)
     {
 
-        $validated = $data->validate([
-            'title' => 'required|min:10',
-            'content' => 'required|min:100',
-            'status' => 'required',
-            'cover' => 'sometimes|image|mimes:jpg,jpeg,png,webp|max:2048',
-        ]);
 
-        if ($data->hasFile('cover')) {
-            $path = $data->file('cover')->store('covers', 'public');
-            $validated['cover'] = $path;
+        try {
+
+            $validated = $data->validate([
+                'title' => 'required|min:50',
+                'content' => 'required|min:100',
+                'status' => 'required',
+                'cover' => 'sometimes|image|mimes:jpg,jpeg,png,webp|max:2048',
+            ]);
+
+            if ($data->hasFile('cover')) {
+                $path = $data->file('cover')->store('covers', 'public');
+                $validated['cover'] = $path;
+            }
+
+            if ($data->has('tags')) {
+                $tags = [
+                    'article_id' => $id,
+                    'tags' => $data['tags']
+                ];
+            }
+
+            return $this->articleRepository->update($id, $validated);
+        } catch (Exception $e) {
         }
-
-        return $this->articleRepository->update($id, $validated);
     }
 
 

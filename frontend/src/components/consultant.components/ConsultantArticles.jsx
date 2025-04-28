@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
-import PrimaryButton from "../buttons/PrimaryButton";
+import PrimaryButton from "../buttons/PrimaryLink";
 import { format } from "date-fns";
 import EditArticleModal from "../article.components/EditArticle";
 
@@ -23,6 +23,7 @@ export default function ConsultantArticles() {
         }
       );
       setArticles(response.data.data);
+    
     } catch (err) {
       setError("Failed to load articles");
     } finally {

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import PrimaryButton from "../buttons/PrimaryButton";
+import PrimaryButton from "../buttons/PrimaryLink";
 import ProfileCard from "../ProfileCard";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -54,7 +54,7 @@ export const ExpertsSection = () => {
         className="text-center text-[6rem] md:text-[8em] leading-[7rem] font-bold mb-20"
       >
         Find the
-        <br /> right <span className="text-[#19485F]">expert</span> for you
+        <br /> right <span className="text-[#4338CA]">expert</span> for you
       </motion.h1>
 
       <motion.div

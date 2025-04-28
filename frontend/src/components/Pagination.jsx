@@ -13,7 +13,7 @@ const Pagination = ({ currentPage, dataPerPage, totalData, handlePagination }) =
         <button
           key={pageNumber}
           className={`px-3 py-1 mx-1 rounded-full transition ${
-            currentPage === pageNumber ? "bg-[#19485F] text-white" : "bg-white"
+            currentPage === pageNumber ? "bg-[#4F46E5] text-white" : "bg-white"
           }`}
           onClick={() => handlePagination(pageNumber)}
         >

@@ -19,7 +19,7 @@ class ArticleController extends Controller
 
         $articles = $this->articleService->getAllArticles();
 
-        return response()->json(compact('articles'), 200);
+        return response()->json(['articles' => $articles], 200);
     }
 
     public function show($id)
@@ -58,7 +58,6 @@ class ArticleController extends Controller
         $articles = $this->articleService->getConsultantArticles($consultantId);
 
         return response()->json([
-            'success' => true,
             'data' => $articles
         ]);
     }

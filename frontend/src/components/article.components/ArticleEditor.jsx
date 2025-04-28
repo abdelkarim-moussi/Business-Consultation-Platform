@@ -3,7 +3,7 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import axios from "axios";
 import Input from "../Input";
-import Button from "../buttons/Button";
+import Button from "../buttons/PrimaryButton";
 import Label from "../Label";
 import { jwtDecode } from "jwt-decode";
 
@@ -16,6 +16,9 @@ export default function ArticleEditor() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+  const [tags, setTags] = useState([]);
+  const [tagInput, setTagInput] = useState("");
+
   const fileInputRef = useRef(null);
 
   useEffect(() => {
@@ -52,6 +55,8 @@ export default function ArticleEditor() {
       formData.append("title", title);
       formData.append("content", content);
       formData.append("category_id", selectedCategory);
+      formData.append("tags", tags);
+
       if (cover) formData.append("cover", cover);
 
       await axios.post("http://127.0.0.1:8000/api/articles", formData, {
@@ -63,7 +68,7 @@ export default function ArticleEditor() {
       });
 
       setSuccess(true);
-      
+
       setTitle("");
       setContent("");
       setCover(null);
@@ -76,6 +81,20 @@ export default function ArticleEditor() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && tagInput.trim() !== "") {
+      e.preventDefault();
+      if (!tags.includes(tagInput.trim())) {
+        setTags([...tags, tagInput.trim()]);
+      }
+      setTagInput("");
+    }
+  };
+
+  const handleRemoveTag = (index) => {
+    setTags(tags.filter((_, i) => i !== index));
   };
 
   return (
@@ -111,7 +130,7 @@ export default function ArticleEditor() {
             name="category_id"
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="w-full p-2 border"
+            className="w-full h-[35px] border border-[#4F46E5] rounded-lg outline-none mt-1"
             required
           >
             {categories.map((category) => (
@@ -130,13 +149,45 @@ export default function ArticleEditor() {
             type="file"
             onChange={(e) => setCover(e.target.files[0])}
             ref={fileInputRef}
-            className="w-full"
+            className="w-full h-[35px] text-sm text-slate-500 rounded-lg cursor-pointer outline-none file:bg-[#EEF2FF] file:text-[#4F46E5] file:border-none border border-[#4F46E5] file:outline-none file:h-full file:cursor-pointer file:text-sm"
+          />
+        </div>
+
+        <div>
+          <Label label="Tags" htmlFor="tags" />
+
+          <div className="flex flex-wrap gap-2 mb-2">
+            {tags.map((tag, index) => (
+              <span
+                key={index}
+                className="flex items-center gap-1 bg-[#EEF2FF] text-[#4F46E5] px-3 py-1 rounded-full text-sm"
+              >
+                {tag}
+                <button
+                  type="button"
+                  onClick={() => handleRemoveTag(index)}
+                  className="text-red-500 hover:text-red-700"
+                >
+                  ×
+                </button>
+              </span>
+            ))}
+          </div>
+
+          <input
+            id="tags"
+            type="text"
+            value={tagInput}
+            onChange={(e) => setTagInput(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="Type a tag and press Enter"
+            className="w-full h-[35px] border border-[#4F46E5] rounded-lg outline-none p-2"
           />
         </div>
 
         <div className="editor-container">
           <Label label="Content" />
-          <div className="border rounded">
+          <div className="border rounded-lg border-[#4F46E5]">
             <CKEditor
               editor={ClassicEditor}
               data={content}

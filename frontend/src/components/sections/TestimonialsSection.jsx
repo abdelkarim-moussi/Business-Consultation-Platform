@@ -81,7 +81,7 @@ export default function TestimonialsSection() {
             <div
               key={index}
               className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                index === Math.floor(currentIndex / 3) ? 'bg-gray-800' : 'bg-gray-400'
+                index === Math.floor(currentIndex / 3) ? 'bg-[#4338CA]' : 'bg-[#EEF2FF]'
               }`}
               onClick={() => setCurrentIndex(index * 3)}
             />
