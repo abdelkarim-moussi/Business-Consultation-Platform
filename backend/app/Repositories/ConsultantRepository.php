@@ -19,7 +19,11 @@ class ConsultantRepository implements ConsultantRepositoryInterface
             ->select('users.*', 'consultants.*', DB::raw('COUNT(reviews.id) as ratings_count'))
             ->groupBy('users.id', 'consultants.id')
             ->get();
-            
+
+        $consultants->map(function ($consultant) {
+            $consultant->photo = asset('/storage/' . $consultant->photo);
+        });
+
         return $consultants;
     }
 
