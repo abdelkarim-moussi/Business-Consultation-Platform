@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { FaCalendarAlt, FaTag } from "react-icons/fa";
 
-const ArticleCard = ({ ...props }) => {
-  // Format date function
+const ArticleCard = ({ article }) => {
+  
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
@@ -22,46 +22,45 @@ const ArticleCard = ({ ...props }) => {
   return (
     <div className="flex flex-col h-full transition-transform duration-300 hover:-translate-y-1">
       <div className="bg-white shadow-md rounded-xl overflow-hidden h-full flex flex-col">
-        {/* Article cover image */}
         <div className="relative">
           <img
-            src={props.article.cover || "/api/placeholder/400/170"}
-            alt={props.article.title || "Article cover"}
+            src={article.cover || "/api/placeholder/400/170"}
+            alt={article.title || "Article cover"}
             className="h-48 w-full object-cover"
           />
-          {props.article.category && (
+          {article.category && (
             <span className="absolute top-4 left-4 bg-indigo-600 text-white text-xs font-medium py-1 px-2 rounded-full">
-              {props.article.category}
+              {article.category}
             </span>
           )}
         </div>
 
-        {/* Article content */}
         <div className="p-5 flex flex-col flex-grow">
-          {/* Title */}
-          <Link to={`/articles/${props.article.id}`} className="group">
+          <Link to={`/articles/${article.id}`} className="group">
             <h2 className="text-lg font-semibold text-gray-800 group-hover:text-indigo-600 transition-colors mb-3">
-              {truncateText(props.article.title, 60)}
+              {truncateText(article.title, 60)}
             </h2>
           </Link>
 
-          {props.article.description && (
+          {article.description && (
             <p className="text-gray-600 text-sm mb-4">
-              {truncateText(props.article.description, 100)}
+              {truncateText(article.description, 100)}
             </p>
           )}
 
-          {props.article.tags && props.article.tags.length > 0 && (
+          {article.tags && article.tags.length > 0 && (
             <div className="flex flex-wrap gap-2 mb-4">
-              {props.article.tags.map((tag) =>
-                ((tag.tags).split(",")).map((tag,index) => {
-                  return <span
-                    key={index}
-                    className="inline-flex items-center text-xs bg-indigo-50 text-indigo-700 px-2 py-1 rounded-full"
-                  >
-                    <FaTag className="mr-1 text-xs" />
-                    {tag}
-                  </span>;
+              {article.tags.map((tag) =>
+                tag.tags.split(",").map((tag, index) => {
+                  return (
+                    <span
+                      key={index}
+                      className="inline-flex items-center text-xs bg-indigo-50 text-indigo-700 px-2 py-1 rounded-full"
+                    >
+                      <FaTag className="mr-1 text-xs" />
+                      {tag}
+                    </span>
+                  );
                 })
               )}
             </div>
@@ -73,21 +72,17 @@ const ArticleCard = ({ ...props }) => {
 
           <div className="flex items-center">
             <img
-              src={
-                props.article.author?.photo || "https://via.placeholder.com/50"
-              }
-              alt={props.article.author?.name || "Author"}
+              src={article.author?.photo || "https://via.placeholder.com/50"}
+              alt={article.author?.name || "Author"}
               className="rounded-full w-10 h-10 object-cover border border-gray-200"
             />
             <div className="ml-3">
               <h3 className="font-medium text-gray-800">
-                {props.article.author?.name || "Jean Damon"}
+                {article.author?.name || "Jean Damon"}
               </h3>
               <div className="flex items-center text-xs text-gray-500 mt-1">
                 <FaCalendarAlt className="mr-1" />
-                <span>
-                  {formatDate(props.article.publishedAt || "2025-01-12")}
-                </span>
+                <span>{formatDate(article.publishedAt || "2025-01-12")}</span>
               </div>
             </div>
           </div>

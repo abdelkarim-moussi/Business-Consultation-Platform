@@ -5,9 +5,6 @@ namespace App\Repositories;
 use App\Models\Article;
 use App\Models\Category;
 use App\Repositories\Interfaces\ArticleRepositoryInterface;
-use Illuminate\Support\Facades\DB;
-
-use function PHPSTORM_META\map;
 
 class ArticleRepository implements ArticleRepositoryInterface
 {
@@ -26,7 +23,13 @@ class ArticleRepository implements ArticleRepositoryInterface
 
     public function find($id)
     {
-        return Article::findOrFail($id);
+        $article = Article::with(['author', 'tags'])->findOrFail($id);
+
+        $article->author->photo = asset('/storage/' . $article->author->photo);
+  
+        $article->cover = asset('/storage/' . $article->cover);
+
+        return $article;
     }
 
     public function create($data)

@@ -110,7 +110,7 @@ export default function EditArticleModal({ article, onClose, onUpdated }) {
               className="w-full border border-[#4F46E5] h-[35px] px-3 text-sm rounded-lg mt-1 outline-none"
             >
               <option value="draft">Draft</option>
-              <option value="published">Published</option>
+              <option value="published">Publish</option>
             </select>
           </div>
 

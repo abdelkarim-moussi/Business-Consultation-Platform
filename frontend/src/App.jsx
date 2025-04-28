@@ -4,7 +4,6 @@ import Blog from "./pages/articles/Articles";
 import Home from "./pages/Home";
 import Consultants from "./pages/consultants/Consultants";
 import Register from "./pages/auth/Register";
-import ArticleDetails from "./pages/Articles/ArticleDetails";
 import ConsultantDashboard from "./pages/consultants/ConsultantDashboard";
 import NewArticle from "./pages/articles/NewArticle";
 import { AuthProvider } from "./context/AuthContext";
@@ -13,7 +12,8 @@ import PublicRoute from "./routes/PublicRoute";
 import ConsultantArticlesPage from "./pages/articles/consultantArticlesPage";
 import UserProfile from "./pages/auth/UserProfile";
 import ConsultantDetails from "./pages/consultants/ConsultantDetails";
-import {ToastContainer} from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import ArticleDetails from "./pages/articles/ArticleDetails";
 
 export default function App() {
   return (
@@ -42,8 +42,6 @@ export default function App() {
                 </PublicRoute>
               }
             />
-
-            <Route path="/article_details" element={<ArticleDetails />} />
 
             <Route
               path="/consultantDash"
@@ -83,10 +81,10 @@ export default function App() {
 
             <Route path="/profile" element={<UserProfile />} />
             <Route path="/consultants/:id" element={<ConsultantDetails />} />
+            <Route path="/articles/:id" element={<ArticleDetails />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
-
 
       <ToastContainer />
     </>

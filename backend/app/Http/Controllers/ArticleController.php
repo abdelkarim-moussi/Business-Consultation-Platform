@@ -24,7 +24,6 @@ class ArticleController extends Controller
 
     public function show($id)
     {
-
         $article = $this->articleService->getArticleById($id);
         return response()->json(compact('article'));
     }

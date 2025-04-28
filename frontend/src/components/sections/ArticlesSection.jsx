@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import ArticleCard from "../article.components/ArticleCard";
 
@@ -43,7 +42,7 @@ const ArticlesSection = ({ data, loading, currentPage, articlesPerPage }) => {
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 items-center gap-5 px-5 md:px-10 py-10">
         {currentArticles.map((article, index) => (
           <motion.div
-            key={index}
+            key={article.id}
             initial={{ opacity: 0, scale: 0.8 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}

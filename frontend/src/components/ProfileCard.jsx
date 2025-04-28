@@ -77,7 +77,6 @@ const ProfileCard = ({ consultant }) => {
           </div>
         </div>
 
-        {/* Skills */}
         <div className="mb-4">
           <h3 className="text-xs uppercase tracking-wider text-gray-500 mb-2">
             Expertise

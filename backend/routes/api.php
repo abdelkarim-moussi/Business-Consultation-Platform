@@ -29,8 +29,8 @@ Route::middleware(['jwtauth'])->group(function () {
     Route::post('consultations/{id}/accept', [ConsultationController::class, 'accept']);
     Route::post('consultations/{id}/refuse', [ConsultationController::class, 'refuse']);
 
-    Route::apiResource('articles', ArticleController::class)->except('index', 'view');
-    Route::apiResource('comments', CommentController::class)->except('index', 'view');
+    Route::apiResource('articles', ArticleController::class)->except('index', 'show');
+    Route::apiResource('comments', CommentController::class)->except('index', 'show');
 
     Route::get('/stats/platform', [StatisticsController::class, 'platformOverview']);
 
@@ -42,7 +42,7 @@ Route::middleware(['jwtauth'])->group(function () {
 
     Route::apiResource('/profile', ProfileController::class);
 
-    Route::post('updatephoto', [ProfileController::class,'updatePhoto']);
+    Route::post('updatephoto', [ProfileController::class, 'updatePhoto']);
 
     Route::put('resetpassword', [JWTAuthController::class, 'resetPassword']);
 
@@ -50,3 +50,6 @@ Route::middleware(['jwtauth'])->group(function () {
 });
 
 Route::apiResource('categories', CategoryController::class);
+
+Route::get('articles', [ArticleController::class, 'index']);
+Route::get('articles/{id}', [ArticleController::class, 'show']);

@@ -18,7 +18,7 @@ export default function ConsultantDetails() {
 
   const id = useParams();
   const [modalOpen, setModalOpen] = useState(false);
-
+  
   const handleRequestCall = async (data) => {
     try {
       const token = sessionStorage.getItem("token");
@@ -103,7 +103,6 @@ export default function ConsultantDetails() {
       <div className="max-w-7xl mx-auto pt-24 px-4 sm:px-6 lg:px-8">
         <div className="bg-white shadow rounded-xl overflow-hidden">
           <div className="lg:grid lg:grid-cols-3 gap-6">
-            {/* Consultant Profile Section */}
             <div className="col-span-2 p-6">
               <div className="flex flex-col md:flex-row gap-8">
                 <div className="flex-shrink-0">
@@ -147,10 +146,8 @@ export default function ConsultantDetails() {
               </div>
             </div>
 
-            {/* Action Panel */}
             <div className="col-span-1 border-t lg:border-t-0 lg:border-l border-gray-200">
               <div className="p-6 space-y-6">
-                {/* Action Buttons */}
                 <div className="space-y-3">
                   <Button
                     text="Request a Call"
@@ -184,7 +181,6 @@ export default function ConsultantDetails() {
                   </button>
                 </div>
 
-                {/* Stats Card */}
                 <div className="bg-indigo-50 rounded-lg p-5">
                   <div className="flex justify-between items-center">
                     <div className="text-center flex-1">
@@ -216,7 +212,6 @@ export default function ConsultantDetails() {
           </div>
         </div>
 
-        {/* Reviews Section */}
         <div className="mt-8 bg-white shadow rounded-xl p-6">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-bold text-gray-800">Reviews</h2>
