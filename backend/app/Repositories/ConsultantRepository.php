@@ -35,6 +35,8 @@ class ConsultantRepository implements ConsultantRepositoryInterface
             ->select('users.*', 'consultants.*')
             ->first();
 
+        $consultant->photo = asset('/storage/' . $consultant->photo);
+
         $consultations_num = Consultation::where('consultant_id', $id)->count();
 
         $reviews = DB::table('reviews')->join('users', 'reviews.reviewer_id', 'users.id')

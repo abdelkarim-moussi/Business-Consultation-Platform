@@ -52,4 +52,5 @@ Route::middleware(['jwtauth'])->group(function () {
 Route::apiResource('categories', CategoryController::class);
 
 Route::get('articles', [ArticleController::class, 'index']);
+Route::get('articles/category/{category}', [ArticleController::class, 'RelatedArticles']);
 Route::get('articles/{id}', [ArticleController::class, 'show']);

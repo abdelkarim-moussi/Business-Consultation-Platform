@@ -113,4 +113,9 @@ class ArticleService
     {
         return $this->articleRepository->getArticlesForConsultant($id);
     }
+
+    public function getRelatedArticles($category)
+    {
+        return $this->articleRepository->getByCategory($category);
+    }
 }

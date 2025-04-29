@@ -1,6 +1,5 @@
 import Navbar from "../../components/Navbar";
 import { AuthProvider } from "../../context/AuthContext";
-import User from "../../assets/images/user.png";
 import Button from "../../components/buttons/PrimaryButton";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -8,6 +7,7 @@ import { useParams } from "react-router-dom";
 import ReservationModal from "../../components/ReservationModal";
 import ReviewModal from "../../components/modals-forms/ReviewModal";
 import { toast } from "react-toastify";
+import Footer from "../../components/Footer";
 
 export default function ConsultantDetails() {
   const [consultant, setConsultant] = useState({});
@@ -16,9 +16,9 @@ export default function ConsultantDetails() {
   const [reviewsNum, setReviewsNum] = useState(0);
   const [reviewModalOpen, setReviewModalOpen] = useState(false);
 
-  const id = useParams();
+  const { id } = useParams();
   const [modalOpen, setModalOpen] = useState(false);
-  
+
   const handleRequestCall = async (data) => {
     try {
       const token = sessionStorage.getItem("token");
@@ -83,7 +83,7 @@ export default function ConsultantDetails() {
   useEffect(() => {
     const fetchUser = async () => {
       const response = await axios.get(
-        `http://127.0.0.1:8000/api/consultants/${id.id}`
+        `http://127.0.0.1:8000/api/consultants/${id}`
       );
 
       setConsultant(response.data[0].consultant);
@@ -95,21 +95,21 @@ export default function ConsultantDetails() {
   }, [consultant]);
 
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="min-h-screen">
       <AuthProvider>
         <Navbar />
       </AuthProvider>
 
       <div className="max-w-7xl mx-auto pt-24 px-4 sm:px-6 lg:px-8">
-        <div className="bg-white shadow rounded-xl overflow-hidden">
+        <div className=" overflow-hidden">
           <div className="lg:grid lg:grid-cols-3 gap-6">
             <div className="col-span-2 p-6">
               <div className="flex flex-col md:flex-row gap-8">
                 <div className="flex-shrink-0">
                   <img
-                    src={User}
+                    src={consultant.photo}
                     alt={`${consultant.firstName} ${consultant.lastName}`}
-                    className="w-40 h-40 object-cover rounded-lg shadow-md"
+                    className="w-40 h-40 object-cover rounded-full shadow-md"
                   />
                 </div>
                 <div className="space-y-4">
@@ -212,7 +212,7 @@ export default function ConsultantDetails() {
           </div>
         </div>
 
-        <div className="mt-8 bg-white shadow rounded-xl p-6">
+        <div className="my-8 border rounded-lg p-6 max-w-[80%] mx-auto">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-bold text-gray-800">Reviews</h2>
             <span className="text-sm text-gray-500">{reviewsNum} total</span>
@@ -290,6 +290,8 @@ export default function ConsultantDetails() {
           consultant_id={id.id}
         />
       </AuthProvider>
+
+      <Footer />
     </div>
   );
 }

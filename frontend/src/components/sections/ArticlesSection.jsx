@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import ArticleCard from "../article.components/ArticleCard";
 
-const ArticlesSection = ({ data, loading, currentPage, articlesPerPage }) => {
+  const ArticlesSection = ({ data, loading, currentPage, articlesPerPage }) => {
   if (loading) {
     return (
       <motion.div

@@ -60,4 +60,12 @@ class ArticleController extends Controller
             'data' => $articles
         ]);
     }
+
+    public function RelatedArticles($category)
+    {
+        $articles = $this->articleService->getRelatedArticles($category);
+        return response()->json([
+            'articles' => $articles
+        ]);
+    }
 }

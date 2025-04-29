@@ -19,6 +19,7 @@ export default function ArticleDetails() {
   const [author, setAuthor] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [relatedArticles, setRalatedArticles] = useState([]);
   const { id } = useParams();
 
   const formatDate = (dateString) => {
@@ -29,6 +30,13 @@ export default function ArticleDetails() {
       month: "short",
       year: "numeric",
     });
+  };
+
+  const fetchRelatedArticles = async () => {
+    const fetchedArt = await axios.get("http://127.0.0.1:8000/api/articles");
+    setRalatedArticles(
+      fetchedArt.data.articles.filter((ar) => ar.id != id)
+    );
   };
 
   useEffect(() => {
@@ -50,6 +58,7 @@ export default function ArticleDetails() {
 
     if (id) {
       fetchArticle();
+      fetchRelatedArticles();
     }
   }, [id]);
 
@@ -90,13 +99,13 @@ export default function ArticleDetails() {
         <NavBar />
       </AuthProvider>
 
-      <div className="min-h-screen flex flex-col bg-gray-50">
+      <div className="min-h-screen flex flex-col">
         <div className="bg-gradient-to-r  py-16 px-4 relative mt-20">
           <div className="max-w-4xl mx-auto text-center">
             <div className="mb-4 flex items-center justify-center space-x-2">
               {article.category && (
                 <span className="bg-white/20 text-indigo-500 px-3 py-1 rounded-full text-sm backdrop-blur-sm">
-                  {article.category}
+                  {article.category.name}
                 </span>
               )}
               <span className="bg-gray-100 text-indigo-500 px-3 py-1 rounded-full text-sm backdrop-blur-sm flex items-center">
@@ -131,84 +140,77 @@ export default function ArticleDetails() {
               </div>
             </div>
           </div>
-
-          <div className="absolute bottom-0 left-0 right-0 h-16 bg-gray-50 clip-path-wave"></div>
         </div>
 
         <main className="grid grid-cols-1 lg:grid-cols-3 gap-8 p-6 max-w-6xl mx-auto -mt-6 relative z-10">
           <div className="lg:col-span-2 space-y-6">
-            <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-              <img
-                src={article.cover || "/api/placeholder/800/400"}
-                alt={article.title}
-                className="w-full h-64 md:h-80 object-cover"
-              />
+            <img
+              src={article.cover || "/api/placeholder/800/400"}
+              alt={article.title}
+              className="w-full h-64 md:h-80 object-cover"
+            />
 
-              <div className="p-6 md:p-8">
-                <div className="flex items-center justify-between mb-6">
-                  <div className="flex items-center space-x-2">
-                    <button className="p-2 rounded-full bg-indigo-50 text-indigo-600 hover:bg-indigo-100 transition-colors">
-                      <FaFacebookF />
-                    </button>
-                    <button className="p-2 rounded-full bg-indigo-50 text-indigo-600 hover:bg-indigo-100 transition-colors">
-                      <FaTwitter />
-                    </button>
-                    <button className="p-2 rounded-full bg-indigo-50 text-indigo-600 hover:bg-indigo-100 transition-colors">
-                      <FaLinkedinIn />
-                    </button>
-                  </div>
-
-                  <div className="flex items-center space-x-2">
-                    <button className="flex items-center space-x-1 px-3 py-1 rounded-full bg-indigo-50 text-indigo-600 hover:bg-indigo-100 transition-colors">
-                      <FaShare size={14} />
-                      <span className="text-sm">Share</span>
-                    </button>
-                    <button className="flex items-center space-x-1 px-3 py-1 rounded-full bg-indigo-50 text-indigo-600 hover:bg-indigo-100 transition-colors">
-                      <FaBookmark size={14} />
-                      <span className="text-sm">Save</span>
-                    </button>
-                  </div>
+            <div className="p-6 md:p-8">
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center space-x-2">
+                  <button className="p-2 rounded-full bg-indigo-50 text-indigo-600 hover:bg-indigo-100 transition-colors">
+                    <FaFacebookF />
+                  </button>
+                  <button className="p-2 rounded-full bg-indigo-50 text-indigo-600 hover:bg-indigo-100 transition-colors">
+                    <FaTwitter />
+                  </button>
+                  <button className="p-2 rounded-full bg-indigo-50 text-indigo-600 hover:bg-indigo-100 transition-colors">
+                    <FaLinkedinIn />
+                  </button>
                 </div>
 
-                <article
-                  className="prose max-w-none prose-lg prose-headings:text-indigo-900 prose-a:text-indigo-600 prose-img:rounded-xl"
-                  dangerouslySetInnerHTML={{ __html: article.content }}
-                ></article>
-
-                {/* Tags */}
-                {article.tags && article.tags.length > 0 && (
-                  <div className="mt-8 pt-6 border-t border-gray-100">
-                    <h4 className="text-sm font-medium text-gray-500 mb-3">
-                      TAGS
-                    </h4>
-                    <div className="flex flex-wrap gap-2">
-                      {article.tags.map((tag) =>
-                        tag.tags.split(",").map((tg, idx) => {
-                          return (
-                            <span
-                              key={idx}
-                              className="px-3 py-1 bg-indigo-50 text-gray-700 hover:text-indigo-600 rounded-full text-sm transition-colors"
-                            >
-                              {tg}
-                            </span>
-                          );
-                        })
-                      )}
-                    </div>
-                  </div>
-                )}
+                <div className="flex items-center space-x-2">
+                  <button className="flex items-center space-x-1 px-3 py-1 rounded-full bg-indigo-50 text-indigo-600 hover:bg-indigo-100 transition-colors">
+                    <FaShare size={14} />
+                    <span className="text-sm">Share</span>
+                  </button>
+                  <button className="flex items-center space-x-1 px-3 py-1 rounded-full bg-indigo-50 text-indigo-600 hover:bg-indigo-100 transition-colors">
+                    <FaBookmark size={14} />
+                    <span className="text-sm">Save</span>
+                  </button>
+                </div>
               </div>
+
+              <article
+                className="prose max-w-none prose-lg prose-headings:text-indigo-900 prose-a:text-indigo-600 prose-img:rounded-xl"
+                dangerouslySetInnerHTML={{ __html: article.content }}
+              ></article>
+
+              {article.tags && article.tags.length > 0 && (
+                <div className="mt-8 pt-6 border-t border-gray-100">
+                  <h4 className="text-sm font-medium text-gray-500 mb-3">
+                    TAGS
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {article.tags.map((tag) =>
+                      tag.tags.split(",").map((tg, idx) => {
+                        return (
+                          <span
+                            key={idx}
+                            className="px-3 py-1 bg-indigo-50 text-gray-700 hover:text-indigo-600 rounded-full text-sm transition-colors"
+                          >
+                            {tg}
+                          </span>
+                        );
+                      })
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
-          {/* Sidebar */}
           <aside className="space-y-6">
-            {/* Author Card */}
-            <div className="bg-white p-6 rounded-xl shadow-sm">
+            <div className="p-6">
               <h3 className="font-semibold text-lg mb-4 text-gray-800 pb-2 border-b border-gray-100">
                 About the Author
               </h3>
-              <div className="flex items-start space-x-4">
+              <div className="flex items-start space-x-4 border-b pb-3">
                 <img
                   src={
                     author.photo ||
@@ -241,72 +243,33 @@ export default function ArticleDetails() {
               </div>
             </div>
 
-            {/* Related Articles */}
-            <div className="bg-white p-6 rounded-xl shadow-sm">
+            <div className="p-6">
               <h3 className="font-semibold text-lg mb-4 text-gray-800 pb-2 border-b border-gray-100">
                 Related Articles
               </h3>
               <ul className="space-y-4">
-                {(
-                  article.relatedArticles || [
-                    {
-                      id: 1,
-                      title: "How to Build a Business Plan",
-                      image: "/api/placeholder/100/60",
-                    },
-                    {
-                      id: 2,
-                      title: "Top 5 Marketing Tools for Startups",
-                      image: "/api/placeholder/100/60",
-                    },
-                    {
-                      id: 3,
-                      title: "Funding Tips from Experts",
-                      image: "/api/placeholder/100/60",
-                    },
-                  ]
-                ).map((relatedArticle, index) => (
-                  <li key={index}>
-                    <Link
-                      to={`/articles/${relatedArticle.id}`}
-                      className="flex group items-start"
-                    >
-                      <img
-                        src={relatedArticle.image}
-                        alt={relatedArticle.title}
-                        className="w-16 h-12 rounded object-cover mr-3"
-                      />
-                      <p className="text-gray-700 group-hover:text-indigo-600 transition-colors">
-                        {relatedArticle.title}
-                      </p>
-                    </Link>
-                  </li>
-                ))}
+                {relatedArticles.map(
+                  (relatedArticle, index) =>
+                    relatedArticle.category.name == article.category.name &&
+                    index < 5 && (
+                      <li key={index} className="border-b pb-2">
+                        <Link
+                          to={`/articles/${relatedArticle.id}`}
+                          className="flex group items-start"
+                        >
+                          <img
+                            src={relatedArticle.cover}
+                            alt={relatedArticle.title[2]}
+                            className="w-16 h-12 rounded object-cover mr-3"
+                          />
+                          <p className="text-gray-700 group-hover:text-indigo-600 transition-colors">
+                            {relatedArticle.title}
+                          </p>
+                        </Link>
+                      </li>
+                    )
+                )}
               </ul>
-            </div>
-
-            {/* Newsletter Signup */}
-            <div className="bg-gradient-to-br from-indigo-600 to-indigo-700 p-6 rounded-xl shadow-sm text-white">
-              <h3 className="font-semibold text-lg mb-2">
-                Subscribe to Our Newsletter
-              </h3>
-              <p className="text-indigo-100 text-sm mb-4">
-                Get the latest articles and business tips straight to your
-                inbox.
-              </p>
-              <form className="space-y-3">
-                <input
-                  type="email"
-                  placeholder="Your email address"
-                  className="w-full px-4 py-2 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-white"
-                />
-                <button
-                  type="submit"
-                  className="w-full bg-white text-indigo-600 font-medium px-4 py-2 rounded-lg hover:bg-indigo-50 transition-colors"
-                >
-                  Subscribe
-                </button>
-              </form>
             </div>
           </aside>
         </main>

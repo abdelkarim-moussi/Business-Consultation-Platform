@@ -5,13 +5,14 @@ namespace App\Repositories;
 use App\Models\Article;
 use App\Models\Category;
 use App\Repositories\Interfaces\ArticleRepositoryInterface;
+use Illuminate\Support\Facades\DB;
 
 class ArticleRepository implements ArticleRepositoryInterface
 {
 
     public function all()
     {
-        $articles = Article::with('author', 'tags')->get();
+        $articles = Article::with('author', 'tags','category')->get();
 
         $articles->map(function ($article) {
             $article->cover = asset('storage/' . $article->cover);
@@ -23,10 +24,10 @@ class ArticleRepository implements ArticleRepositoryInterface
 
     public function find($id)
     {
-        $article = Article::with(['author', 'tags'])->findOrFail($id);
+        $article = Article::with(['author', 'tags', 'category'])->findOrFail($id);
 
         $article->author->photo = asset('/storage/' . $article->author->photo);
-  
+
         $article->cover = asset('/storage/' . $article->cover);
 
         return $article;
@@ -67,5 +68,19 @@ class ArticleRepository implements ArticleRepositoryInterface
             ->where('author_id', $id)
             ->orderBy('created_at', 'desc')
             ->get();
+    }
+
+    public function getByCategory($category)
+    {
+        $articles = DB::table('articles')
+            ->join('categories', 'articles.category_id', 'categories.id')
+            ->where('categories.name', $category)->get();
+
+        $articles->map(function ($article) {
+            $article->cover = asset('storage/' . $article->cover);
+            return $article;
+        });
+
+        return $articles;
     }
 }
