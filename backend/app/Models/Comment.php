@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Database\Eloquent\Model;
 
-class Comment extends Pivot
+class Comment extends Model
 {
 
     protected $fillable = [
@@ -18,6 +18,11 @@ class Comment extends Pivot
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function article()
+    {
+        return $this->BelongsTo(Article::class);
     }
 
     public function replies()

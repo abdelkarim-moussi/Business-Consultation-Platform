@@ -24,7 +24,7 @@ class Article extends Model
 
     public function comments()
     {
-        return $this->hasMany(Comment::class)->whereNull('parent_id');
+        return $this->hasMany(Comment::class);
     }
 
     public function category()
@@ -32,7 +32,8 @@ class Article extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function tags(){
+    public function tags()
+    {
         return $this->hasMany(Tag::class);
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\Article;
 use App\Models\Tag;
 use App\Repositories\ArticleRepository;
 use Exception;

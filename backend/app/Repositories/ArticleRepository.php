@@ -12,7 +12,7 @@ class ArticleRepository implements ArticleRepositoryInterface
 
     public function all()
     {
-        $articles = Article::with('author', 'tags','category')->get();
+        $articles = Article::with(['author', 'tags', 'category','comments','comments.user'])->get();
 
         $articles->map(function ($article) {
             $article->cover = asset('storage/' . $article->cover);
@@ -24,7 +24,7 @@ class ArticleRepository implements ArticleRepositoryInterface
 
     public function find($id)
     {
-        $article = Article::with(['author', 'tags', 'category'])->findOrFail($id);
+        $article = Article::with(['author', 'tags', 'category','comments'])->findOrFail($id);
 
         $article->author->photo = asset('/storage/' . $article->author->photo);
 

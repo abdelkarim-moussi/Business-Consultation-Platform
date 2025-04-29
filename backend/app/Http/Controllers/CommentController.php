@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
@@ -11,17 +11,17 @@ class CommentController extends Controller
     public function index()
     {
 
-        $messages = Comment::all();
-        return response()->json(compact('messages'), 200);
+        $comment = Comment::all();
+        return response()->json(compact('comment'), 200);
     }
 
     public function view($id)
     {
 
-        $message = Comment::find($id);
-        if (!$message) {
+        $comment = Comment::find($id);
+        if (!$comment) {
             return response()->json([
-                'message' => 'message doesn\'t exist'
+                'comment' => 'comment doesn\'t exist'
             ]);
         }
 
