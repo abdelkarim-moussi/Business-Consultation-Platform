@@ -44,6 +44,7 @@ class ArticleService
             ]);
 
             $validated['cover'] = $data->file('cover')->store('covers', 'public');
+
             $article = JWTAuth::user()->articles()->create($validated);
 
             if ($data->has('tags')) {
@@ -56,12 +57,14 @@ class ArticleService
             }
 
             DB::commit();
-            return response()->json(
-                [
-                    'message' => 'article created succefully',
-                ],
-                200
-            );
+
+            if ($article)
+                return response()->json(
+                    [
+                        'message' => 'article created succefully',
+                    ],
+                    200
+                );
         } catch (Exception $e) {
             DB::rollBack();
 

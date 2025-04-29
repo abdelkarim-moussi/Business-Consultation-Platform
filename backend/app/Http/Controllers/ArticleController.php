@@ -31,8 +31,8 @@ class ArticleController extends Controller
     public function store(Request $request)
     {
 
-        $this->articleService->createArticle($request);
-
+        $article = $this->articleService->createArticle($request);
+        dd($article);
         return response()->json(
             [
                 'message' => 'article created succefully'

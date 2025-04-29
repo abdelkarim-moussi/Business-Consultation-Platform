@@ -24,7 +24,7 @@ class ArticleRepository implements ArticleRepositoryInterface
 
     public function find($id)
     {
-        $article = Article::with(['author', 'tags', 'category','comments'])->findOrFail($id);
+        $article = Article::with(['author', 'tags', 'category','comments','comments.user'])->findOrFail($id);
 
         $article->author->photo = asset('/storage/' . $article->author->photo);
 

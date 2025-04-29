@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class CommentController extends Controller
 {
 
     public function index()
     {
-
         $comment = Comment::all();
         return response()->json(compact('comment'), 200);
     }
@@ -30,6 +30,7 @@ class CommentController extends Controller
 
     public function store(Request $request)
     {
+        $request['user_id'] = JWTAuth::user()->id;
 
         $validated = $request->validate([
             'content' => 'required|min:1',
@@ -38,11 +39,12 @@ class CommentController extends Controller
             'parent_id' => 'sometimes|min:1'
         ]);
 
-        Comment::create($validated);
+        $comment = Comment::create($validated);
 
         return response()->json(
             [
-                'message' => 'comment added succefully'
+                'message' => 'comment added succefully',
+                'comment' => $comment
             ]
         );
     }

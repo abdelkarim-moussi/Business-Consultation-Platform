@@ -30,7 +30,7 @@ class ConsultantRepository implements ConsultantRepositoryInterface
     public function findById($id)
     {
         $consultant = DB::table('users')
-            ->join('consultants', 'users.id', '=', 'consultants.user_id')
+            ->join('consultants', 'users.id', 'consultants.user_id')
             ->where('consultants.id', $id)
             ->select('users.*', 'consultants.*')
             ->first();
