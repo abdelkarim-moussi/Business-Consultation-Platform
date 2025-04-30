@@ -11,6 +11,13 @@ export default function ConsultantStats() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const truncateText = (text, maxLength) => {
+    if (!text) return "";
+    return text.length > maxLength
+      ? `${text.substring(0, maxLength)}...`
+      : text;
+  };
+
   useEffect(() => {
     const fetchStats = async () => {
       try {
@@ -35,7 +42,14 @@ export default function ConsultantStats() {
   }, [user.id]);
 
   if (loading)
-    return <div className="text-center py-8">Loading statistics...</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+        </div>
+      </div>
+    );
+
   if (error)
     return <div className="text-red-500 text-center py-8">{error}</div>;
   if (!stats)
@@ -83,13 +97,13 @@ export default function ConsultantStats() {
                     id: 0,
                     value: stats.completed_consultations,
                     label: "completed consultations",
-                    color:'green'
+                    color: "green",
                   },
                   {
                     id: 1,
                     value: stats.accepted_consultations,
                     label: "accepted consultations",
-                    color:'blue'
+                    color: "blue",
                   },
                   {
                     id: 2,
@@ -100,7 +114,7 @@ export default function ConsultantStats() {
                     id: 3,
                     value: stats.upcoming_consultations,
                     label: "pending consultations",
-                    color:'orange'
+                    color: "orange",
                   },
                 ],
               },
@@ -142,11 +156,8 @@ export default function ConsultantStats() {
           <ul className="text-sm text-gray-700 space-y-1">
             {stats.article_stats.latest_articles.map((article) => {
               return (
-                <li
-                  className="flex justify-between gap-2"
-                  key={article.id}
-                >
-                  <span>{article.title}</span>
+                <li className="flex justify-between gap-2" key={article.id}>
+                  <span>{truncateText(article.title, 20)}</span>
                   <span className="text-gray-400">
                     {format(Date(article.created_at), "dd MMMM , yyyy H:mm")}
                   </span>

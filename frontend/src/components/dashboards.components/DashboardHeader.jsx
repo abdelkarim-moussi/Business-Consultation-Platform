@@ -45,20 +45,14 @@ export default function DashboardHeader({ page }) {
     <div className="p-2 sticky top-0 z-20">
       <div className="flex items-center justify-between gap-10 mb-8 bg-[#4F46E5] text-white p-4 w-full z-20 rounded-lg shadow-md">
         <h1 className="text-xl font-semibold">{page}</h1>
-        <div className="w-[350px] h-[35px] bg-[#EEF2FF] rounded-lg">
-          <input
-            type="text"
-            placeholder="Search"
-            className="border px-3 text-sm w-full h-full bg-transparent outline-none text-gray-600 rounded-lg"
-          />
-        </div>
+
         <div className="flex items-center space-x-4 gap-5">
           <div className="flex items-center space-x-2">
-            <img
-              src="https://i.pravatar.cc/30"
-              alt="avatar"
-              className="w-8 h-8 rounded-full"
-            />
+            <div className="border-2 rounded-full border-white uppercase h-10 w-10 text-center flex items-center justify-center">
+              {/* {fetchedUser.firstName.slice(0, 1) +
+                "" +
+                fetchedUser.lastName.slice(0, 1)} */}
+            </div>
 
             <span className="text-gray-100 text-sm capitalize">
               {fetchedUser.firstName + " " + fetchedUser.lastName}

@@ -287,7 +287,7 @@ export default function ConsultantDetails() {
           isOpen={reviewModalOpen}
           onClose={() => setReviewModalOpen(false)}
           onSubmit={handleAdReview}
-          consultant_id={id.id}
+          consultant_id={id}
         />
       </AuthProvider>
 

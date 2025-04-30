@@ -29,16 +29,42 @@ export default function NavBar() {
               home
             </Link>
           </li>
-          <li className=" text-sm capitalize">
-            <Link to="/consultants" className="transition hover:text-[#EEF2FF]">
-              consultants
-            </Link>
-          </li>
+          {(user && user.accountType === "entrepreneur") ||
+            (!user && (
+              <li className=" text-sm capitalize">
+                <Link
+                  to="/consultants"
+                  className="transition hover:text-[#EEF2FF]"
+                >
+                  consultants
+                </Link>
+              </li>
+            ))}
           <li className=" text-sm capitalize">
             <Link to="/blog" className="transition hover:text-[#EEF2FF]">
               blog
             </Link>
           </li>
+          {user && user.accountType === "consultant" && (
+            <li className=" text-sm capitalize">
+              <Link
+                to="/consultantDash"
+                className="transition hover:text-[#EEF2FF]"
+              >
+                dashboard
+              </Link>
+            </li>
+          )}
+          {user && user.accountType === "entrepreneur" && (
+            <li className=" text-sm capitalize">
+              <Link
+                to="/entrepreneurDash"
+                className="transition hover:text-[#EEF2FF]"
+              >
+                dashboard
+              </Link>
+            </li>
+          )}
         </ul>
         <ul className="flex items-center">
           {!user ? (

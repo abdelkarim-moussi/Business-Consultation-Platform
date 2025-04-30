@@ -23,7 +23,6 @@ export default function ConsultantArticles() {
         }
       );
       setArticles(response.data.data);
-    
     } catch (err) {
       setError("Failed to load articles");
     } finally {
@@ -69,7 +68,14 @@ export default function ConsultantArticles() {
   };
 
   if (loading)
-    return <div className="text-center py-8">Loading articles...</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+        </div>
+      </div>
+    );
+
   if (error)
     return <div className="text-red-500 text-center py-8">{error}</div>;
 

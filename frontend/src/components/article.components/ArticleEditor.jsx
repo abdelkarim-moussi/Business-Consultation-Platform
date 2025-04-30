@@ -6,6 +6,7 @@ import Input from "../Input";
 import Button from "../buttons/PrimaryButton";
 import Label from "../Label";
 import { jwtDecode } from "jwt-decode";
+import { toast } from "react-toastify";
 
 export default function ArticleEditor() {
   const [title, setTitle] = useState("");
@@ -67,6 +68,7 @@ export default function ArticleEditor() {
         },
       });
 
+      toast.success("article created succefully");
       setSuccess(true);
 
       setTitle("");

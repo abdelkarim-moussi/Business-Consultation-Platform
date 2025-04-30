@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { FaCalendarAlt, FaTag } from "react-icons/fa";
 
 const ArticleCard = ({ article }) => {
-  
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
@@ -19,6 +18,7 @@ const ArticleCard = ({ article }) => {
       : text;
   };
 
+
   return (
     <div className="flex flex-col h-full transition-transform duration-300 hover:-translate-y-1">
       <div className="bg-white shadow-md rounded-xl overflow-hidden h-full flex flex-col">
@@ -30,7 +30,7 @@ const ArticleCard = ({ article }) => {
           />
           {article.category && (
             <span className="absolute top-4 left-4 bg-indigo-600 text-white text-xs font-medium py-1 px-2 rounded-full">
-              {article.category}
+              {article.category.name}
             </span>
           )}
         </div>

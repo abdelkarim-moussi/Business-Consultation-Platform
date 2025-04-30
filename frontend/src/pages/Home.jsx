@@ -28,7 +28,7 @@ const Home = () => {
           <h1 className="text-[4rem] text-[#4F46E5] font-semibold text-center md:text-left md:text-[5rem] leading-[4rem] mb-10">
             take your business to the next level
           </h1>
-          <div className="flex gap-5 justify-center md:justify-start">
+          <div className="flex gap-5 justify-center md:justify-start items-center">
             
             <PrimaryLink text="Log In" link="/login" extraClasses="px-8"/>
             <SecondaryLink text="Sign Up" link="/register" extraClasses="px-8"/>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, replace } from "react-router-dom";
 import {
   FaCalendarAlt,
   FaClock,
@@ -9,10 +9,14 @@ import {
   FaFacebookF,
   FaTwitter,
   FaLinkedinIn,
+  FaArrowLeft,
 } from "react-icons/fa";
 import NavBar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import { AuthProvider } from "../../context/AuthContext";
+import { AuthProvider, useAuth } from "../../context/AuthContext";
+import SecondaryButton from "../../components/buttons/SecondaryButton";
+import { toast } from "react-toastify";
+import { fetchAuthUser } from "../../services/userService";
 
 export default function ArticleDetails() {
   const [article, setArticle] = useState({});
@@ -21,6 +25,51 @@ export default function ArticleDetails() {
   const [error, setError] = useState(null);
   const [relatedArticles, setRalatedArticles] = useState([]);
   const { id } = useParams();
+
+  const [comment, setComment] = useState("");
+  const [comments, setComments] = useState([]);
+  const [parentId, setParentId] = useState(null);
+  const [count, setCount] = useState(3);
+  const [authUser, setAuthUser] = useState({});
+  const [replyModal, setReplyModal] = useState(null);
+
+  const { user } = useAuth();
+
+  const fetchAuth = async () => {
+    const user = await fetchAuthUser();
+    setAuthUser(user);
+  };
+
+  const handleSubmitComment = async (e) => {
+    e.preventDefault();
+
+    try {
+      if (comment.trim()) {
+        const token = sessionStorage.getItem("token");
+        const response = await axios.post(
+          "http://127.0.0.1:8000/api/comments",
+          {
+            content: comment,
+            article_id: article.id,
+            parent_id: parentId,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        await fetchArticle();
+        toast.success(response.data.message);
+        setComment("");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(response.data.error);
+    }
+  };
+
+  console.log(parentId);
 
   const formatDate = (dateString) => {
     if (!dateString) return "";
@@ -34,32 +83,52 @@ export default function ArticleDetails() {
 
   const fetchRelatedArticles = async () => {
     const fetchedArt = await axios.get("http://127.0.0.1:8000/api/articles");
-    setRalatedArticles(
-      fetchedArt.data.articles.filter((ar) => ar.id != id)
-    );
+    setRalatedArticles(fetchedArt.data.articles.filter((ar) => ar.id != id));
+  };
+
+  const fetchArticle = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.get(
+        `http://127.0.0.1:8000/api/articles/${id}`
+      );
+      setArticle(response.data.article);
+      setAuthor(response.data.article.author || {});
+      setComments(response.data.article.comments);
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Failed to fetch article:", error);
+      setError("Failed to load article. Please try again later.");
+      setIsLoading(false);
+    }
+  };
+
+  const handleDeleteComment = async (id) => {
+    try {
+      const token = sessionStorage.getItem("token");
+      const response = await axios.delete(
+        `http://127.0.0.1:8000/api/comments/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      toast.success(response.data.message);
+      fetchArticle();
+    } catch (error) {
+      console.log("there is an error", error);
+      toast.error(response.data.error);
+    }
   };
 
   useEffect(() => {
-    const fetchArticle = async () => {
-      setIsLoading(true);
-      try {
-        const response = await axios.get(
-          `http://127.0.0.1:8000/api/articles/${id}`
-        );
-        setArticle(response.data.article);
-        setAuthor(response.data.article.author || {});
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Failed to fetch article:", error);
-        setError("Failed to load article. Please try again later.");
-        setIsLoading(false);
-      }
-    };
-
     if (id) {
       fetchArticle();
       fetchRelatedArticles();
     }
+    fetchAuth();
   }, [id]);
 
   if (isLoading) {
@@ -67,7 +136,6 @@ export default function ArticleDetails() {
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-indigo-600 font-medium">Loading article...</p>
         </div>
       </div>
     );
@@ -75,18 +143,18 @@ export default function ArticleDetails() {
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="text-center p-8 max-w-md mx-auto bg-white rounded-xl shadow-md">
-          <div className="text-red-500 text-5xl mb-4">⚠️</div>
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">
+      <div className="min-h-screen flex items-center justify-center ">
+        <div className="text-center p-8 max-w-md mx-auto bg-white rounded-xl ">
+          <div className="text-red-500 text-2xl mb-4">⚠️</div>
+          <h2 className="text-xl font-semibold text-gray-800 mb-2">
             Something went wrong
           </h2>
           <p className="text-gray-600 mb-4">{error}</p>
           <Link
-            to="/articles"
-            className="inline-block bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
+            to="/blog"
+            className="flex items-center justify-center gap-2 text-indigo-500 px-4 py-1 rounded-lg hover:text-indigo-700 transition-colors"
           >
-            Back to Articles
+            <FaArrowLeft /> Back to Articles
           </Link>
         </div>
       </div>
@@ -120,10 +188,7 @@ export default function ArticleDetails() {
             <div className="flex items-center justify-center text-sm">
               <div className="flex items-center">
                 <img
-                  src={
-                    author.photo ||
-                    "https://randomuser.me/api/portraits/women/44.jpg"
-                  }
+                  src={author.photo}
                   className="w-10 h-10 rounded-full border-2 border-indigo-700"
                   alt={`${author.firstName[0] || ""} ${
                     author.lastName[0] || ""
@@ -203,6 +268,174 @@ export default function ArticleDetails() {
                 </div>
               )}
             </div>
+
+            <div className="bg-white rounded-xl shadow-md p-6 mt-6">
+              <h4 className="text-sm font-medium text-gray-500 border-b border-gray-100 pb-3">
+                COMMENTS ({comments.length})
+              </h4>
+              {user && (
+                <form onSubmit={handleSubmitComment} className="mt-4 mb-6">
+                  <div className="flex items-start gap-3">
+                    <img
+                      src={authUser.photo}
+                      alt="Your avatar"
+                      className="w-8 h-8 rounded-full object-cover"
+                    />
+                    <div className="flex-1">
+                      <textarea
+                        rows="2"
+                        placeholder="Write your comment here..."
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                        className="w-full bg-gray-50 border border-gray-100 rounded-lg resize-none p-3 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                      />
+                      <div className="flex justify-end mt-2">
+                        <SecondaryButton type="submit" text="Post Comment" />
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              )}
+
+              <div className="space-y-5">
+                {comments.slice(0, count).map(
+                  (com) =>
+                    !com.parent_id && (
+                      <div
+                        key={com.id}
+                        className="border-b border-gray-100 pb-5"
+                      >
+                        <div className="flex items-start gap-3">
+                          <img
+                            src={com.user.photo}
+                            alt={com.user.firstName[0]}
+                            className="w-10 h-10 rounded-full object-cover"
+                          />
+                          <div className="flex-1">
+                            <div className="flex items-center justify-between">
+                              <h5 className="text-sm capitalize font-semibold text-gray-800">
+                                {com.user.firstName}
+                              </h5>
+                              <span className="text-xs text-gray-500">
+                                {formatDate(com.created_at)}
+                              </span>
+                            </div>
+                            <p className="text-gray-600 text-xs mt-1">
+                              {com.content}
+                            </p>
+                            <div className="flex items-center gap-4 mt-2">
+                              <button
+                                className="text-xs text-gray-500 hover:text-indigo-600"
+                                onClick={() => {
+                                  setReplyModal(com.id);
+                                  setParentId(com.id);
+                                }}
+                              >
+                                Reply
+                              </button>
+                              {user && user.id == com.user_id && (
+                                <button
+                                  className="text-xs text-red-500 hover:text-red-600"
+                                  onClick={() => handleDeleteComment(com.id)}
+                                >
+                                  delete
+                                </button>
+                              )}
+                            </div>
+
+                            {com.replies.map((rep, i) => {
+                              return (
+                                <div
+                                  key={i}
+                                  className="flex flex-col items-start justify-between gap-1 border-t py-1 mt-1"
+                                >
+                                  <div className="w-full flex items-center justify-between">
+                                    <p className="text-gray-600 text-xs">
+                                      {rep.content}
+                                    </p>
+                                    <span className="text-xs text-gray-500">
+                                      {formatDate(rep.created_at)}
+                                    </span>
+                                  </div>
+
+                                  {user && user.id == rep.user_id && (
+                                    <button
+                                      className="text-xs text-red-500 hover:text-red-600"
+                                      onClick={() =>
+                                        handleDeleteComment(com.id)
+                                      }
+                                    >
+                                      delete
+                                    </button>
+                                  )}
+                                </div>
+                              );
+                            })}
+
+                            {replyModal === com.id && (
+                              <div>
+                                <button
+                                  onClick={() => setReplyModal(null)}
+                                  className="text-red-500"
+                                >
+                                  x
+                                </button>
+                                <form
+                                  className="mt-2 mb-3"
+                                  onSubmit={handleSubmitComment}
+                                >
+                                  <div className="flex items-start gap-3">
+                                    <img
+                                      src={authUser.photo}
+                                      alt="Your avatar"
+                                      className="w-5 h-5 rounded-full object-cover"
+                                    />
+                                    <div className="flex-1 flex items-center gap-2">
+                                      <textarea
+                                        rows="1"
+                                        placeholder="Write your comment here..."
+                                        value={comment}
+                                        onChange={(e) =>
+                                          setComment(e.target.value)
+                                        }
+                                        className="w-full bg-gray-50 border border-gray-100 rounded-lg resize-none p-3 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                                      />
+
+                                      <SecondaryButton
+                                        type="submit"
+                                        text="Post"
+                                      />
+                                    </div>
+                                  </div>
+                                </form>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    )
+                )}
+              </div>
+
+              {comments.length > 3 && (
+                <div className="mt-6 text-center flex gap-4 items-center justify-center">
+                  <button
+                    onClick={() => setCount(count + 3)}
+                    className="text-indigo-600 hover:text-indigo-700 text-sm font-medium"
+                  >
+                    Load more comments
+                  </button>
+                  {count > 3 && (
+                    <button
+                      onClick={() => setCount(count - 3)}
+                      className="text-indigo-600 border-l pl-4 hover:text-indigo-700 text-sm font-medium"
+                    >
+                      Load less comments
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
 
           <aside className="space-y-6">
@@ -233,7 +466,7 @@ export default function ArticleDetails() {
 
                   <div className="mt-3">
                     <Link
-                      to={`/consultants/${author.id}`}
+                      to={`/consultants/${article.author_id}`}
                       className="text-indigo-600 hover:text-indigo-700 text-sm font-medium"
                     >
                       View Profile →
@@ -250,7 +483,8 @@ export default function ArticleDetails() {
               <ul className="space-y-4">
                 {relatedArticles.map(
                   (relatedArticle, index) =>
-                    relatedArticle.category.name == article.category.name &&
+                    relatedArticle.category.name.toLowerCase ==
+                      article.category.name.toLowerCase &&
                     index < 5 && (
                       <li key={index} className="border-b pb-2">
                         <Link
@@ -274,12 +508,6 @@ export default function ArticleDetails() {
           </aside>
         </main>
       </div>
-
-      <style jsx>{`
-        .clip-path-wave {
-          clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-        }
-      `}</style>
 
       <Footer />
     </>

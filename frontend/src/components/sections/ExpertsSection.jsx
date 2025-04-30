@@ -64,9 +64,9 @@ export const ExpertsSection = () => {
         viewport={{ once: true }}
         className="my-10 grid sm:grid-cols-2 md:grid-cols-3 gap-5 sm:px-5 md:px-10"
       >
-        {consultants.map((consultant) => {
+        {consultants.map((consultant,index) => {
           return (
-            consultant.id < 3 && (
+            index < 3 && (
               <motion.div
                 key={consultant.id}
                 initial={{ opacity: 0, scale: 0.8 }}
