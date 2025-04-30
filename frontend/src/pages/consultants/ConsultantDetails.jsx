@@ -20,6 +20,7 @@ export default function ConsultantDetails() {
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleRequestCall = async (data) => {
+    console.log(data);
     try {
       const token = sessionStorage.getItem("token");
 
@@ -279,7 +280,7 @@ export default function ConsultantDetails() {
       <AuthProvider>
         <ReservationModal
           isOpen={modalOpen}
-          consultant_id={id.id}
+          consultant_id={id}
           onClose={() => setModalOpen(false)}
           onSubmit={handleRequestCall}
         />

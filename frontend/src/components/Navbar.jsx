@@ -25,23 +25,38 @@ export default function NavBar() {
         </Link>
         <ul className="flex items-center text-white gap-x-10">
           <li className=" text-sm capitalize">
-            <Link to="/" className="transition hover:text-[#EEF2FF]">
+            <Link
+              to="/"
+              className="transition hover:underline hover:text-[#EEF2FF]"
+            >
               home
             </Link>
           </li>
-          {(user && user.accountType === "entrepreneur") ||
+          {(user && user.accountType === "entrepreneur" && (
+            <li className=" text-sm capitalize">
+              <Link
+                to="/consultants"
+                className="transition hover:underline hover:text-[#EEF2FF]"
+              >
+                consultants
+              </Link>
+            </li>
+          )) ||
             (!user && (
               <li className=" text-sm capitalize">
                 <Link
                   to="/consultants"
-                  className="transition hover:text-[#EEF2FF]"
+                  className="transition hover:underline hover:text-[#EEF2FF]"
                 >
                   consultants
                 </Link>
               </li>
             ))}
           <li className=" text-sm capitalize">
-            <Link to="/blog" className="transition hover:text-[#EEF2FF]">
+            <Link
+              to="/blog"
+              className="transition hover:underline hover:text-[#EEF2FF] "
+            >
               blog
             </Link>
           </li>
@@ -49,7 +64,7 @@ export default function NavBar() {
             <li className=" text-sm capitalize">
               <Link
                 to="/consultantDash"
-                className="transition hover:text-[#EEF2FF]"
+                className="transition hover:underline hover:text-[#EEF2FF]"
               >
                 dashboard
               </Link>
@@ -59,7 +74,7 @@ export default function NavBar() {
             <li className=" text-sm capitalize">
               <Link
                 to="/entrepreneurDash"
-                className="transition hover:text-[#EEF2FF]"
+                className="transition hover:underline hover:text-[#EEF2FF]"
               >
                 dashboard
               </Link>
@@ -70,7 +85,7 @@ export default function NavBar() {
           {!user ? (
             <Link
               to="/login"
-              className="px-[25px] py-[5px] text-sm text-white border border-[EEF2FF] rounded-md text-center transition hover:bg-[#EEF2FF] hover:text-[#4338CA]"
+              className="px-[25px] py-[5px] text-sm text-white border border-[EEF2FF] rounded-md text-center transition hover:underline hover:bg-[#EEF2FF] hover:text-[#4338CA]"
             >
               Login
             </Link>
