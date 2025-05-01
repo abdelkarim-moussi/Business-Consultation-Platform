@@ -14,7 +14,7 @@ const Articles = () => {
   const [filteredArticles, setFilteredArticles] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [articlesPerPage, setArticlesPerPage] = useState(12);
+  const [articlesPerPage, setArticlesPerPage] = useState(8);
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
@@ -44,12 +44,13 @@ const Articles = () => {
         .includes(searchTerm.toLowerCase());
       const categoryMatch = category ? article.category_id == category : true;
 
-      return titleMatch, categoryMatch;
+      return titleMatch && categoryMatch;
     });
 
     setFilteredArticles(filteredArticles);
     setCurrentPage(1);
     fetchCategories();
+
   }, [articles, category, searchTerm]);
 
   const handlePagination = (pageNumber) => {

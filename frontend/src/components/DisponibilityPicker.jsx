@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Calendar, Clock } from "lucide-react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
+import { toast } from "react-toastify";
 
 const DisponibilityPicker = () => {
   const [date, setDate] = useState(new Date());
@@ -115,7 +116,7 @@ const DisponibilityPicker = () => {
 
   const submitDisponibility = async () => {
     const disponibility = {
-      consultant_id: user.id,
+      consultant_id: userInfo.id,
       date: formatDateForInput(date),
       startTime,
       endTime,
@@ -125,7 +126,7 @@ const DisponibilityPicker = () => {
       disponibility
     );
 
-    console.log(response.data.message);
+    toast.log(response.data.message);
   };
 
   const generateTimeOptions = () => {

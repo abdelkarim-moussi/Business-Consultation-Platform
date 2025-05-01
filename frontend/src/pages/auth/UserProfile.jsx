@@ -109,6 +109,8 @@ export default function UserProfile() {
         newPassword: "",
         newPassword_confirmation: "",
       });
+
+      fetchUser;
     } catch (error) {
       throw ("password reset failed", error);
     }

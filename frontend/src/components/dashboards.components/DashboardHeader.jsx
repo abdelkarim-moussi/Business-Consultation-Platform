@@ -2,6 +2,8 @@ import { useAuth } from "../../context/AuthContext";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+
+
 export default function DashboardHeader({ page }) {
   const { logout } = useAuth();
   const [fetchedUser, setFetchedUser] = useState({});

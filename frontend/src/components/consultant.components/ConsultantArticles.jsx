@@ -4,6 +4,7 @@ import { useAuth } from "../../context/AuthContext";
 import PrimaryButton from "../buttons/PrimaryLink";
 import { format } from "date-fns";
 import EditArticleModal from "../article.components/EditArticle";
+import { Link } from "react-router-dom";
 
 export default function ConsultantArticles() {
   const { user } = useAuth();
@@ -106,8 +107,8 @@ export default function ConsultantArticles() {
                 {articles.map((article) => (
                   <tr key={article.id} className="border-b hover:bg-gray-50">
                     <td className="px-4 py-3">
-                      <a href="">{article.title}</a>
-                    </td>
+                      <Link to={`/articles/${article.id}`}>{article.title}</Link>
+                    </td> 
                     <td className="px-4 py-3 capitalize">{article.status}</td>
                     <td className="px-4 py-3">
                       {format(Date(article.created_at), "d-m-y H:mm")}

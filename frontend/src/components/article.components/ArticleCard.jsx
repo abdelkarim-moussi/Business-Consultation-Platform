@@ -18,7 +18,6 @@ const ArticleCard = ({ article }) => {
       : text;
   };
 
-
   return (
     <div className="flex flex-col h-full transition-transform duration-300 hover:-translate-y-1">
       <div className="bg-white shadow-md rounded-xl overflow-hidden h-full flex flex-col">
@@ -78,11 +77,11 @@ const ArticleCard = ({ article }) => {
             />
             <div className="ml-3">
               <h3 className="font-medium text-gray-800">
-                {article.author?.name || "Jean Damon"}
+                {article.author?.firstName+" "+article.author?.lastName || "Jean Damon"}
               </h3>
               <div className="flex items-center text-xs text-gray-500 mt-1">
                 <FaCalendarAlt className="mr-1" />
-                <span>{formatDate(article.publishedAt || "2025-01-12")}</span>
+                <span>{formatDate(article.created_at || "2025-01-12")}</span>
               </div>
             </div>
           </div>

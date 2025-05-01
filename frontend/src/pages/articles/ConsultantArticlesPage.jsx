@@ -7,7 +7,7 @@ import { AuthProvider } from "../../context/AuthContext";
 export default function ConsultantArticlesPage() {
   return (
     <div className="flex h-full">
-      <Sidebar active="consultantArticles" />
+      <Sidebar active="consultant/articles" />
       <div className="w-full">
         <AuthProvider>
           <DashboardHeader page="Articles"/>

@@ -14,6 +14,7 @@ import UserProfile from "./pages/auth/UserProfile";
 import ConsultantDetails from "./pages/consultants/ConsultantDetails";
 import { ToastContainer } from "react-toastify";
 import ArticleDetails from "./pages/articles/ArticleDetails";
+import ConsultantConsultationsPage from "./pages/consultations/ConsultantConsultationsPage";
 
 export default function App() {
   return (
@@ -62,7 +63,7 @@ export default function App() {
             />
 
             <Route
-              path="/consultantArticles"
+              path="/consultant/articles"
               element={
                 <ProtectedRoute>
                   <ConsultantArticlesPage />
@@ -71,15 +72,22 @@ export default function App() {
             />
 
             <Route
-              path="/Consultconsultations"
+              path="/consultant/consultations"
               element={
                 <ProtectedRoute>
-                  <ConsultantArticlesPage />
+                  <ConsultantConsultationsPage />
                 </ProtectedRoute>
               }
             />
 
-            <Route path="/profile" element={<UserProfile />} />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <UserProfile />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/consultants/:id" element={<ConsultantDetails />} />
             <Route path="/articles/:id" element={<ArticleDetails />} />
           </Routes>

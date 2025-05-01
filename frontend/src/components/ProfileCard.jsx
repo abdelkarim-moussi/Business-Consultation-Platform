@@ -34,17 +34,17 @@ const ProfileCard = ({ consultant }) => {
 
   return (
     <div className="max-w-xs w-full bg-white shadow-md rounded-xl overflow-hidden hover:shadow-lg transition-shadow duration-300">
-      <div className="bg-gradient-to-r from-indigo-600 to-indigo-500 p-4 text-white">
+      <div className="bg-gradient-to-r p-4 border-b border-gray-200">
         <div className="flex items-center gap-4">
           <div className="relative">
             {consultant.photo != 'http://127.0.0.1:8000/storage' ? (
               <img
                 src={consultant.photo || "/api/placeholder/80/80"}
                 alt={`${consultant.firstName} ${consultant.lastName}`}
-                className="w-16 h-16 rounded-full object-cover border-2 border-white shadow-md"
+                className="w-16 h-16 rounded-full object-cover border-2 border-indigo-500 shadow-md"
               />
             ) : (
-              <div className="w-16 h-16 flex items-center justify-center rounded-full border-2 border-white shadow-md text-center uppercase">{consultant.firstName[0] + "/" + consultant.lastName[0]}</div>
+              <div className="w-16 h-16 flex items-center justify-center rounded-full border-2 border-indigo-500 shadow-md text-center uppercase">{consultant.firstName[0] + "/" + consultant.lastName[0]}</div>
             )}
 
             {consultant.isVerified && (
@@ -55,12 +55,12 @@ const ProfileCard = ({ consultant }) => {
           </div>
           <div>
             <Link to={`/consultants/${consultant.id}`} className="group">
-              <h2 className="text-lg font-semibold capitalize group-hover:underline">
+              <h2 className="text-md text-slate-700 font-semibold capitalize group-hover:underline">
                 {consultant.firstName} {consultant.lastName}
               </h2>
             </Link>
-            <p className="text-indigo-100">
-              {consultant.title || "Consultant"}
+            <p className="text-indigo-500 text-sm capitalize">
+              {consultant.domainExpertise || "Consultant"}
             </p>
           </div>
         </div>
@@ -69,10 +69,10 @@ const ProfileCard = ({ consultant }) => {
       <div className="p-4">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center text-gray-600">
-            <FaMapMarkerAlt className="mr-1 text-indigo-600" />
+            <FaMapMarkerAlt className="mr-1 text-indigo-600 text-xs" />
             <span>{consultant.location || "San Francisco"}</span>
           </div>
-          <div className="px-3 py-1 bg-indigo-100 text-indigo-600 rounded-full text-sm font-medium">
+          <div className="px-3 py-1 bg-indigo-100 text-indigo-600 rounded-full text-xs font-medium">
             {consultant.experience || 0} years exp
           </div>
         </div>
@@ -103,7 +103,7 @@ const ProfileCard = ({ consultant }) => {
           </div>
         </div>
 
-        <div className="border-t border-gray-100 pt-4">
+        <div className="border-t border-gray-200 pt-4">
           <div className="flex items-center justify-between">
             <span className="text-sm text-gray-500">Client satisfaction</span>
             {renderRatingStars(consultant.rating || 4.5)}

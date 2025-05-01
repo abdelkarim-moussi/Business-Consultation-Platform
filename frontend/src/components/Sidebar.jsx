@@ -4,20 +4,24 @@ import articles from "../assets/images/articles.png";
 import messages from "../assets/images/messages.png";
 import plus from "../assets/images/plus.png";
 import payment from "../assets/images/payment.png";
-import consultation from "../assets/images/consultation.png";
+import consultations from "../assets/images/consultation.png";
 
 export default function Sidebar({ active }) {
   const menuItems = [
     { name: "Dashboard", icon: dash, link: "consultantDash" },
-    { name: "Consultations", icon: consultation },
-    { name: "Articles", icon: articles, link: "consultantArticles" },
+    {
+      name: "Consultations",
+      icon: consultations,
+      link: "consultant/consultations",
+    },
+    { name: "Articles", icon: articles, link: "consultant/articles" },
     { name: "Create Article", icon: plus, link: "createarticle" },
     { name: "Payment", icon: payment },
     { name: "Messages", icon: messages },
   ];
 
   return (
-    <aside className="w-64 bg-[#4F46E5] shadow-sm p-4 h-[100vh] sticky top-0">
+    <aside className="w-64 bg-[#4F46E5] shadow-sm p-4 h-[100vh] sticky top-0 ">
       <Link to="/">
         <h2 className="text-2xl font-bold text-white mb-8 capitalize">
           <span className="text-[#EEF2FF]">Buz</span>Consult

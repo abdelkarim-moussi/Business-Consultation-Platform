@@ -1,6 +1,7 @@
 import { Outlet, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Logout from "../assets/images/logout-white.png";
+import UserIcon from "../assets/images/user-.png";
 
 export default function NavBar() {
   const { user } = useAuth();
@@ -90,9 +91,15 @@ export default function NavBar() {
               Login
             </Link>
           ) : (
-            <button onClick={handlelogout} className="hover:inderline">
-              <img src={Logout} className="w-5" />
-            </button>
+            <>
+              <Link to="/profile" className="mr-2">
+                <img src={UserIcon} alt="user" className="w-5 h-5"/>
+              </Link>
+
+              <button onClick={handlelogout}>
+                <img src={Logout} className="w-4 h-4" />
+              </button>
+            </>
           )}
         </ul>
       </nav>
