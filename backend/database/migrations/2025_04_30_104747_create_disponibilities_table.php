@@ -11,8 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('comments', function (Blueprint $table) {
+        Schema::create('disponibilities', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('consultant_id')->constrained('users', 'id')->deleteOnCascade()->updateOnCascade();
+            $table->date('date');
+            $table->time('startTime');
+            $table->time('endTime');
             $table->timestamps();
         });
     }
@@ -22,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('comments');
+        Schema::dropIfExists('disponibilities');
     }
 };

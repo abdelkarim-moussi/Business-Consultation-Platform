@@ -12,10 +12,13 @@ class ArticleRepository implements ArticleRepositoryInterface
 
     public function all()
     {
-        $articles = Article::with(['author', 'tags', 'category','comments','comments.user'])->get();
+        $articles = Article::with(['author', 'tags', 'category', 'comments', 'comments.user'])->get();
 
         $articles->map(function ($article) {
             $article->cover = asset('storage/' . $article->cover);
+            if ($article->author->photo && !str_contains($article->author->photo, '/storage/')) {
+                $article->author->photo = asset('storage/' . $article->author->photo);
+            }
             return $article;
         });
 
@@ -24,11 +27,19 @@ class ArticleRepository implements ArticleRepositoryInterface
 
     public function find($id)
     {
-        $article = Article::with(['author', 'tags', 'category','comments','comments.user'])->findOrFail($id);
+        $article = Article::with(['author', 'tags', 'category', 'comments', 'comments.user', 'comments.replies'])->findOrFail($id);
 
         $article->author->photo = asset('/storage/' . $article->author->photo);
 
         $article->cover = asset('/storage/' . $article->cover);
+
+        $article->comments->map(function ($comment) {
+            if ($comment->user->photo && !str_contains($comment->user->photo, '/storage/')) {
+                $comment->user->photo = asset('storage/' . $comment->user->photo);
+            }
+            return $comment;
+        });
+
 
         return $article;
     }

@@ -8,65 +8,92 @@ use Illuminate\Http\Request;
 class ConsultationController extends Controller
 {
     private $consultationService;
-    
+
     public function __construct(ConsultationService $consultationService)
     {
         $this->consultationService = $consultationService;
     }
 
-    public function index(){
+    public function index()
+    {
 
         $consultations = $this->consultationService->getAllConsultations();
 
         return response()->json(compact('consultations'));
-
     }
 
 
-    public function show($id){
+    public function show($id)
+    {
 
-        $consulation = $this->consultationService->getConsultationById($id);
-        
+        $consultation = $this->consultationService->getConsultationById($id);
+
         return response()->json(compact('consultation'));
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
 
         $consultation = $this->consultationService->createConsultation($request);
 
         return response()->json(
             [
-                'message'=>'consultation created succefully',
-                'consultation'=>$consultation
-            ],200);
-
-    }
-
-    public function update($id,Request $request){
-        
-       $consultation = $this->consultationService->updateConsultation($id,$request);
-       return response()->json(
-        [
-            'message'=>'consultation updated succefully',
-            'consultation'=>$consultation
-        ]
+                'message' => 'consultation created succefully',
+                'consultation' => $consultation
+            ],
+            200
         );
-
-    }
-    
-    public function cancel($id){
-
-       return $this->consultationService->cancelConsultation($id);
     }
 
-    public function accept($id){
+    public function update($id, Request $request)
+    {
 
-       return $this->consultationService->acceptConsultation($id);
+        $consultation = $this->consultationService->updateConsultation($id, $request);
+        return response()->json(
+            [
+                'message' => 'consultation updated succefully',
+                'consultation' => $consultation
+            ]
+        );
     }
 
-    public function refuse($id){
+    public function findConsultationsByConsultantId($id)
+    {
+        $consultations = $this->consultationService->getConsultationsByConsultantId($id);
 
-       return $this->consultationService->refuseConsultation($id);
+        return response()->json([
+            'consultations' => $consultations
+        ]);
     }
 
+
+    public function ManageConsultationStatus($id, Request $request)
+    {
+        $this->consultationService->changeConsultationStatus($id, $request);
+
+        return response()->json(
+            [
+                'message' => 'consultation ' . $request->status . ' succefully'
+            ]
+        );
+    }
+
+
+    public function cancel($id)
+    {
+
+        return $this->consultationService->cancelConsultation($id);
+    }
+
+    public function accept($id)
+    {
+
+        return $this->consultationService->acceptConsultation($id);
+    }
+
+    public function refuse($id)
+    {
+
+        return $this->consultationService->refuseConsultation($id);
+    }
 }

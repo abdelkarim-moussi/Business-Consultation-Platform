@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Consultant;
 use App\Models\Consultation;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
@@ -22,9 +23,15 @@ class ConsultationPolicy
      */
     public function view(User $user, Consultation $consultation): bool
     {
-        return $consultation->consultant_id === $user->id ?? $consultation->entrepreneur_id === $user->id;
+        return $consultation->consultant_id === $user->id || $consultation->entrepreneur_id === $user->id;
     }
 
+    public function viewConsultConsultations(User $user, Consultant $consultant): bool
+    {
+        return $user->id === $consultant->user_id ;
+    }
+
+    
     /**
      * Determine whether the user can create models.
      */

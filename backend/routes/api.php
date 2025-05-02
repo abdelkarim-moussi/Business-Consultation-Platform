@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ConsultantController;
 use App\Http\Controllers\ConsultationController;
+use App\Http\Controllers\DisponibilityController;
 use App\Http\Controllers\JWTAuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReviewController;
@@ -29,6 +30,11 @@ Route::middleware(['jwtauth'])->group(function () {
     Route::post('consultations/{id}/accept', [ConsultationController::class, 'accept']);
     Route::post('consultations/{id}/refuse', [ConsultationController::class, 'refuse']);
 
+    Route::post('consultations/{id}', [ConsultationController::class, 'ManageConsultationStatus']);
+
+    Route::get('consultations/consultant/{id}', [ConsultationController::class, 'findConsultationsByConsultantId']);
+
+
     Route::apiResource('articles', ArticleController::class)->except('index', 'show');
     Route::apiResource('comments', CommentController::class)->except('index', 'show');
 
@@ -47,6 +53,9 @@ Route::middleware(['jwtauth'])->group(function () {
     Route::put('resetpassword', [JWTAuthController::class, 'resetPassword']);
 
     Route::apiResource('reviews', ReviewController::class);
+    Route::apiResource('disponibilities', DisponibilityController::class);
+    Route::get('disponibilities/consultant/{id}', [DisponibilityController::class, 'consultantDisponibilities']);
+    
 });
 
 Route::apiResource('categories', CategoryController::class);
@@ -56,4 +65,4 @@ Route::get('articles', [ArticleController::class, 'index']);
 Route::get('articles/category/{category}', [ArticleController::class, 'RelatedArticles']);
 Route::get('articles/{id}', [ArticleController::class, 'show']);
 
-Route::get('comments', [CommentController::class,'index']);
+Route::get('comments', [CommentController::class, 'index']);

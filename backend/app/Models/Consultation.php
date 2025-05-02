@@ -11,7 +11,8 @@ class Consultation extends Model
         'delay',
         'entrepreneur_id',
         'consultant_id',
-        'consultation_reason'
+        'consultation_reason',
+        'status'
     ];
 
 

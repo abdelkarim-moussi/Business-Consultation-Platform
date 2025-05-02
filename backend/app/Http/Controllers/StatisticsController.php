@@ -77,6 +77,25 @@ class StatisticsController extends Controller
             abort(403);
         }
 
+        $latestCustomers = DB::table(DB::raw("
+        (
+            SELECT DISTINCT ON (c.entrepreneur_id) 
+                c.*, u.*
+            FROM consultations c
+            JOIN users u ON u.id = c.entrepreneur_id
+            WHERE c.consultant_id = ?
+            ORDER BY c.entrepreneur_id, c.created_at DESC
+        )
+        "))
+        ->setBindings([$consultantId])
+            ->limit(5)
+            ->get();
+
+        $latestCustomers->map(function ($customer) {
+            $customer->photo = asset('storage/' . $customer->photo);
+            return $customer;
+        });
+
 
         return response()->json([
             'success' => true,
@@ -90,13 +109,13 @@ class StatisticsController extends Controller
                     ->where('status', 'refused')->count(),
                 'upcoming_consultations' => Consultation::where('consultant_id', $consultantId)
                     ->where('status', 'pending')->count(),
-                    
+
                 'article_stats' => [
                     'total_articles' => Article::where('author_id', $consultantId)->count(),
                     'latest_articles' => Article::select('id', 'title', 'author_id', 'created_at')->where('author_id', $consultantId)->limit(4)->get()
                 ],
 
-                'latest_customers' => DB::table('users')->join('consultations', 'users.id', 'consultations.entrepreneur_id')->where('consultations.consultant_id', $consultantId)->orderBy('consultations.created_at', 'desc')->limit(5)->get()
+                'latest_customers' => $latestCustomers
 
             ]
         ]);
