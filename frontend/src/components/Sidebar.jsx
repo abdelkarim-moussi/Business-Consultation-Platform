@@ -17,7 +17,7 @@ export default function Sidebar({ active }) {
     { name: "Articles", icon: articles, link: "consultant/articles" },
     { name: "Create Article", icon: plus, link: "createarticle" },
     { name: "Payment", icon: payment },
-    { name: "Messages", icon: messages },
+    { name: "Chats", icon: messages, link: "chats" },
   ];
 
   return (

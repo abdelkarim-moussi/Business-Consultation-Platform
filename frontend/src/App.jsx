@@ -15,6 +15,7 @@ import ConsultantDetails from "./pages/consultants/ConsultantDetails";
 import { ToastContainer } from "react-toastify";
 import ArticleDetails from "./pages/articles/ArticleDetails";
 import ConsultantConsultationsPage from "./pages/consultations/ConsultantConsultationsPage";
+import Chats from "./pages/Chats";
 
 export default function App() {
   return (
@@ -90,6 +91,7 @@ export default function App() {
             />
             <Route path="/consultants/:id" element={<ConsultantDetails />} />
             <Route path="/articles/:id" element={<ArticleDetails />} />
+            <Route path="/chats" element={<Chats />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
