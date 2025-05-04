@@ -58,12 +58,16 @@ class ConsultationService
     {
         return $this->consultationRepository->findConsultationsByConsultantBy($id);
     }
+    public function getConsultationsByEntrepreneurId($id)
+    {
+        return $this->consultationRepository->findConsultationsByEntrepreneurBy($id);
+    }
 
     public function changeConsultationStatus($id, Request $data)
     {
         $validated = $data->validate(
             [
-                'status' => 'required|in:accepted,refused,in_progress,done'
+                'status' => 'required|in:accepted,refused,cancel,in_progress,done'
             ]
         );
 

@@ -37,6 +37,7 @@ Route::middleware(['jwtauth'])->group(function () {
     Route::post('consultations/{id}', [ConsultationController::class, 'ManageConsultationStatus']);
 
     Route::get('consultations/consultant/{id}', [ConsultationController::class, 'findConsultationsByConsultantId']);
+    Route::get('consultations/entrepreneur/{id}', [ConsultationController::class, 'findConsultationsByEntrepreneurId']);
 
 
     Route::apiResource('articles', ArticleController::class)->except('index', 'show');

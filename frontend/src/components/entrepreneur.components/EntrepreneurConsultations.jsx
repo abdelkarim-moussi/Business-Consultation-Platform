@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { jwtDecode } from "jwt-decode";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const EntrepreneurConsultations = () => {
   const [consultations, setConsultations] = useState([]);
@@ -93,6 +95,7 @@ const EntrepreneurConsultations = () => {
       toast.success(response.data.message);
       fetchConsultations();
     } catch (error) {
+      toast.error("there is an error");
       console.log(error);
     }
   };
@@ -103,9 +106,15 @@ const EntrepreneurConsultations = () => {
     if (status === "pending") {
       colors = "bg-amber-100 text-amber-800";
     } else if (status === "in progress") {
-      colors = "bg-green-100 text-green-800";
+      colors = "bg-green-100 text-yellow-800";
     } else if (status === "refused") {
       colors = "bg-red-100 text-red-800";
+    }
+    else if(status === "accepted") {
+      colors = "bg-green-100 text-green-800";
+    }
+    else if(status === "done") {
+      colors = "bg-blue-100 text-blue-800";
     }
 
     return (
@@ -118,7 +127,7 @@ const EntrepreneurConsultations = () => {
   return (
     <>
       <div className="p-5">
-        <div className="bg-white p-5 w-full max-w-[75vw] overflow-auto">
+        <div className="bg-white p-5 w-full overflow-auto">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-xl font-semibold">My Consultations</h2>
           </div>
@@ -183,7 +192,7 @@ const EntrepreneurConsultations = () => {
                         <>
                           <button
                             onClick={() =>
-                              handleStatusChange(consultation.id, "canceled")
+                              handleStatusChange(consultation.id, "cancel")
                             }
                             className="bg-green-50 px-2 rounded-xl text-green-600 hover:bg-green-100"
                           >

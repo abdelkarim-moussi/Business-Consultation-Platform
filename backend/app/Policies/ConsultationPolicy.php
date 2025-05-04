@@ -2,11 +2,9 @@
 
 namespace App\Policies;
 
-use App\Models\Consultant;
 use App\Models\Consultation;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
-use Tymon\JWTAuth\Facades\JWTAuth;
+
 
 class ConsultationPolicy
 {
@@ -15,7 +13,7 @@ class ConsultationPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return $user->accountType === "admin";
     }
 
     /**
@@ -26,12 +24,7 @@ class ConsultationPolicy
         return $consultation->consultant_id === $user->id || $consultation->entrepreneur_id === $user->id;
     }
 
-    public function viewConsultConsultations(User $user, Consultant $consultant): bool
-    {
-        return $user->id === $consultant->user_id ;
-    }
 
-    
     /**
      * Determine whether the user can create models.
      */
@@ -48,12 +41,12 @@ class ConsultationPolicy
         return $user->id === $consultation->entrepreneur_id;
     }
 
-    public function cancel(User $user,Consultation $consultation):bool
+    public function cancel(User $user, Consultation $consultation): bool
     {
         return $user->id === $consultation->entrepreneur_id;
     }
 
-    public function acceptRefuse(User $user,Consultation $consultation):bool
+    public function acceptRefuse(User $user, Consultation $consultation): bool
     {
         return $user->id === $consultation->consultant_id;
     }

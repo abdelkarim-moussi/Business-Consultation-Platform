@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Consultant;
 use App\Models\Consultation;
+use App\Models\User;
 use App\Repositories\Interfaces\ConsultationRepositoryInterface;
 use Carbon\Carbon;
 use Illuminate\Console\Application;
@@ -17,11 +18,13 @@ class ConsultationRepository implements ConsultationRepositoryInterface
 
     public function all()
     {
-        if (Gate::denies('view')) {
+        if (Gate::denies('viewAny', Consultation::class)) {
             abort(403, 'you don\'t have access');
         }
 
-        return Consultation::all();
+        $consultations = Consultation::all();
+
+        return $consultations;
     }
 
     public function find($id)
@@ -78,6 +81,21 @@ class ConsultationRepository implements ConsultationRepositoryInterface
         $consultations->map(function ($consultation) {
             if ($consultation->entrepreneur->photo && !str_contains($consultation->entrepreneur->photo, '/storage/')) {
                 $consultation->entrepreneur->photo = asset('storage/' . $consultation->entrepreneur->photo);
+            }
+            return $consultation;
+        });
+
+        return $consultations;
+    }
+
+    public function findConsultationsByEntrepreneurBy($id)
+    {
+
+        $consultations = Consultation::where('entrepreneur_id', $id)->with('consultant')->get();
+
+        $consultations->map(function ($consultation) {
+            if ($consultation->consultant->photo && !str_contains($consultation->consultant->photo, '/storage/')) {
+                $consultation->consultant->photo = asset('storage/' . $consultation->consultant->photo);
             }
             return $consultation;
         });

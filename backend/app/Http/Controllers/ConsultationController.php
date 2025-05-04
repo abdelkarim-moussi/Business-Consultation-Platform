@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Entrepreneur;
+use App\Models\User;
 use App\Services\ConsultationService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class ConsultationController extends Controller
 {
@@ -59,7 +63,30 @@ class ConsultationController extends Controller
 
     public function findConsultationsByConsultantId($id)
     {
+        
+        $user = User::findOrFail($id);
+
+        if (! Gate::allows('viewEntrepreneurConsultations', $user)) {
+            abort(403, "you are not allowed");
+        }
+
         $consultations = $this->consultationService->getConsultationsByConsultantId($id);
+
+        return response()->json([
+            'consultations' => $consultations
+        ]);
+    }
+
+
+    public function findConsultationsByEntrepreneurId($id)
+    {
+        $user = User::findOrFail($id);
+
+        if (!Gate::allows('viewEntrepreneurConsultations', $user)) {
+            abort(403, "you are not allowed");
+        }
+
+        $consultations = $this->consultationService->getConsultationsByEntrepreneurId($id);
 
         return response()->json([
             'consultations' => $consultations

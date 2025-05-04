@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Consultant;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
@@ -79,5 +80,15 @@ class UserPolicy
     {
         // Only allow users with 'consultant' role to view the dashboard
         return $user->accountType === 'consultant';
+    }
+
+    public function viewConsultConsultations(User $authUser, User $targetUser): bool
+    {
+        return $authUser->id === $targetUser->id && $targetUser->accountType === "consultant";
+    }
+
+    public function viewEntrepreneurConsultations(User $authUser, User $targetUser): bool
+    {
+        return $authUser->id === $targetUser->id && $targetUser->accountType === "entrepreneur";
     }
 }
