@@ -56,7 +56,7 @@ body{
 }
 
 .message.sent .message-content {
-    background-color: #007bff;
+    background-color: #4338CA;
     color: white;
 }
 
@@ -90,7 +90,7 @@ body{
 .message-input button {
     margin-left: 10px;
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #4338CA;
     color: white;
     border: none;
     border-radius: 20px;

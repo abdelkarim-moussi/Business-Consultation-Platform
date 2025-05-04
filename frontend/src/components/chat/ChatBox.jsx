@@ -9,7 +9,6 @@ const ChatBox = ({ currentUser, otherUser }) => {
   const [isLoading, setIsLoading] = useState(true);
   const messagesEndRef = useRef(null);
 
-  // Scroll to bottom of messages
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -18,7 +17,6 @@ const ChatBox = ({ currentUser, otherUser }) => {
     scrollToBottom();
   }, [messages]);
 
-  // Load existing messages
   useEffect(() => {
     const fetchMessages = async () => {
       setIsLoading(true);
@@ -41,7 +39,6 @@ const ChatBox = ({ currentUser, otherUser }) => {
 
     fetchMessages();
 
-    // Initialize Pusher
     const pusher = new Pusher("3e9c83178cddfab8b1f2", {
       cluster: "eu",
       forceTLS: true,
@@ -55,37 +52,20 @@ const ChatBox = ({ currentUser, otherUser }) => {
 
     Pusher.logToConsole = true;
 
-    // Subscribe to the channel for messages directed to the current user
-    const channelName = `chat.${currentUser.id}`;
-    console.log(`Subscribing to channel: ${channelName}`);
-
-    const channel = echo.private(`chat.${currentUser.id}`);
-
-    // Listen for new messages
-    // channel.bind("message.sent", (data) => {
-    //   console.log("Message received via Pusher:", data);
-    //   // if (data.message && data.message.sender_id === otherUser.id) {
-    //   setMessages((prev) => [...prev, data.message]);
-    //   // }
-    // });
-
-    channel.listen(".message.sent", (e) => {
-      console.log("Received via Echo:", e);
-      setMessages((prev) => [...prev, e.message]);
+    channel.bind("message.sent", (data) => {
+      console.log("Message received via Pusher:", data);
+      if (data.message && data.message.sender_id === otherUser.id) {
+        setMessages((prev) => [...prev, data.message]);
+      }
     });
 
-    // return () => {
-    //   channel.unbind_all();
-    //   channel.unsubscribe();
-    //   pusher.disconnect();
-    // };
-
     return () => {
-      channel.stopListening(".message.sent");
+      channel.unbind_all();
+      channel.unsubscribe();
+      pusher.disconnect();
     };
   }, [currentUser.id, otherUser.id]);
 
-  // Send new message
   const sendMessage = async (e) => {
     e?.preventDefault();
     if (newMessage.trim() === "") return;
@@ -103,7 +83,6 @@ const ChatBox = ({ currentUser, otherUser }) => {
         }
       );
 
-      // Add the new message to the state immediately
       setMessages((prev) => [...prev, response.data]);
       setNewMessage("");
     } catch (error) {
@@ -118,7 +97,7 @@ const ChatBox = ({ currentUser, otherUser }) => {
 
   return (
     <div className="flex flex-col h-full rounded-lg shadow-lg">
-      <div className="bg-blue-600 text-white p-4 rounded-t-lg">
+      <div className="bg-indigo-600 text-white p-4 rounded-t-lg">
         <h3 className="font-semibold flex items-center">
           <div className="w-3 h-3 bg-green-400 rounded-full mr-2"></div>
           Chat with {otherUser.firstName}
@@ -147,7 +126,7 @@ const ChatBox = ({ currentUser, otherUser }) => {
               <div
                 className={`max-w-xs md:max-w-md rounded-lg px-2 py-1 text-xs ${
                   message.sender_id === currentUser.id
-                    ? "bg-blue-500 text-white rounded-br-none"
+                    ? "bg-indigo-600 text-white rounded-br-none"
                     : "bg-white text-gray-800 rounded-bl-none shadow"
                 }`}
               >
@@ -155,7 +134,7 @@ const ChatBox = ({ currentUser, otherUser }) => {
                 <span
                   className={`text-xs mt-1 block text-right ${
                     message.sender_id === currentUser.id
-                      ? "text-blue-100"
+                      ? "text-indigo-600"
                       : "text-gray-500"
                   }`}
                 >
@@ -178,12 +157,12 @@ const ChatBox = ({ currentUser, otherUser }) => {
           onChange={(e) => setNewMessage(e.target.value)}
           placeholder="Type a message..."
           disabled={isLoading}
-          className="flex-1 border border-gray-300 rounded-l-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
+          className="flex-1 border border-gray-300 rounded-l-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-indigo-600"
         />
         <button
           type="submit"
           disabled={isLoading || newMessage.trim() === ""}
-          className="bg-blue-600 text-white px-6 py-2 rounded-r-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition cursor-pointer"
+          className="bg-indigo-600 text-white px-6 py-2 rounded-r-md hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600 transition cursor-pointer"
         >
           Send
         </button>

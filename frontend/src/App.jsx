@@ -16,6 +16,7 @@ import { ToastContainer } from "react-toastify";
 import ArticleDetails from "./pages/articles/ArticleDetails";
 import ConsultantConsultationsPage from "./pages/consultations/ConsultantConsultationsPage";
 import Chats from "./pages/Chats";
+import EntrepreneurDashboard from "./pages/entrepreneur/EntrepreneurDashboard";
 
 export default function App() {
   return (
@@ -48,8 +49,16 @@ export default function App() {
             <Route
               path="/consultantDash"
               element={
-                <ProtectedRoute roles={["consultant"]}>
+                <ProtectedRoute rules={["consultant"]}>
                   <ConsultantDashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/entrepreneurDash"
+              element={
+                <ProtectedRoute rules={["entrepreneur"]}>
+                  <EntrepreneurDashboard />
                 </ProtectedRoute>
               }
             />
@@ -57,7 +66,7 @@ export default function App() {
             <Route
               path="/createarticle"
               element={
-                <ProtectedRoute>
+                <ProtectedRoute rules={["consultant"]}>
                   <NewArticle />
                 </ProtectedRoute>
               }
@@ -66,7 +75,7 @@ export default function App() {
             <Route
               path="/consultant/articles"
               element={
-                <ProtectedRoute>
+                <ProtectedRoute rules={["consultant"]}>
                   <ConsultantArticlesPage />
                 </ProtectedRoute>
               }
@@ -75,7 +84,7 @@ export default function App() {
             <Route
               path="/consultant/consultations"
               element={
-                <ProtectedRoute>
+                <ProtectedRoute rules={["consultant"]}>
                   <ConsultantConsultationsPage />
                 </ProtectedRoute>
               }
@@ -84,7 +93,7 @@ export default function App() {
             <Route
               path="/profile"
               element={
-                <ProtectedRoute>
+                <ProtectedRoute rules={["consultant", "entrepreneur"]}>
                   <UserProfile />
                 </ProtectedRoute>
               }

@@ -56,14 +56,16 @@ class StatisticsController extends Controller
         return response()->json([
             'success' => true,
             'data' => [
+                'consultations' => Consultation::where('entrepreneur_id', $entrepreneurId)->get(),
                 'total_consultations' => Consultation::where('entrepreneur_id', $entrepreneurId)->count(),
                 'completed_consultations' => Consultation::where('entrepreneur_id', $entrepreneurId)
-                    ->where('status', 'completed')->count(),
-                'upcoming_consultations' => Consultation::where('entrepreneur_id', $entrepreneurId)
-                    ->where('status', 'scheduled')->count(),
-                'favorite_categories' => $this->getEntrepreneurFavoriteCategories($entrepreneurId),
-                'consultation_trends' => $this->getEntrepreneurConsultationTrends($entrepreneurId),
-                'average_rating_given' => $this->getAverageRatingGiven($entrepreneurId),
+                    ->where('status', 'done')->count(),
+                'refused_consultations' =>Consultation::where('entrepreneur_id', $entrepreneurId)
+                ->where('status', 'refused')->count(),
+                'accepted_consultations' =>Consultation::where('entrepreneur_id', $entrepreneurId)
+                ->where('status', 'accepted')->count(),
+                'pending_consultations' =>Consultation::where('entrepreneur_id', $entrepreneurId)
+                ->where('status', 'pending')->count(),
             ]
         ]);
     }

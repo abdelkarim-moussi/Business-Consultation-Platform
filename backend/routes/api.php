@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ConsultantController;
 use App\Http\Controllers\ConsultationController;
@@ -10,6 +11,9 @@ use App\Http\Controllers\JWTAuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\StatisticsController;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
 
 Route::post('register', [JWTAuthController::class, 'register']);
@@ -55,7 +59,17 @@ Route::middleware(['jwtauth'])->group(function () {
     Route::apiResource('reviews', ReviewController::class);
     Route::apiResource('disponibilities', DisponibilityController::class);
     Route::get('disponibilities/consultant/{id}', [DisponibilityController::class, 'consultantDisponibilities']);
-    
+
+    //chat routes
+    Route::get('/messages/{user}', [ChatController::class, 'index']);
+    Route::post('/messages/{user}', [ChatController::class, 'store']);
+    Route::get('/users', [ChatController::class, 'viewUsers']);
+    Route::get('/user/{user}', [ChatController::class, 'user']);
+
+    //broadcast channel
+    Broadcast::channel('chat.{id}', function ($user, $id) {
+        return (int) $user->id === (int) $id;
+    });
 });
 
 Route::apiResource('categories', CategoryController::class);

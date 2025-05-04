@@ -7,10 +7,10 @@ import Sidebar from "../components/Sidebar";
 const Chats = () => {
   return (
     <div className="flex h-full">
-      <Sidebar active="consultantDash" />
+      <Sidebar active="chats" />
       <div className="w-full">
         <AuthProvider>
-          <DashboardHeader page="Dashboard" />
+          <DashboardHeader page="chats" />
         </AuthProvider>
         <Chat />
       </div>
