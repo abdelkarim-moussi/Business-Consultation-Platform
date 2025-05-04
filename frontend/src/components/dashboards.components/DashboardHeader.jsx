@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
-
 export default function DashboardHeader({ page }) {
   const { logout } = useAuth();
   const [fetchedUser, setFetchedUser] = useState({});
@@ -12,15 +11,19 @@ export default function DashboardHeader({ page }) {
   const [mode, setMode] = useState("hidden");
 
   const fetchUser = async () => {
-    const token = sessionStorage.getItem("token");
+    try {
+      const token = sessionStorage.getItem("token");
 
-    const response = await axios.get("http://127.0.0.1:8000/api/profile", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+      const response = await axios.get("http://127.0.0.1:8000/api/profile", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-    setFetchedUser(response.data.user);
+      setFetchedUser(response.data);
+    } catch (error) {
+      console.log("arror fetching the user data", error);
+    }
   };
 
   const handlelogout = () => {
@@ -50,11 +53,13 @@ export default function DashboardHeader({ page }) {
 
         <div className="flex items-center space-x-4 gap-5">
           <div className="flex items-center space-x-2">
-            <div className="border-2 rounded-full border-white uppercase h-10 w-10 text-center flex items-center justify-center">
-              {/* {fetchedUser.firstName.slice(0, 1) +
-                "" +
-                fetchedUser.lastName.slice(0, 1)} */}
-            </div>
+            {fetchedUser.photo && (
+              <img
+                className="object-cover h-10 w-10 rounded-full border-2 border-white p-[1px]"
+                src={fetchedUser.photo}
+                alt=""
+              />
+            )}
 
             <span className="text-gray-100 text-sm capitalize">
               {fetchedUser.firstName + " " + fetchedUser.lastName}

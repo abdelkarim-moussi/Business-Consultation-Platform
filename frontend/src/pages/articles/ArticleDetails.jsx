@@ -37,6 +37,7 @@ export default function ArticleDetails() {
 
   const fetchAuth = async () => {
     const user = await fetchAuthUser();
+    console.log(user);
     setAuthUser(user);
   };
 
@@ -68,8 +69,6 @@ export default function ArticleDetails() {
       toast.error(response.data.error);
     }
   };
-
-  console.log(parentId);
 
   const formatDate = (dateString) => {
     if (!dateString) return "";
@@ -127,8 +126,8 @@ export default function ArticleDetails() {
     if (id) {
       fetchArticle();
       fetchRelatedArticles();
+      fetchAuth();
     }
-    fetchAuth();
   }, [id]);
 
   if (isLoading) {

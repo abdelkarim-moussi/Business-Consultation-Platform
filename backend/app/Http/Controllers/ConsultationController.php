@@ -66,7 +66,7 @@ class ConsultationController extends Controller
         
         $user = User::findOrFail($id);
 
-        if (! Gate::allows('viewEntrepreneurConsultations', $user)) {
+        if (! Gate::allows('viewConsultConsultations', $user)) {
             abort(403, "you are not allowed");
         }
 

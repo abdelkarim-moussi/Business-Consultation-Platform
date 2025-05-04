@@ -55,17 +55,19 @@ class StatisticsController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => [
-                'consultations' => Consultation::where('entrepreneur_id', $entrepreneurId)->get(),
+            'stats' => [
+
                 'total_consultations' => Consultation::where('entrepreneur_id', $entrepreneurId)->count(),
                 'completed_consultations' => Consultation::where('entrepreneur_id', $entrepreneurId)
                     ->where('status', 'done')->count(),
-                'refused_consultations' =>Consultation::where('entrepreneur_id', $entrepreneurId)
-                ->where('status', 'refused')->count(),
-                'accepted_consultations' =>Consultation::where('entrepreneur_id', $entrepreneurId)
-                ->where('status', 'accepted')->count(),
-                'pending_consultations' =>Consultation::where('entrepreneur_id', $entrepreneurId)
-                ->where('status', 'pending')->count(),
+                'refused_consultations' => Consultation::where('entrepreneur_id', $entrepreneurId)
+                    ->where('status', 'refused')->count(),
+                'accepted_consultations' => Consultation::where('entrepreneur_id', $entrepreneurId)
+                    ->where('status', 'accepted')->count(),
+                'pending_consultations' => Consultation::where('entrepreneur_id', $entrepreneurId)
+                    ->where('status', 'pending')->count(),
+                'canceled_consultations' => Consultation::where('entrepreneur_id', $entrepreneurId)
+                    ->where('status', 'cancel')->count(),
             ]
         ]);
     }
@@ -89,7 +91,7 @@ class StatisticsController extends Controller
             ORDER BY c.entrepreneur_id, c.created_at DESC
         )
         "))
-        ->setBindings([$consultantId])
+            ->setBindings([$consultantId])
             ->limit(5)
             ->get();
 

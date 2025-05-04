@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import ArticleCard from "../article.components/ArticleCard";
 
-  const ArticlesSection = ({ data, loading, currentPage, articlesPerPage }) => {
+const ArticlesSection = ({ data, loading, currentPage, articlesPerPage }) => {
   if (loading) {
     return (
       <motion.div
@@ -10,7 +10,11 @@ import ArticleCard from "../article.components/ArticleCard";
         transition={{ duration: 0.5 }}
         className="flex justify-center items-center h-[300px]"
       >
-        <h1>Loading...</h1>
+        <div className="min-h-screen flex items-center justify-center bg-gray-50">
+          <div className="text-center">
+            <div className="w-16 h-16 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          </div>
+        </div>
       </motion.div>
     );
   }

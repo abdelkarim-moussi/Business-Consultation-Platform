@@ -8,5 +8,5 @@ export const fetchAuthUser = async () => {
     },
   });
 
-  return response.data.user;
+  return response.data;
 };

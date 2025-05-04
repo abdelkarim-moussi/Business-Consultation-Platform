@@ -1,14 +1,16 @@
 import React from "react";
 import EntrepreneurConsultations from "../../components/entrepreneur.components/EntrepreneurConsultations";
 import { AuthProvider } from "../../context/AuthContext";
-import DashboardHeader from "../../components/dashboards.components/DashboardHeader";
+import Navbar from "../../components/Navbar";
+import EntrepreneurStats from "../../components/entrepreneur.components/EntrepreneurStats";
 
 const EntrepreneurDashboard = () => {
   return (
     <div className="flex h-ful">
       <div className="w-full">
         <AuthProvider>
-          <DashboardHeader page="Consulations" />
+          <Navbar />
+          <EntrepreneurStats />
           <EntrepreneurConsultations />
         </AuthProvider>
       </div>

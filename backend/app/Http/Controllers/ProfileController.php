@@ -13,7 +13,13 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        $user = User::where('id', Auth::user()->id)->first();
+        $user = Auth::user();
+
+        if ($user->photo && !str_contains($user->photo, 'storage/')) {
+            $user->photo = asset('storage/' . $user->photo);
+        }
+        return $user;
+
 
         if ($user->accountType === 'consultant') {
             $user = DB::table('users')->join('consultants', 'users.id', 'consultants.user_id')
@@ -22,12 +28,9 @@ class ProfileController extends Controller
 
             $avgRating = DB::table('reviews')->select(DB::raw('avg(rating) as avgrating'))->where('consultant_id', $user->id)->get()->first();
             $user->avgrating = $avgRating->avgrating;
-
-            $user->photo = asset('/storage/' . $user->photo);
         } else if ($user->accountType === 'entrepreneur') {
             $user = DB::table('users')->join('entrepreneurs', 'users.id', 'entrepreneurs.user_id')
                 ->where('users.id', Auth::user()->id)->first();
-            $user->photo = asset('/storage/' . $user->photo);
         }
 
 
