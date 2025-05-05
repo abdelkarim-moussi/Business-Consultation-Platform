@@ -2,9 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\Consultant;
 use App\Models\Consultation;
-use App\Models\Review;
 use App\Repositories\Interfaces\ConsultantRepositoryInterface;
 use Illuminate\Support\Facades\DB;
 
@@ -17,6 +15,7 @@ class ConsultantRepository implements ConsultantRepositoryInterface
             ->join('consultants', 'users.id', '=', 'consultants.user_id')
             ->leftJoin('reviews', 'consultants.id', '=', 'reviews.consultant_id')
             ->select('users.*', 'consultants.*', DB::raw('COUNT(reviews.id) as ratings_count'))
+            ->where('users.accountType', '=', 'consultant')
             ->groupBy('users.id', 'consultants.id')
             ->get();
 

@@ -24,28 +24,6 @@ class StatisticsController extends Controller
     }
 
 
-    public function platformOverview()
-    {
-        if (! Gate::allows('viewAdminDashboard')) {
-            abort(403);
-        }
-
-        return response()->json([
-            'success' => true,
-            'data' => [
-                'total_users' => User::count(),
-                'total_entrepreneurs' => User::where('role', 'entrepreneur')->count(),
-                'total_consultants' => User::where('role', 'consultant')->count(),
-                'total_consultations' => Consultation::count(),
-                'completed_consultations' => Consultation::where('status', 'completed')->count(),
-                'upcoming_consultations' => Consultation::where('status', 'scheduled')->count(),
-                'total_articles' => Article::count(),
-                'popular_categories' => $this->getPopularCategories(),
-                'user_growth' => $this->getUserGrowthStats(),
-            ]
-        ]);
-    }
-
     public function entrepreneurStats($entrepreneurId)
     {
         $entrepreneur = User::findOrFail($entrepreneurId);
@@ -125,62 +103,38 @@ class StatisticsController extends Controller
         ]);
     }
 
+    public function adminStats()
+    {
+        if (! Gate::allows('viewAdminDashboard', User::class)) {
+            abort(403, 'you are not allowed');
+        }
+
+        return response()->json([
+            'success' => true,
+            'stats' => [
+                'total_users' => User::where('accountType', '!=', 'admin')->count(),
+                'total_entrepreneurs' => User::where('accountType', 'entrepreneur')->count(),
+                'total_consultants' => User::where('accountType', 'consultant')->count(),
+                'total_consultations' => Consultation::count(),
+                'completed_consultations' => Consultation::where('status', 'done')->count(),
+                'accepted_consultations' => Consultation::where('status', 'accepted')->count(),
+                'refused_consultations' => Consultation::where('status', 'refused')->count(),
+                'upcoming_consultations' => Consultation::where('status', 'pending')->count(),
+                'canceled_consultations' => Consultation::where('status', 'cancel')->count(),
+                'total_articles' => Article::count(),
+                'popular_categories' => $this->getPopularCategories(),
+            ]
+        ]);
+    }
+
     private function getPopularCategories()
     {
-        return Article::selectRaw('category_id, COUNT(*) as count')
-            ->groupBy('category_id')
+        return DB::table('articles')
+            ->join('categories', 'articles.category_id', 'categories.id')
+            ->selectRaw('category_id,name, COUNT(*) as count')
+            ->groupBy('category_id','name')
             ->orderByDesc('count')
             ->limit(5)
             ->get();
-    }
-
-
-    private function getUserGrowthStats()
-    {
-        return [
-            'last_7_days' => User::where('created_at', '>=', Carbon::now()->subDays(7))->count(),
-            'last_30_days' => User::where('created_at', '>=', Carbon::now()->subDays(30))->count(),
-            'growth_rate' => $this->calculateGrowthRate(),
-        ];
-    }
-
-    private function calculateGrowthRate()
-    {
-        $currentMonth = User::whereMonth('created_at', Carbon::now()->month)->count();
-        $previousMonth = User::whereMonth('created_at', Carbon::now()->subMonth()->month)->count();
-
-        return $previousMonth > 0
-            ? round(($currentMonth - $previousMonth) / $previousMonth * 100, 2)
-            : 0;
-    }
-
-    private function getEntrepreneurFavoriteCategories($entrepreneurId)
-    {
-        return Article::where('author_id', $entrepreneurId)
-            ->selectRaw('category_id, COUNT(*) as count')
-            ->groupBy('category_id')
-            ->orderByDesc('count')
-            ->limit(3)
-            ->get();
-    }
-
-    private function getEntrepreneurConsultationTrends($entrepreneurId)
-    {
-        return Consultation::where('entrepreneur_id', $entrepreneurId)
-            ->selectRaw('DATE(created_at) as date, COUNT(*) as count')
-            ->groupBy('created_at')
-            ->orderBy('created_at')
-            ->get();
-    }
-
-    private function getAverageRatingGiven($entrepreneurId)
-    {
-        return Consultation::where('entrepreneur_id', $entrepreneurId);
-    }
-
-
-    private function getConsultantAverageRating($consultantId)
-    {
-        return Consultation::where('consultant_id', $consultantId);
     }
 }

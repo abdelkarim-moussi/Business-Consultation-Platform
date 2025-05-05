@@ -43,8 +43,6 @@ Route::middleware(['jwtauth'])->group(function () {
     Route::apiResource('articles', ArticleController::class)->except('index', 'show');
     Route::apiResource('comments', CommentController::class)->except('index', 'show');
 
-    Route::get('/stats/platform', [StatisticsController::class, 'platformOverview']);
-
     Route::get('/consultants/{id}/articles', [ArticleController::class, 'forConsultant']);
 
     Route::get('/entrepreneurs/{id}/stats', [StatisticsController::class, 'entrepreneurStats']);
@@ -60,6 +58,7 @@ Route::middleware(['jwtauth'])->group(function () {
     Route::apiResource('reviews', ReviewController::class);
     Route::apiResource('disponibilities', DisponibilityController::class);
     Route::get('disponibilities/consultant/{id}', [DisponibilityController::class, 'consultantDisponibilities']);
+    Route::get('stats/admin', [StatisticsController::class, 'adminStats']);
 
     //chat routes
     Route::get('/messages/{user}', [ChatController::class, 'index']);

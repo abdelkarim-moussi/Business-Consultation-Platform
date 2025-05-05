@@ -8,6 +8,7 @@ use App\Models\ChatMessages;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ChatController extends Controller
 {
@@ -39,8 +40,40 @@ class ChatController extends Controller
 
     public function viewUsers()
     {
-        $users = User::where('id', '!=', Auth::id())->get();
+        $users = [];
 
+        $user = Auth::user();
+
+        if ($user->accountType === "consultant") {
+            // $users = User::where('id', '!=', Auth::id())->where('accountType','!=','admin')->get();
+            $users = DB::table('users')->where('users.id', '!=', Auth::id())
+                ->where('users.accountType', '!=', 'admin')
+                ->join('entrepreneurs', 'users.id', 'entrepreneurs.user_id')
+                ->join('consultations', 'entrepreneurs.id', 'consultations.entrepreneur_id')
+                ->where('users.id', '!=', Auth::id())
+                ->where('users.accountType', '!=', 'admin')
+                ->select('users.id', 'users.firstName', 'users.lastName', 'users.email', 'users.photo', 'users.accountType')
+                ->groupBy('users.id', 'users.firstName', 'users.lastName', 'users.email', 'users.photo', 'users.accountType')
+                ->get();
+        }
+        if ($user->accountType === "entrepreneur") {
+
+            $users = DB::table('users')
+                ->join('consultants', 'users.id', 'consultants.user_id')
+                ->join('consultations', 'consultants.id', 'consultations.consultant_id')
+                ->where('users.id', '!=', Auth::id())
+                ->where('users.accountType', '!=', 'admin')
+                ->select('users.id', 'users.firstName', 'users.lastName', 'users.email', 'users.photo', 'users.accountType')
+                ->groupBy('users.id', 'users.firstName', 'users.lastName', 'users.email', 'users.photo', 'users.accountType')
+                ->get();
+        }
+
+        $users->map(function ($user) {
+            if ($user->photo && !str_contains($user->photo, '/storage/')) {
+                $user->photo = asset('storage/' . $user->photo);
+            }
+            return $user;
+        });
 
         return response()->json(
             [
