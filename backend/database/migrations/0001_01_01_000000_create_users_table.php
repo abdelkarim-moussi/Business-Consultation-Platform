@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('lastName');
             $table->string('email')->unique();
             $table->string('photo')->nullable();
-            $table->enum('accountType',['consultant','entrepreneur','admin']);
+            $table->enum('accountType', ['consultant', 'entrepreneur', 'admin']);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->timestamps();
@@ -33,7 +33,7 @@ return new class extends Migration
             $table->string('id')->primary();
             $table->foreignId('user_id')->nullable()->index();
             $table->string('ip_address', 45)->nullable();
-            $table->text('user_agent')->nullable(); 
+            $table->text('user_agent')->nullable();
             $table->longText('payload');
             $table->integer('last_activity')->index();
         });

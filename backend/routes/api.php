@@ -11,6 +11,7 @@ use App\Http\Controllers\JWTAuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\StatisticsController;
+use App\Http\Controllers\UserController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Broadcast;
@@ -58,7 +59,10 @@ Route::middleware(['jwtauth'])->group(function () {
     Route::apiResource('reviews', ReviewController::class);
     Route::apiResource('disponibilities', DisponibilityController::class);
     Route::get('disponibilities/consultant/{id}', [DisponibilityController::class, 'consultantDisponibilities']);
+    //admnin routes
     Route::get('stats/admin', [StatisticsController::class, 'adminStats']);
+    Route::get('users/admin', [UserController::class, 'index']);
+
 
     //chat routes
     Route::get('/messages/{user}', [ChatController::class, 'index']);
