@@ -16,7 +16,7 @@ class UserController extends Controller
             abort(403, 'you are not allowed');
         }
 
-        $users = User::all()->where('accountType', '!=', 'admin');
+        $users = User::where('accountType', '!=', 'admin')->get();
         $users->map(function ($user) {
             if ($user->photo && !str_contains($user->photo, 'storage/')) {
                 $user->photo = asset('storage/' . $user->photo);
@@ -30,4 +30,9 @@ class UserController extends Controller
             ]
         );
     }
+
+
+    public function manageUserStatus($id, $status) {}
+
+    public function verifie($id) {}
 }

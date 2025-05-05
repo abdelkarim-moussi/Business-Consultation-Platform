@@ -16,7 +16,6 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->integer('experience')->nullable();
             $table->string('domainExpertise')->nullable();
-            $table->string('tags')->nullable();
             $table->timestamps();
         });
     }

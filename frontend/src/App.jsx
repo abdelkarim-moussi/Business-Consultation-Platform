@@ -17,6 +17,8 @@ import ArticleDetails from "./pages/articles/ArticleDetails";
 import ConsultantConsultationsPage from "./pages/consultations/ConsultantConsultationsPage";
 import Chats from "./pages/Chats";
 import EntrepreneurDashboard from "./pages/entrepreneur/EntrepreneurDashboard";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import UsersManagement from "./pages/admin/UsersManagement";
 
 export default function App() {
   return (
@@ -93,14 +95,32 @@ export default function App() {
             <Route
               path="/profile"
               element={
-                <ProtectedRoute rules={["consultant", "entrepreneur"]}>
+                <ProtectedRoute rules={["consultant", "entrepreneur", "admin"]}>
                   <UserProfile />
                 </ProtectedRoute>
               }
             />
+
             <Route path="/consultants/:id" element={<ConsultantDetails />} />
             <Route path="/articles/:id" element={<ArticleDetails />} />
             <Route path="/chats" element={<Chats />} />
+
+            <Route
+              path="/adminDash"
+              element={
+                // <ProtectedRoute rules={["admin"]}>
+                <AdminDashboard />
+                // </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/users/management"
+              element={
+                // <ProtectedRoute rules={["admin"]}>
+                <UsersManagement />
+                // </ProtectedRoute>
+              }
+            />
           </Routes>
         </BrowserRouter>
       </AuthProvider>

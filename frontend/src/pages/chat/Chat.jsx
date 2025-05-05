@@ -11,13 +11,16 @@ const Chat = () => {
   const [otherUser, setOtherUser] = useState(null);
 
   const fetchUsers = async () => {
-    const response = await axios.get(`http://127.0.0.1:8000/api/users`, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-      },
-    });
-    // console.log(response.data);
-    setUsers(response.data.users);
+    try {
+      const response = await axios.get(`http://127.0.0.1:8000/api/users`, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+      });
+      setUsers(response.data.users);
+    } catch (error) {
+      console.log("there was an error", error);
+    }
   };
 
   const fetchAuthUser = async () => {
@@ -40,16 +43,14 @@ const Chat = () => {
     fetchAuthUser();
   }, []);
 
-  console.log(users);
-
   return (
-    <div className="chat-app grid grid-cols-3 px-5 gap-2 relative">
+    <div className="chat-app grid grid-cols-4 px-5 gap-2 relative pt-20 h-[100vh]">
       <div className="col-span-1 p-5 shadow-md rounded-md sticky top-0">
         <h2 className="font-semibold mb-5 border-b pb-3">
           Select a user to chat with:
         </h2>
         {users.map((user) => (
-          <div className="flex gap-2 mb-2">
+          <div className="flex gap-2 mb-2" key={user.id}>
             <div className="rounded-full border-2 bg-indigo-500 text-white border-white w-10 h-10 flex items-center justify-center uppercase">
               {user.firstName[0] + user.lastName[0]}
             </div>
@@ -67,7 +68,7 @@ const Chat = () => {
         ))}
       </div>
 
-      <div className="chat-area col-span-2 max-h-[400px]">
+      <div className="col-span-3">
         {otherUser ? (
           <ChatBox currentUser={authUser} otherUser={otherUser} />
         ) : (

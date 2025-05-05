@@ -4,7 +4,6 @@ import Label from "../../components/Label";
 import { AuthProvider, useAuth } from "../../context/AuthContext";
 import axios from "axios";
 import Button from "../../components/buttons/PrimaryButton";
-import ArrowBack from "../../assets/images/arrow-back.png";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";

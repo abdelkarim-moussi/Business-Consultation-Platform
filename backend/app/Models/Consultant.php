@@ -11,7 +11,8 @@ class Consultant extends Model
         'user_id',
         'experience',
         'domainExpertise',
-        'tags'
+        'skills',
+        'about'
     ];
 
     public function reviews()

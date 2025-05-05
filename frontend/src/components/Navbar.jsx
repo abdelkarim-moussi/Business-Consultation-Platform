@@ -33,17 +33,8 @@ export default function NavBar() {
               home
             </Link>
           </li>
-          {(user && user.accountType === "entrepreneur" && (
-            <li className=" text-sm capitalize">
-              <Link
-                to="/consultants"
-                className="transition hover:underline hover:text-[#EEF2FF]"
-              >
-                consultants
-              </Link>
-            </li>
-          )) ||
-            (!user && (
+          {!user ||
+            (user.accountType === "entrepreneur" && (
               <li className=" text-sm capitalize">
                 <Link
                   to="/consultants"
@@ -53,14 +44,26 @@ export default function NavBar() {
                 </Link>
               </li>
             ))}
-          <li className=" text-sm capitalize">
-            <Link
-              to="/blog"
-              className="transition hover:underline hover:text-[#EEF2FF] "
-            >
-              blog
-            </Link>
-          </li>
+          {!user || user.accountType != "admin" && (
+            <li className=" text-sm capitalize">
+              <Link
+                to="/blog"
+                className="transition hover:underline hover:text-[#EEF2FF] "
+              >
+                blog
+              </Link>
+            </li>
+          )}
+          {user && user.accountType != "admin" && (
+            <li className=" text-sm capitalize">
+              <Link
+                to="/chats"
+                className="transition hover:underline hover:text-[#EEF2FF] "
+              >
+                chats
+              </Link>
+            </li>
+          )}
           {user && user.accountType === "consultant" && (
             <li className=" text-sm capitalize">
               <Link
@@ -81,6 +84,16 @@ export default function NavBar() {
               </Link>
             </li>
           )}
+          {user && user.accountType === "admin" && (
+            <li className=" text-sm capitalize">
+              <Link
+                to="/adminDash"
+                className="transition hover:underline hover:text-[#EEF2FF]"
+              >
+                dashboard
+              </Link>
+            </li>
+          )}
         </ul>
         <ul className="flex items-center">
           {!user ? (
@@ -93,7 +106,7 @@ export default function NavBar() {
           ) : (
             <>
               <Link to="/profile" className="mr-2">
-                <img src={UserIcon} alt="user" className="w-5 h-5"/>
+                <img src={UserIcon} alt="user" className="w-5 h-5" />
               </Link>
 
               <button onClick={handlelogout}>
