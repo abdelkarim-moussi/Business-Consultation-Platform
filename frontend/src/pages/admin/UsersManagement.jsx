@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Sidebar from "../../components/Sidebar";
 import DashboardHeader from "../../components/dashboards.components/DashboardHeader";
+import { toast } from "react-toastify";
 
 const UsersManagement = () => {
   const [users, setUsers] = useState([]);
@@ -9,6 +10,7 @@ const UsersManagement = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [accountFilter, setAccountFilter] = useState("All");
   const [statusFilter, setStatusFilter] = useState("All");
+  const [newStatus, setNewStatus] = useState("");
 
   const fetchUsers = async () => {
     try {
@@ -23,6 +25,49 @@ const UsersManagement = () => {
 
       setUsers(response.data.users);
       setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const verifyUser = async (id) => {
+    try {
+      const response = await axios.put(
+        `http://127.0.0.1:8000/api/users/${id}/verify`,
+        {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      console.log(response.data);
+      toast.success(response.data.message);
+      fetchUsers();
+    } catch (error) {
+      console.log(error);
+      toast.error("there was an error");
+    }
+  };
+
+  const manageUserStatus = async (id, newStatus) => {
+    try {
+      const response = await axios.put(
+        `http://127.0.0.1:8000/api/users/${id}/status`,
+        {
+          status: newStatus,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      console.log(response.data.message);
+      toast.success(response.data.message);
+      fetchUsers();
+
     } catch (error) {
       console.log(error);
     }
@@ -200,17 +245,30 @@ const UsersManagement = () => {
                           </td>
                           <td className="px-5 py-1 whitespace-nowrap text-xs space-x-2">
                             {user.is_verified == 0 && (
-                              <button className="text-indigo-600 hover:text-indigo-900 border-r pr-2">
+                              <button
+                                className="text-indigo-600 hover:text-indigo-900 border-r pr-2"
+                                onClick={() => verifyUser(user.id)}
+                              >
                                 Verify
                               </button>
                             )}
                             {user.status != "suspended" && (
-                              <button className="text-red-600 hover:text-red-900 border-r pr-2">
+                              <button
+                                className="text-red-600 hover:text-red-900 border-r pr-2"
+                                onClick={() =>
+                                  manageUserStatus(user.id, "suspended")
+                                }
+                              >
                                 Suspend
                               </button>
                             )}
                             {user.status != "active" && (
-                              <button className="text-green-600 hover:grenn-red-900">
+                              <button
+                                className="text-green-600 hover:grenn-red-900"
+                                onClick={() =>
+                                  manageUserStatus(user.id, "active")
+                                }
+                              >
                                 Activate
                               </button>
                             )}

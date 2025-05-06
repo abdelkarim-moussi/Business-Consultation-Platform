@@ -59,9 +59,11 @@ Route::middleware(['jwtauth'])->group(function () {
     Route::apiResource('reviews', ReviewController::class);
     Route::apiResource('disponibilities', DisponibilityController::class);
     Route::get('disponibilities/consultant/{id}', [DisponibilityController::class, 'consultantDisponibilities']);
-    //admnin routes
+    //admin routes
     Route::get('stats/admin', [StatisticsController::class, 'adminStats']);
     Route::get('users/admin', [UserController::class, 'index']);
+    Route::put('users/{id}/verify', [UserController::class, 'verify']);
+    Route::put('users/{id}/status', [UserController::class, 'manageUserStatus']);
 
 
     //chat routes

@@ -30,7 +30,9 @@ class User extends Authenticatable implements JWTSubject
         'email',
         'accountType',
         'password',
-        'photo'
+        'photo',
+        'status',
+        'is_verified'
     ];
 
     protected $hidden = [
@@ -59,7 +61,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function comments()
     {
-        return $this->hasMany(Comment   ::class);
+        return $this->hasMany(Comment::class);
     }
 
     public function articles()

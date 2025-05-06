@@ -32,7 +32,37 @@ class UserController extends Controller
     }
 
 
-    public function manageUserStatus($id, $status) {}
+    public function manageUserStatus($id, Request $request)
+    {
+        $user = User::findOrFail($id);
+        $validate = $request->validate(
+            [
+                'status' => 'in:active,suspended'
+            ]
+        );
 
-    public function verifie($id) {}
+        $user->status = $request->status;
+        $user->save();
+
+        return response()->json(
+            [
+                'message' => "user status updated succefully"
+            ]
+        );
+    }
+
+    public function verify($id)
+    {
+
+        $user = User::findOrFail($id);
+
+        $user->is_verified = 1;
+        $user->save();
+
+        return response()->json(
+            [
+                'message' => "user verified succefully"
+            ]
+        );
+    }
 }
