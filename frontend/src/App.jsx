@@ -19,6 +19,7 @@ import Chats from "./pages/Chats";
 import EntrepreneurDashboard from "./pages/entrepreneur/EntrepreneurDashboard";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import UsersManagement from "./pages/admin/UsersManagement";
+import ArticlesManagement from "./pages/admin/ArticlesManagement";
 
 export default function App() {
   return (
@@ -118,6 +119,14 @@ export default function App() {
               element={
                 // <ProtectedRoute rules={["admin"]}>
                 <UsersManagement />
+                // </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/articles"
+              element={
+                // <ProtectedRoute rules={["admin"]}>
+                <ArticlesManagement />
                 // </ProtectedRoute>
               }
             />
