@@ -16,18 +16,18 @@ return [
     */
 
     'paths' => ['api/*', 'broadcasting/auth'],
-    
+
     'allowed_methods' => ['*'],
-    
-    'allowed_origins' => ['http://localhost:3000', 'http://localhost:5173'], // Add your frontend URLs
-    
+
+    'allowed_origins' => ['*'], // Add your frontend URLs
+
     'allowed_origins_patterns' => [],
-    
+
     'allowed_headers' => ['*'],
-    
+
     'exposed_headers' => [],
-    
+
     'max_age' => 0,
-    
+
     'supports_credentials' => false, // JWT doesn't rely on cookies
 ];

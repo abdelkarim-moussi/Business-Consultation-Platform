@@ -3,6 +3,7 @@ import Sidebar from "../../components/Sidebar";
 import DashboardHeader from "../../components/dashboards.components/DashboardHeader";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const ArticlesManagement = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -21,6 +22,24 @@ const ArticlesManagement = () => {
     fetchArticles();
     setLoading(false);
   }, []);
+
+  const deleteArticle = async (id) => {
+    try {
+      const response = await axios.delete(
+        `http://127.0.0.1:8000/api/articles/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      toast.success(response.data.message);
+      console.log(response.data.message);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const filteredArticles = articles.filter((article) => {
     const matchesSearch = `${article.title}`
@@ -109,7 +128,11 @@ const ArticlesManagement = () => {
                           }
                         >
                           <td>
-                            <img src={article.cover} alt="cover" className="w-10 h-10 rounded-sm"/>
+                            <img
+                              src={article.cover}
+                              alt="cover"
+                              className="w-10 h-10 rounded-sm"
+                            />
                           </td>
                           <td className="px-5 py-1 whitespace-nowrap">
                             <Link
@@ -134,7 +157,7 @@ const ArticlesManagement = () => {
                           <td className="px-5 py-1 whitespace-nowrap text-xs space-x-2">
                             <button
                               className="text-red-600 hover:text-red-900"
-                              onClick={() => DeleteArticle(article.id)}
+                              onClick={() => deleteArticle(article.id)}
                             >
                               Delete
                             </button>

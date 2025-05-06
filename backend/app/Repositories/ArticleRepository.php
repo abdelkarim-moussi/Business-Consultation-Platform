@@ -6,6 +6,7 @@ use App\Models\Article;
 use App\Models\Category;
 use App\Repositories\Interfaces\ArticleRepositoryInterface;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class ArticleRepository implements ArticleRepositoryInterface
 {
@@ -65,7 +66,13 @@ class ArticleRepository implements ArticleRepositoryInterface
     public function delete($id)
     {
 
-        Article::findOrFail($id)->delete();
+        $article = Article::findOrFail($id);
+
+        if (Gate::denies('delete', $article)) {
+            abort(403, 'you are note allowed to delete this article');
+        }
+
+        $article->delete();
 
         return response()->json([
             'message' => 'article deleted succefully'

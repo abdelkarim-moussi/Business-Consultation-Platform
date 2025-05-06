@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Article;
 use App\Services\ArticleService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ArticleController extends Controller
 {
@@ -48,6 +50,7 @@ class ArticleController extends Controller
 
     public function destroy($id)
     {
+    
         return $this->articleService->deleteArticle($id);
     }
 

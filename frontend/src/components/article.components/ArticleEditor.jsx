@@ -65,6 +65,7 @@ export default function ArticleEditor() {
           Authorization: `Bearer ${token}`,
           Accept: "application/json",
           "Content-Type": "multipart/form-data",
+          
         },
       });
 

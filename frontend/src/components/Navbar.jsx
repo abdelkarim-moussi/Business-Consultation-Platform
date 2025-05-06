@@ -33,18 +33,27 @@ export default function NavBar() {
               home
             </Link>
           </li>
-          {!user ||
-            (user.accountType === "entrepreneur" && (
-              <li className=" text-sm capitalize">
-                <Link
-                  to="/consultants"
-                  className="transition hover:underline hover:text-[#EEF2FF]"
-                >
-                  consultants
-                </Link>
-              </li>
-            ))}
-          {!user || user.accountType != "admin" && (
+          {!user && (
+            <li className=" text-sm capitalize">
+              <Link
+                to="/consultants"
+                className="transition hover:underline hover:text-[#EEF2FF]"
+              >
+                consultants
+              </Link>
+            </li>
+          )}
+          {user && user.accountType === "entrepreneur" && (
+            <li className=" text-sm capitalize">
+              <Link
+                to="/consultants"
+                className="transition hover:underline hover:text-[#EEF2FF]"
+              >
+                consultants
+              </Link>
+            </li>
+          )}
+          {(!user && (
             <li className=" text-sm capitalize">
               <Link
                 to="/blog"
@@ -53,7 +62,17 @@ export default function NavBar() {
                 blog
               </Link>
             </li>
-          )}
+          )) ||
+            (user.accountType != "admin" && (
+              <li className=" text-sm capitalize">
+                <Link
+                  to="/blog"
+                  className="transition hover:underline hover:text-[#EEF2FF] "
+                >
+                  blog
+                </Link>
+              </li>
+            ))}
           {user && user.accountType != "admin" && (
             <li className=" text-sm capitalize">
               <Link

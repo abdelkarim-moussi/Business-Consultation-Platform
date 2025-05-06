@@ -3,8 +3,11 @@
 namespace App\Policies;
 
 use App\Models\Article;
+use App\Models\Consultant;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\DB;
+use PhpParser\Node\Stmt\Const_;
 
 class ArticlePolicy
 {
@@ -45,7 +48,8 @@ class ArticlePolicy
      */
     public function delete(User $user, Article $article): bool
     {
-        return false;
+        $consultant = DB::table('consultants')->where('user_id', $user->id)->get();
+        return $user->accountType === 'admin' || $consultant->id === $article->consultant_id;
     }
 
     /**
