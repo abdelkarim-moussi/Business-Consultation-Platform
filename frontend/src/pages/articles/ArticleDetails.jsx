@@ -227,17 +227,6 @@ export default function ArticleDetails() {
                     <FaLinkedinIn />
                   </button>
                 </div>
-
-                <div className="flex items-center space-x-2">
-                  <button className="flex items-center space-x-1 px-3 py-1 rounded-full bg-indigo-50 text-indigo-600 hover:bg-indigo-100 transition-colors">
-                    <FaShare size={14} />
-                    <span className="text-sm">Share</span>
-                  </button>
-                  <button className="flex items-center space-x-1 px-3 py-1 rounded-full bg-indigo-50 text-indigo-600 hover:bg-indigo-100 transition-colors">
-                    <FaBookmark size={14} />
-                    <span className="text-sm">Save</span>
-                  </button>
-                </div>
               </div>
 
               <article

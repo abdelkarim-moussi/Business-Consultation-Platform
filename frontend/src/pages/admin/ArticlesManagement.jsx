@@ -1,12 +1,51 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../../components/Sidebar";
 import DashboardHeader from "../../components/dashboards.components/DashboardHeader";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 const ArticlesManagement = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [articles, setArticles] = useState([]);
 
-  
+  const fetchArticles = async () => {
+    try {
+      const response = await axios.get("http://127.0.0.1:8000/api/articles");
+      setArticles(response.data.articles);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchArticles();
+    setLoading(false);
+  }, []);
+
+  const filteredArticles = articles.filter((article) => {
+    const matchesSearch = `${article.title}`
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
+    return matchesSearch;
+  });
+
+  const truncateText = (text, maxLength) => {
+    if (!text) return "";
+    return text.length > maxLength
+      ? `${text.substring(0, maxLength)}...`
+      : text;
+  };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
+  };
+
   return (
     <div className="flex">
       <Sidebar active="admin/articles" />
@@ -23,35 +62,11 @@ const ArticlesManagement = () => {
                 <input
                   type="text"
                   placeholder="Search articles..."
-                  className="px-5 py-1 text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  className="px-5 py-1 text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
-
-              {/* <select
-                    className="px-3 py-1 border text-xs border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                    value={accountFilter}
-                    onChange={(e) => setAccountFilter(e.target.value)}
-                  >
-                    {accountTypes.map((type) => (
-                      <option key={type} value={type}>
-                        {type}
-                      </option>
-                    ))}
-                  </select> */}
-              {/*     
-                  <select
-                    className="px-3 py-1 border text-xs border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                    value={statusFilter}
-                    onChange={(e) => setStatusFilter(e.target.value)}
-                  >
-                    {statuses.map((status) => (
-                      <option key={status} value={status}>
-                        {status}
-                      </option>
-                    ))}
-                  </select> */}
             </div>
           </div>
           {loading ? (
@@ -66,6 +81,9 @@ const ArticlesManagement = () => {
                 <table className="w-full border-collapse">
                   <thead>
                     <tr className="bg-gray-50">
+                      <th className="px-5 py-2 text-left text-xs font-normal text-gray-600 uppercase tracking-wider">
+                        Article Cover
+                      </th>
                       <th className="px-5 py-2 text-left text-xs font-normal text-gray-600 uppercase tracking-wider">
                         Article Title
                       </th>
@@ -90,25 +108,32 @@ const ArticlesManagement = () => {
                             index % 2 === 0 ? "bg-white" : "bg-gray-50"
                           }
                         >
+                          <td>
+                            <img src={article.cover} alt="cover" className="w-10 h-10 rounded-sm"/>
+                          </td>
                           <td className="px-5 py-1 whitespace-nowrap">
-                            <div className="text-sm font-normal text-gray-600">
-                              {article.title}
+                            <Link
+                              className="text-sm font-normal text-indigo-600"
+                              to={`../articles/${article.id}`}
+                            >
+                              {truncateText(article.title, 20)}
+                            </Link>
+                          </td>
+                          <td className="px-5 py-1 whitespace-nowrap">
+                            <div className="text-sm text-gray-500 capitalize">
+                              {article.author.firstName}{" "}
+                              {article.author.lastName}
                             </div>
                           </td>
                           <td className="px-5 py-1 whitespace-nowrap">
                             <div className="text-sm text-gray-500">
-                              {article.author.firstName}
-                            </div>
-                          </td>
-                          <td className="px-5 py-1 whitespace-nowrap">
-                            <div className="text-sm text-gray-500">
-                              {article.created_at}
+                              {formatDate(article.created_at)}
                             </div>
                           </td>
 
                           <td className="px-5 py-1 whitespace-nowrap text-xs space-x-2">
                             <button
-                              className="text-red-600 hover:text-red-900 border-r pr-2"
+                              className="text-red-600 hover:text-red-900"
                               onClick={() => DeleteArticle(article.id)}
                             >
                               Delete

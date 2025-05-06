@@ -10,7 +10,7 @@ const UsersManagement = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [accountFilter, setAccountFilter] = useState("All");
   const [statusFilter, setStatusFilter] = useState("All");
-  const [newStatus, setNewStatus] = useState("");
+
 
   const fetchUsers = async () => {
     try {
@@ -64,9 +64,9 @@ const UsersManagement = () => {
         }
       );
 
-      console.log(response.data.message);
       toast.success(response.data.message);
       fetchUsers();
+      console.log(response.data.message);
 
     } catch (error) {
       console.log(error);
@@ -112,14 +112,14 @@ const UsersManagement = () => {
                 <input
                   type="text"
                   placeholder="Search users..."
-                  className="px-5 py-1 text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  className="px-5 py-1 text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
 
               <select
-                className="px-3 py-1 border text-xs border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                className="px-3 py-1 border text-xs border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
                 value={accountFilter}
                 onChange={(e) => setAccountFilter(e.target.value)}
               >
@@ -131,7 +131,7 @@ const UsersManagement = () => {
               </select>
 
               <select
-                className="px-3 py-1 border text-xs border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                className="px-3 py-1 border text-xs border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
               >

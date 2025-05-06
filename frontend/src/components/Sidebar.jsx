@@ -27,7 +27,6 @@ export default function Sidebar({ active }) {
     { name: "Dashboard", icon: dash, link: "adminDash" },
     { name: "Users", icon: users, link: "users/management" },
     { name: "Articles", icon: articles, link: "admin/articles" },
-    { name: "Chats", icon: messages, link: "chats" },
   ];
 
   const user = jwtDecode(sessionStorage.getItem("token"));
