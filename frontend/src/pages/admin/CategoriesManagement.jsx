@@ -31,6 +31,7 @@ const CategoriesManagement = () => {
     }
   };
 
+
   useEffect(() => {
     fetchCategories();
   }, []);

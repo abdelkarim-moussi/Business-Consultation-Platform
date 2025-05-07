@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Plus, X } from "lucide-react";
 import Input from "../Input";
 import Label from "../Label";
-import axios from "axios";
 
 export default function CategoryModal({ onSubmit }) {
   const [name, setName] = useState("");
