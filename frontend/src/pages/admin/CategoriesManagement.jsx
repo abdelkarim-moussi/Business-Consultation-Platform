@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import CreateCategoryForm from "../../components/category.components/CreateCategoryForm";
 import Sidebar from "../../components/Sidebar";
 import DashboardHeader from "../../components/dashboards.components/DashboardHeader";
+import CategoriesList from "../../components/category.components/CategoriesList";
+import CategoryModal from "../../components/category.components/CategoryModal";
+import { toast } from "react-toastify";
 const CategoriesManagement = () => {
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState({});
@@ -16,6 +18,19 @@ const CategoriesManagement = () => {
     }
   };
 
+  const handleSubmit = async (data) => {
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/categories",
+        data
+      );
+      fetchCategories();
+      toast.success(response.data.message);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     fetchCategories();
   }, []);
@@ -24,9 +39,11 @@ const CategoriesManagement = () => {
     <div className="flex">
       <Sidebar />
       <div className="w-full">
-        <DashboardHeader />
+        {/* <DashboardHeader /> */}
         <div className="p-5">
-          <CreateCategoryForm />
+          <CategoryModal onSubmit={handleSubmit} />
+
+          <CategoriesList categories={categories} />
         </div>
       </div>
     </div>
