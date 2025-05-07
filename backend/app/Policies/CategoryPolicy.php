@@ -13,7 +13,7 @@ class CategoryPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->role = 'admin';
+        return $user->accountType = 'admin';
     }
 
     /**

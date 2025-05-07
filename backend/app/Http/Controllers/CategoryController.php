@@ -4,20 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Tymon\JWTAuth\Claims\JwtId;
-use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Gate;
 
 class CategoryController extends Controller
 {
 
     public function index()
     {
-
+       
         $categories = Category::all();
-
         return response()->json(compact('categories'));
-    }
 
+    }
 
     public function show($id)
     {

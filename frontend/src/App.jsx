@@ -20,6 +20,7 @@ import EntrepreneurDashboard from "./pages/entrepreneur/EntrepreneurDashboard";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import UsersManagement from "./pages/admin/UsersManagement";
 import ArticlesManagement from "./pages/admin/ArticlesManagement";
+import CategoriesManagement from "./pages/admin/CategoriesManagement";
 
 export default function App() {
   return (
@@ -127,6 +128,14 @@ export default function App() {
               element={
                 // <ProtectedRoute rules={["admin"]}>
                 <ArticlesManagement />
+                // </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/categories"
+              element={
+                // <ProtectedRoute rules={["admin"]}>
+                <CategoriesManagement />
                 // </ProtectedRoute>
               }
             />
