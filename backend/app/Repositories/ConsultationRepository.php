@@ -180,13 +180,13 @@ class ConsultationRepository implements ConsultationRepositoryInterface
             'status' => $data['status']
         ]);
 
-        if ($data->status === "accepted") {
+        if ($data['status'] === "accepted") {
 
             $roomName = 'consultation-' . Str::random(10);
             $jitsiLink = "https://meet.jit.si/$roomName";
 
-            $entrepreneur = JWTAuth::user();
-            $consultant = DB::table('users')->join('consultants', 'users.id', 'consultants.user_id')->get()->first();
+            $consultant = JWTAuth::user();
+            $entrepreneur = DB::table('users')->join('entrepreneurs', 'users.id', 'entrepreneurs.user_id')->where('entrepreneurs.id', '=', $consultation->entrepreneur_id)->get()->first();
 
             Mail::to($entrepreneur->email)->send(new ConsultationSchedueled($jitsiLink, $entrepreneur));
             Mail::to($consultant->email)->send(new ConsultationSchedueled($jitsiLink, $consultant));

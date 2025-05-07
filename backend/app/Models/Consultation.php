@@ -12,6 +12,7 @@ class Consultation extends Model
         'entrepreneur_id',
         'consultant_id',
         'consultation_reason',
+        'status'
     ];
 
 

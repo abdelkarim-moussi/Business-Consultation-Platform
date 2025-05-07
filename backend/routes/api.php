@@ -35,7 +35,7 @@ Route::middleware(['jwtauth'])->group(function () {
     Route::post('consultations/{id}/accept', [ConsultationController::class, 'accept']);
     Route::post('consultations/{id}/refuse', [ConsultationController::class, 'refuse']);
 
-    Route::post('consultations/{id}', [ConsultationController::class, 'ManageConsultationStatus']);
+    Route::post('consultations/{id}/statuschange', [ConsultationController::class, 'ManageConsultationStatus']);
 
     Route::get('consultations/consultant/{id}', [ConsultationController::class, 'findConsultationsByConsultantId']);
     Route::get('consultations/entrepreneur/{id}', [ConsultationController::class, 'findConsultationsByEntrepreneurId']);
