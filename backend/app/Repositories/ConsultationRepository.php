@@ -2,14 +2,15 @@
 
 namespace App\Repositories;
 
-use App\Models\Consultant;
+use App\Mail\ConsultationSchedueled;
 use App\Models\Consultation;
-use App\Models\User;
 use App\Repositories\Interfaces\ConsultationRepositoryInterface;
 use Carbon\Carbon;
-use Illuminate\Console\Application;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 use function PHPUnit\Framework\returnCallback;
 
@@ -175,9 +176,23 @@ class ConsultationRepository implements ConsultationRepositoryInterface
 
         $consultation = Consultation::findOrFail($id);
 
-        return $consultation->update([
+        $reservation = $consultation->update([
             'status' => $data['status']
         ]);
+
+        if ($data->status === "accepted") {
+
+            $roomName = 'consultation-' . Str::random(10);
+            $jitsiLink = "https://meet.jit.si/$roomName";
+
+            $entrepreneur = JWTAuth::user();
+            $consultant = DB::table('users')->join('consultants', 'users.id', 'consultants.user_id')->get()->first();
+
+            Mail::to($entrepreneur->email)->send(new ConsultationSchedueled($jitsiLink, $entrepreneur));
+            Mail::to($consultant->email)->send(new ConsultationSchedueled($jitsiLink, $consultant));
+        }
+
+        return $reservation;
     }
 
     public function delete($id) {}
