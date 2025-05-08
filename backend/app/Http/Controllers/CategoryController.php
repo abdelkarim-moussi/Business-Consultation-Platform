@@ -11,10 +11,9 @@ class CategoryController extends Controller
 
     public function index()
     {
-       
+
         $categories = Category::all();
         return response()->json(compact('categories'));
-
     }
 
     public function show($id)
@@ -62,7 +61,7 @@ class CategoryController extends Controller
     }
 
 
-    public function delete($id)
+    public function destroy($id)
     {
 
         $category = Category::find($id);

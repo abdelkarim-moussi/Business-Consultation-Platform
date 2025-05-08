@@ -1,15 +1,17 @@
 import { X } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Label from "../Label";
 import Input from "../Input";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const CategoriesList = ({ categories }) => {
+const CategoriesList = ({ categories, onCategoryUpdated,onCategoryDelete }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [editingCategory, setEditingCategory] = useState(null);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
 
   const handleEdit = (id, name, description) => {
     return () => {
@@ -28,21 +30,52 @@ const CategoriesList = ({ categories }) => {
   };
 
   const handleSubmit = async () => {
-    const data = {
-      name,
-      description,
-    };
+    try {
+      setIsLoading(true);
+      const data = {
+        name,
+        description,
+      };
 
-    const response = await axios.put(
-      `http://127.0.0.1:8000/api/categories/${editingCategory}`,
-      data
-    );
+      const response = await axios.put(
+        `http://127.0.0.1:8000/api/categories/${editingCategory}`,
+        data
+      );
 
-    toast.success(response.data.message);
-    closeModal();
+      toast.success(response.data.message);
+      closeModal();
+
+      if (onCategoryUpdated) {
+        onCategoryUpdated();
+      }
+    } catch (error) {
+      console.error("Error updating category:", error);
+      toast.error(error.response?.data?.message || "Failed to update category");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleDelete = () => {};
+  const handleDelete = async (id) => {
+    try {
+      setIsLoading(true);
+      const response = await axios.delete(
+        `http://127.0.0.1:8000/api/categories/${id}`
+      );
+
+      toast.success(response.data.message);
+
+      if (onCategoryUpdated) {
+        onCategoryDelete();
+      }
+    } catch (error) {
+      console.error("Error deleting category:", error);
+      toast.error(error.response?.data?.message || "Failed to delete category");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
 
   return (
     <>
@@ -86,12 +119,14 @@ const CategoriesList = ({ categories }) => {
                         category.name,
                         category.description
                       )}
+                      disabled={isLoading}
                     >
                       Edit
                     </button>
                     <button
                       className="text-red-600 hover:text-red-900 bg-red-50 rounded-full px-2 py-1"
-                      onClick={handleDelete}
+                      onClick={() => handleDelete(category.id)}
+                      disabled={isLoading}
                     >
                       Delete
                     </button>
@@ -101,7 +136,7 @@ const CategoriesList = ({ categories }) => {
             ) : (
               <tr>
                 <td
-                  colSpan="3" // Fixed: was "7"
+                  colSpan="3"
                   className="px-5 py-1 text-center text-sm text-gray-500"
                 >
                   No categories found
@@ -139,6 +174,7 @@ const CategoriesList = ({ categories }) => {
                 placeholder="Enter category name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                disabled={isLoading}
               />
             </div>
 
@@ -152,6 +188,7 @@ const CategoriesList = ({ categories }) => {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 className="w-full border border-gray-300 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 px-3 py-2 text-sm rounded-lg outline-none transition-all duration-200"
+                disabled={isLoading}
               />
             </div>
 
@@ -160,6 +197,7 @@ const CategoriesList = ({ categories }) => {
                 type="button"
                 onClick={closeModal}
                 className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+                disabled={isLoading}
               >
                 Cancel
               </button>
@@ -167,8 +205,13 @@ const CategoriesList = ({ categories }) => {
                 onClick={handleSubmit}
                 type="button"
                 className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg transition-colors duration-200"
+                disabled={isLoading}
               >
-                {editingCategory ? "Update Category" : "Save Category"}
+                {isLoading
+                  ? "Processing..."
+                  : editingCategory
+                  ? "Update Category"
+                  : "Save Category"}
               </button>
             </div>
           </div>

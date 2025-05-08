@@ -31,20 +31,21 @@ const ProfileCard = ({ consultant }) => {
     );
   };
 
-
   return (
     <div className="max-w-xs w-full bg-white shadow-md rounded-xl overflow-hidden hover:shadow-lg transition-shadow duration-300">
       <div className="bg-gradient-to-r p-4 border-b border-gray-200">
         <div className="flex items-center gap-4">
           <div className="relative">
-            {consultant.photo != 'http://127.0.0.1:8000/storage' ? (
+            {consultant.photo != "http://127.0.0.1:8000/storage" ? (
               <img
                 src={consultant.photo || "/api/placeholder/80/80"}
                 alt={`${consultant.firstName} ${consultant.lastName}`}
                 className="w-16 h-16 rounded-full object-cover border-2 border-indigo-500 shadow-md"
               />
             ) : (
-              <div className="w-16 h-16 flex items-center justify-center rounded-full border-2 border-indigo-500 shadow-md text-center uppercase">{consultant.firstName[0] + "/" + consultant.lastName[0]}</div>
+              <div className="w-16 h-16 flex items-center justify-center rounded-full border-2 border-indigo-500 shadow-md text-center uppercase">
+                {consultant.firstName[0] + "/" + consultant.lastName[0]}
+              </div>
             )}
 
             {consultant.isVerified && (
@@ -88,9 +89,6 @@ const ProfileCard = ({ consultant }) => {
                 "google ads",
                 "strategy",
                 "business plan",
-                "product design",
-                "fundraising",
-                "entrepreneurship",
               ]
             ).map((skill, index) => (
               <span
@@ -109,12 +107,6 @@ const ProfileCard = ({ consultant }) => {
             {renderRatingStars(consultant.rating || 4.5)}
           </div>
         </div>
-      </div>
-
-      <div className="px-4 pb-4">
-        <button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-          Contact Consultant
-        </button>
       </div>
     </div>
   );

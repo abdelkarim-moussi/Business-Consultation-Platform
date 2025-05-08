@@ -7,7 +7,6 @@ import CategoryModal from "../../components/category.components/CategoryModal";
 import { toast } from "react-toastify";
 const CategoriesManagement = () => {
   const [categories, setCategories] = useState([]);
-  const [category, setCategory] = useState({});
 
   const fetchCategories = async () => {
     try {
@@ -31,7 +30,6 @@ const CategoriesManagement = () => {
     }
   };
 
-
   useEffect(() => {
     fetchCategories();
   }, []);
@@ -44,7 +42,7 @@ const CategoriesManagement = () => {
         <div className="p-5">
           <CategoryModal onSubmit={handleSubmit} />
 
-          <CategoriesList categories={categories} />
+          <CategoriesList categories={categories}/>
         </div>
       </div>
     </div>
